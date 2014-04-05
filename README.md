@@ -1,20 +1,26 @@
-# Echo() exercise
+# Memory exercise
 
-Modify [echo.js](echo.js) to print out each argument to the `echo()` function on a new line.
+Recreate the tile-matching game Memory.  Demo:
 
-```javascript
-echo();
-// should print nothing
+http://www.zefrank.com/memory/
 
-echo('bla');
-// should print
-//
-// 'bla'
+## V1
 
-echo('foo', 'bar', 'baz');
-// should print
-//
-// 'foo'
-// 'bar'
-// 'baz'
-```
+* Use any libraries you like
+* *Start small*, e.g.
+    * 2x2 grid
+    * Hard-code as a `<table>`
+    * Use letters, numbers or colors as the "values"
+
+## V2
+
+Refactor to use OOP (Views, maybe Models, etc).
+
+## Bonus points
+
+* "Reset" button
+* Randomized board
+* Configurable board size
+* Score keeping (you can decide what this means)
+* Automated tests
+* Fancy interactivity/animations
