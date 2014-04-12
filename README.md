@@ -6,6 +6,7 @@ http://www.zefrank.com/memory/
 
 ## V1
 
+* In-class pair programming
 * Use any libraries you like
 * *Start small*, e.g.
     * 2x2 grid
@@ -14,7 +15,9 @@ http://www.zefrank.com/memory/
 
 ## V2
 
-Refactor to use OOP (Views, maybe Models, etc).
+* Finish independently
+* If you were using the other person's repository, make a fork from theirs and then submit a pull request back to the original repository: `https://github.com/YOUR_USERNAME/countdown/compare/advanced-js:gh-pages...gh-pages`
+* Refactor to use OOP (Views, maybe Models, etc).
 
 ## Bonus points
 
