@@ -1,0 +1,19 @@
+td {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+td span {
+  width: 100px;
+  height: 100px;
+  background: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+span.empty{
+  background: none;
+}
