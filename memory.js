@@ -1,5 +1,6 @@
 // YOUR CODE GOES HERE
 var DEFAULTSIZE = 2;
+var MAXSIZE = 10;
 var table, currentSize, lastTile, score=0;
 
 Array.prototype.shuffle = function() {
@@ -25,7 +26,7 @@ var PairedRandomValues = {
     var pairedValues = [];
     var l = m*n/2;
     for(var i=0; i<l; ++i){
-      var randomNumber = Math.floor(Math.random() * l + 1);
+      var randomNumber = Math.floor(Math.random() * 10 + 1);
       pairedValues.push(randomNumber);
       pairedValues.push(randomNumber);
     }
@@ -107,8 +108,8 @@ Tile.prototype.flip = function(){
       score += 1;
       $('#score').html(score);
     }else{
-      $(this.$el).toggleClass('flipped');
-      $(lastTile.$el).toggleClass('flipped');
+      this.close();
+      lastTile.close();
       table.resetLastTile();
     }
   }else{
@@ -120,9 +121,17 @@ Tile.prototype.disapear = function(){
   (function($el){
     setTimeout(function(){
     $el.empty();
-  }, 300);
+  }, 400);
   })(this.$el);
   this.$el.unbind('click');
+}
+
+Tile.prototype.close = function(){
+  (function($el){
+    setTimeout(function(){
+    $el.removeClass('flipped');
+  }, 400);
+  })(this.$el);
 }
 
 $(document).ready(function(){
@@ -132,6 +141,10 @@ $(document).ready(function(){
   table.initialize();
   $('#memorySize').on('change', function(){
     var value = $(this).val();
+    if(value  > MAXSIZE){
+      alert("Please enter an even number that is no more than " + MAXSIZE +"!");
+      return;
+    }
     if(value <= 0 || (value % 2) > 0){
       alert("Please enter an even number!");
       return;
