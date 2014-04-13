@@ -2,6 +2,7 @@ td {
   width: 100px;
   height: 100px;
   position: relative;
+  text-align: center;
 }
 
 td span {
@@ -14,6 +15,10 @@ td span {
   display: block;
 }
 
-span.empty{
+td.flipped span{
   background: none;
+}
+
+td.green span{
+  background: green;
 }
