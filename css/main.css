@@ -1,5 +1,6 @@
 body {
     background-color: #f5f5f5;
+    padding: 1em 1.5em 1.5em;
 }
 #board {
     background-color: #eee;
@@ -19,13 +20,19 @@ body {
     display: block;
     font-size: 2em;
     margin: 4%;
-    padding: 1em 20%;
+    padding: .5em 20%;
     text-align: center;
     width: 52%;
 }
-@media screen and (min-width : 760px){
+@media screen and (min-width : 30em){
+    .tileContainer span {
+        font-size: 3em;
+        padding: 1em 20%;
+    }
+}
+@media screen and (min-width : 60em){
     .tileContainer span {
         font-size: 4em;
-        padding-top: 1em;
+        padding: 1em 20%;
     }
-} 
+}  
