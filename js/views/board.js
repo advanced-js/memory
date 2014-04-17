@@ -8,19 +8,19 @@ app.BoardView = Backbone.View.extend({
         this.render();
     },
 
-    // render library by rendering each book in its collection
+    // render tiles by rendering each tile in its collection
     render: function() {
         this.collection.each(function( item ) {
             this.renderTile( item );
         }, this );
     },
 
-    // render a book by creating a BookView and appending the
-    // element it renders to the library's element
-    renderBook: function( item ) {
-        var bookView = new app.BookView({
+    // render a tile by creating a TileView and appending the
+    // element it renders to the tiles' element
+    renderTile: function( item ) {
+        var tileView = new app.TileView({
             model: item
         });
-        this.$el.append( bookView.render().el );
+        this.$el.append( tileView.render().el );
     }
 });
