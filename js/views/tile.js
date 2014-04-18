@@ -10,5 +10,14 @@ app.TileView = Backbone.View.extend({
         this.$el.html( this.template( this.model.toJSON() ) );
 
         return this;
+    },
+
+   events: {
+        'click': 'flip'
+    },
+
+    flip: function() {
+       this.$el.find( '.cover' ).fadeToggle( 150 );
     }
+
 });

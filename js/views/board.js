@@ -28,4 +28,5 @@ app.BoardView = Backbone.View.extend({
         });
         this.$el.append( tileView.render().el );
     }
+
 });

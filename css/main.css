@@ -13,10 +13,9 @@ body {
     float: left;
     height: 25%;
     width: 25%;
+    position: relative;
 }
-.tileContainer span {
-    background-color: #add4cc;
-    color: #454545;
+.tileContainer div {
     display: block;
     font-size: 2em;
     margin: 4%;
@@ -24,14 +23,27 @@ body {
     text-align: center;
     width: 52%;
 }
+.tile {
+    color: #454545;
+    background-color: #add4cc;
+    border-top: 1px solid #badfcf;
+}
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #99b0da;
+    color: #8ba1cc;
+    border-bottom: 1px solid #8ba1cc;
+}
 @media screen and (min-width : 30em){
-    .tileContainer span {
+    .tileContainer div {
         font-size: 3em;
         padding: 1em 20%;
     }
 }
 @media screen and (min-width : 60em){
-    .tileContainer span {
+    .tileContainer div {
         font-size: 4em;
         padding: 1em 20%;
     }
