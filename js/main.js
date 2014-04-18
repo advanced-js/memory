@@ -1,4 +1,8 @@
-//MemoryBoardController
+/**
+ * MemoryBoardController class to control game board.
+ * @param {Object} view The id for the controllers view.
+ * @param {Object} model The model for the controller.
+ */
 var MemoryBoardController = function(view, model){
 	this.$el = $("#"+view);
 	this.model = model;
@@ -14,13 +18,22 @@ MemoryBoardController.prototype = {
 		this.subscribe();
 		this.render();
 	},
+	/**
+	 * Events the controller subscribes to
+	 */
 	subscribe: function(){
 		Events.broadcaster.on(Events.tileTurnedOver, $.proxy(this.compareTiles, this));
-		Events.broadcaster.on(Events.resetGame, $.proxy(this.resetBoard, this));
+		this.model.events.on("change", $.proxy(this.resetBoard, this));
 	},
+	/**
+	 * Dom events the controller listens for
+	 */
 	events: function(){
 		$("#reset", this.$el).on("click", $.proxy(this.reset, this));
 	},
+	/**
+	 * Render each tile to the Dom
+	 */
 	render: function(){
 		//Loop through model to create board
 		for(var i=0; i < this.tiles.length; i++){
@@ -29,6 +42,9 @@ MemoryBoardController.prototype = {
 			$("#tiles", this.$el).append(tile.$el);
 		}
 	},
+	/**
+	 * When a tile is flipped over, push tile to activeTiles and check if the activeTiles are a match
+	 */
 	compareTiles: function(e, data){
 		//If less than 2 tiles are flipped, push this flipped tile to activeTiles array
 		if(this.activeTiles.length < 2) this.activeTiles.push(data.id);
@@ -46,10 +62,15 @@ MemoryBoardController.prototype = {
 			this.activeTiles.length = 0;
 		}
 	},
+	/**
+	 * Trigger event that the game has been reset from this controller
+	 */
 	reset: function(){
-		//Trigger event that the game has been reset
 		Events.broadcaster.trigger(Events.resetGame);
 	},
+	/**
+	 * Reset the game's board and rerender tiles based on updated model
+	 */
 	resetBoard: function(){
 		//Reset activeTiles storage
 		this.activeTiles.length = 0;
@@ -62,6 +83,7 @@ MemoryBoardController.prototype = {
 
 /**
  * Model of tiles for Memory Game
+ * @param {Object} data The data to be used to set up the tiles of the game
  */
 var MemoryModel = function(data){
 	this.attributes = $.extend(true, {}, data);
@@ -73,12 +95,23 @@ MemoryModel.prototype = {
 	init: function(){
 		this.duplicateTiles();
 		this.randomizeTiles();
+		this.subscribe();
 	},
 	get: function(attr){
 		return this.attributes(attr);
 	},
 	set: function(attr, value){
 		this.attributes[attr] = value;
+	},
+	/**
+	 * jQuery object used to broadcast event related to itself
+	 */
+	events: $(new Object()),
+	/**
+	 * Events the model subscribes to
+	 */
+	subscribe: function(){
+		Events.broadcaster.on(Events.resetGame, $.proxy(this.randomizeTiles, this));
 	},
 	duplicateTiles: function(){
 		var tiles = this.attributes.tiles,
@@ -98,7 +131,6 @@ MemoryModel.prototype = {
 		/** Inspired by Fisher–Yates Shuffle algorithm
 			url: http://bost.ocks.org/mike/shuffle/
 		**/
-
 		var tiles = this.attributes.tiles,
 			m = tiles.length, t, i;
 
@@ -111,7 +143,9 @@ MemoryModel.prototype = {
 			t = tiles[m];
 			tiles[m] = tiles[i];
 			tiles[i] = t;
-		}		
+		}
+		//Trigger event that the model has changed
+		this.events.trigger("change");
 	}
 }
 
@@ -247,11 +281,17 @@ ScoreBoardController.prototype = {
 		this.subscribe();
 		this.events();
 	},
+	/**
+	 * Events the controller subscribes to
+	 */
 	subscribe: function(){
 		Events.broadcaster.on(Events.attemp, $.proxy(this.updateAttemps, this));
 		Events.broadcaster.on(Events.correctMatch, $.proxy(this.updateCorrect, this));
 		Events.broadcaster.on(Events.resetGame, $.proxy(this.reset, this));
 	},
+	/**
+	 * Dom events the controller listens for
+	 */
 	events: function(){
 		var self = this;
 
@@ -260,22 +300,33 @@ ScoreBoardController.prototype = {
 			self.closeScoreBoard();
 		}); 
 	},
+	/**
+	 * Render the score to the Dom
+	 */
 	render: function(){
 		var score = this.model.get('score');
 		$("#score", this.$el).html(score);
 	},
+	/**
+	 * Display score board
+	 */
 	openScoreBoard: function(){
 		var self = this;
 		$("body").addClass("modal-open");
 		self.$el.fadeIn(500);
 	},
+	/**
+	 * Hide score board
+	 */
 	closeScoreBoard: function(){
 		var self = this;
 		$("body").removeClass("modal-open");
 		self.$el.fadeOut(500);
 	},
+	/**
+	 * Update the number attempts made to the model
+	 */
 	updateAttemps: function(){
-		console.log("updateAttemps");
 		var attemps = this.model.get('attemps');
 		this.model.set('attemps', attemps+1);
 
@@ -284,6 +335,9 @@ ScoreBoardController.prototype = {
 			this.updateScore();
 		}
 	},
+	/**
+	 * Update the number correct matches to the model
+	 */
 	updateCorrect: function(){
 		var correct = this.model.get('correct');
 		this.model.set('correct', correct+1);
@@ -301,11 +355,16 @@ ScoreBoardController.prototype = {
 		this.render();
 		this.openScoreBoard();
 	},
+	/**
+	 * Reset the model to its defaul state
+	 */
 	reset: function(){
 		this.model.setDefaults();
 	},
+	/**
+	 * Trigger event that the game has been reset
+	 */
 	resetGame: function(){
-		//Trigger event that the game has been reset
 		Events.broadcaster.trigger(Events.resetGame);
 	}
 }
@@ -319,11 +378,13 @@ var Events = {
 	"incorrectMatch": "incorrectMatch",
 	"attemp": "attemp",
 	"resetGame": "resetGame",
+	//broadcaster is a jQuery object used to attach/broadcast events to using the on/trigger methods
 	"broadcaster": $(new Object())
 };
 
 /**
  * Memory data
+ * @param {Object} tiles Tiles is an obect that contains all of the data that will be used for the game		
  */
 var memoryData = {
 	tiles: [
@@ -373,13 +434,12 @@ var memoryData = {
 
 /**
  * On document ready start up Memory Game
- * @return {[type]} [description]
  */
 $(function(){
 	//Instantiate models for game
 	var memoryModel = new MemoryModel(memoryData);
 	var scoreBoardModel = new ScoreBoardModel(memoryData);
-	//Instantiate controller for game
+	//Instantiate controllers for game
 	var scoreBoardController = new ScoreBoardController("score-board", scoreBoardModel);
 	var memoryBoardController = new MemoryBoardController("memory-game", memoryModel);
 });
