@@ -1,0 +1,38 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+/* end reset */
+
+header { width: 100%; margin: 0 0 20px; background: black; }
+header form { width: 50%; margin: 0 auto; padding: 10px; text-align: center; }
+header form fieldset { display: inline-block; }
+header form fieldset legend { margin: 0 16px 0; font: normal 15px times; display: inline-block; color: white; float: left; text-align: left; }
+header form fieldset legend:first-child { margin-left: 0; }
+header form fieldset input { height: 30px; padding: 0 6px; display: inline-block; float: left; border: 0 none; }
+header form fieldset #enterNum { margin-right: 12px; }
+header form fieldset #enterSize { margin-right: 16px; }
+header form fieldset #btn { height: 30px; -webkit-appearance: none; border: 2px solid #ccc; background: #c00; font: normal 15px times; color: white; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
+header form fieldset #btn:hover { cursor: pointer; }
+header form #score-key { height: 38px; margin: 0 30px 0 0; display: inline-block; color: white;  font: normal 15px/20px times;}
+header form #score { display: inline-block; color: white;}
+
+h1 { width: 50%; margin: 26px auto 20px; text-align: center; font: normal 36px times; }
+h1 span { width: 14px; height: 52px; margin: -4px 20px 0 0; background: url("bracket1.gif"); display: inline-block; vertical-align: middle; }
+h1 span + span { margin: -4px 0 0 20px; background: url("bracket2.gif"); }
+
+#container { margin: 0 auto; padding: 0 20px 20px; background: #f1f1f1; border: 2px solid #ccc; overflow: hidden; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; }
+#container div { margin: 20px 20px 0 0; position: relative; text-align: center; vertical-align: middle; float: left; border: 2px solid grey; cursor: pointer; font: times; font-size: 1.3em; }
+#container div:nth-of-type(6n) { margin-right: 0;}
+#container div { -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-transition: -webkit-transform 1s; -moz-transition: -moz-transform 1s; -o-transition: -o-transform 1s; transition: transform 1s; -webkit-transform-style: preserve-3d; -moz-transform-style: preserve-3d; -o-transform-style: preserve-3d; transform-style: preserve-3d; }
+#container div.show { -webkit-transform: rotateY( 180deg ); -moz-transform: rotateY( 180deg ); -o-transform: rotateY( 180deg ); transform: rotateY( 180deg ); }
+#container div figure { width: 100%; display: block; color: black; text-align: center; font-weight: bold; position: absolute; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; backface-visibility: hidden; }
+#container div .front { height:100%; display: block; background: url("bg.jpg"); }
+#container div .back { width: 100%; background: white; -webkit-transform: rotateY( 180deg ); -moz-transform: rotateY( 180deg ); -o-transform: rotateY( 180deg ); transform: rotateY( 180deg ); }
+
+
+
+

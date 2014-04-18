@@ -1,9 +1,28 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Memory exercise</title>
-    <script src="memory.js"></script>
-  </head>
-  <body>
-  </body>
+ <!doctype html>
+ <html>
+    <head>
+      <title>Memory exercise</title>
+		<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="memory.js"></script>
+		<link rel='stylesheet' type='text/css' href='memory.css'>
+    </head>
+    <body>
+        <header>
+            <form id="myForm">
+                <div id="score-key">
+                    <div>Number of Clicks</div>
+                    <div id="score"></div>
+                </div>
+                <fieldset>
+                    <legend>Number of Cards<br>(even, between 8-26)</legend>
+                    <input type="text" size="3" value="18" id="enterNum" autocomplete="off">
+                    <legend>Size of Cards<br>(between 50-100)</legend>
+                    <input type="text" size="5" value="100" id="enterSize" autocomplete="off">
+                    <input type="button" value="Reset" id="btn">
+                </fieldset>
+            </form>
+        </header>
+        <h1><span></span>Memory Game<span></span></h1>
+        <div id="container"></div>
+    </body>
 </html>
