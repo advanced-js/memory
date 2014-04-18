@@ -13,13 +13,13 @@ Array.prototype.shuffle = function() {
      this[j] = temp;
   }
   return this;
-}
+};
 
-var printArray= function(values){
-  for(var i=0, l=values.length; i<l; ++i){
-    console.log("value " + i + " : " + values[i] );
+Array.prototype.print = function(){
+  for(var i=0, l=this.length; i<l; ++i){
+    console.log("value " + i + " : " + this[i] );
   }
-}
+};
 
 var PairedRandomValues = {
   generate: function(m, n){
@@ -32,11 +32,6 @@ var PairedRandomValues = {
     }
     pairedValues.shuffle();
     return pairedValues;
-  },
-  print: function(values){
-    for(var i=0, l=values.length; i<l; ++i){
-      console.log("value " + i + " : " + values[i] );
-    }
   }
 }
 
