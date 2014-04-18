@@ -10,7 +10,12 @@ app.BoardView = Backbone.View.extend({
 
     // render tiles by rendering each tile in its collection
     render: function() {
+        var items = [];
         this.collection.each(function( item ) {
+            items.push( item );
+        });
+        items = _.shuffle( items ); // put the tiles in random order
+        _.each( items, function( item ) {
             this.renderTile( item );
         }, this );
     },
