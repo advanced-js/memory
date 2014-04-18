@@ -2,20 +2,24 @@
 <html>
   <head>
     <title>Memory exercise</title>
-		
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="jquery-1.10.2.min.js"></script>
+   <!-- <script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
     <script src="memory.js"></script>
     <style>
+    body{font-size:24px;}
 		table{position:absolute;left:100px;top:50px;}
-		td{border:3px solid blue;}
+		td{border:10px solid #9999ff; padding:20px;background-color:blue;color:blue;}
+    .exposed{background-color:white;}
+    .removed{visibility: hidden;}
 	</style>
   </head>
   <body>
 
 	<table class="board">
-    <tr><td>A</td><td>B</td></tr>
-    <tr><td>B</td><td>A</td></tr>
-
+    <tr><td>&#223; </td><td>&#4688;</td><td>&#2605;</td><td>$</td></tr>
+    <tr><td>&#33865;</td><td>B</td><td>&#223; </td><td>&#4688;</td></tr>
+    <tr><td>&#2605;</td><td>&#916;</td><td>&#33865;</td><td>&#1511;</td></tr>
+    <tr><td>&#916;</td><td>$</td><td>&#1511;</td><td>B</td></tr>
   </table>
 
   </body>
