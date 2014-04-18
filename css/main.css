@@ -2,12 +2,10 @@ body {
     background-color: #f5f5f5;
     padding: 1em 1.5em 1.5em;
 }
-#board {
-    background-color: #eee;
+#tiles {
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 36em;
     overflow: hidden;
-    padding: .5%;
 }
 .tileContainer {
     float: left;
@@ -36,15 +34,10 @@ body {
     color: #8ba1cc;
     border-bottom: 1px solid #8ba1cc;
 }
-@media screen and (min-width : 30em){
+@media screen and (min-width: 30em){
     .tileContainer div {
         font-size: 3em;
-        padding: 1em 20%;
+        padding: .75em 20%;
     }
 }
-@media screen and (min-width : 60em){
-    .tileContainer div {
-        font-size: 4em;
-        padding: 1em 20%;
-    }
-}  
+

@@ -12,5 +12,5 @@ $(function() {
         { value: 'H' }, { value: 'H' }
     ];
 
-    new app.BoardView( tiles );
+    new app.TilesView( tiles );
 });

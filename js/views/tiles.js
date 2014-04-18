@@ -1,7 +1,7 @@
 var app = app || {};
 
-app.BoardView = Backbone.View.extend({
-    el: '#board',
+app.TilesView = Backbone.View.extend({
+    el: '#tiles',
 
     initialize: function( initialTiles ) {
         this.collection = new app.Tiles( initialTiles );
