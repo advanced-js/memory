@@ -3,8 +3,9 @@ var app = app || {};
 app.TilesView = Backbone.View.extend({
     el: '#tiles',
 
-    initialize: function( initialTiles ) {
-        this.collection = new app.Tiles( initialTiles );
+    initialize: function( options ) {
+        this.collection = new app.Tiles( options.initialTiles );
+        this.gameController = options.controller;
         this.render();
     },
 
@@ -27,6 +28,21 @@ app.TilesView = Backbone.View.extend({
             model: item
         });
         this.$el.append( tileView.render().el );
+    },
+
+    events: {
+        'click .tileContainer': function() {
+            this.gameController.trigger( 'tileSelection', {
+                opt1: this
+            });
+        }
     }
+
+    // tileSelection: function() {
+        // console.log( 'tileSelection in TilesView called' );
+        //this.gameController.trigger( 'tileSelection', {
+            // opt1: this;
+        // });
+    // }
 
 });
