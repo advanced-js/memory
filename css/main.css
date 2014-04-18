@@ -59,7 +59,7 @@ hgroup h2{
     float: left;
     box-sizing: border-box;
     width: 121px;
-    height: 124px;
+    height: 121px;
     margin: 10px;
     -webkit-transform-style: preserve-3d;
     -webkit-transition: 0.5s;
@@ -89,6 +89,7 @@ hgroup h2{
 
 #memory-game .tile .front,
 #memory-game .tile .back{
+    overflow: hidden;
     box-sizing: border-box;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
