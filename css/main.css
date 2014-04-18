@@ -1,0 +1,225 @@
+body{
+    background: url('../images/bg-pattern.png') repeat;
+    margin: 0;
+    padding: 0;
+    font-family: 'Maven Pro', Arial, sans-serif;
+    min-width: 980px;
+}
+
+header{
+    width: 980px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+header .logo{
+    width: 642px;
+    height: 165px;
+    margin: 0 auto;
+    background: url('../images/creamory-logo.png') no-repeat;
+}
+
+hgroup{
+    width: 742px;
+    margin: 25px auto 15px;
+    border-top: 1px #121212 solid;
+    border-bottom: 1px #282828 solid;
+}
+
+hgroup h2{
+    margin: 0;
+    padding: 20px 10px;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 26px; 
+    text-align: center;
+    color: #cfcfcf;
+    border-top: 1px #282828 solid;
+    border-bottom: 1px #121212 solid;
+
+}
+
+/*---------------
+     GRID
+----------------*/
+#memory-game{
+    width: 705px;
+    margin: 15px auto 30px;
+}
+#memory-game #tiles:after{
+    content: "";
+    height: 0px;
+    width: 0px;
+    clear: both;
+    display: block;
+}
+
+#memory-game .tile{
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    width: 121px;
+    height: 121px;
+    margin: 10px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: 0.5s;
+    -moz-transform-style: preserve-3d;
+    -moz-transition: 0.5s;
+    -ms-transform-style: preserve-3d;
+    -ms-transition: 0.5s;
+    -o-transform-style: preserve-3d;
+    -o-transition: 0.5s;
+    transform-style: preserve-3d;
+    transition: 0.5s;
+    cursor: pointer;
+    background: none;
+}
+
+#memory-game .tile.active,
+#memory-game .tile.matched{
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    cursor: default;
+}
+
+#memory-game .tile.matched{
+    opacity: 0.45;
+}
+
+#memory-game .tile .front,
+#memory-game .tile .back{
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 1px solid #fff;
+}
+
+#memory-game .tile .front img,
+#memory-game .tile .back img{
+    width: 100%;
+    height: auto;
+}
+
+#memory-game .tile .front{
+    z-index: 2;
+    background: none;
+}
+
+#memory-game .tile .back{
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+#reset{
+    text-align: center;
+    margin: 20px 0 20px;
+}
+.reset-button{
+    margin: 0 auto;
+    padding: 10px 60px;
+    background: #ed6b9d; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ed6b9d 0%, #ed4a89 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ed6b9d), color-stop(100%,#ed4a89)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ed6b9d 0%,#ed4a89 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ed6b9d 0%,#ed4a89 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ed6b9d 0%,#ed4a89 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ed6b9d 0%,#ed4a89 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ed6b9d', endColorstr='#ed4a89',GradientType=0 ); /* IE6-9 */
+    border: 1px #ed4a89 solid;
+    border-radius: 3px;
+    outline: none;
+    font-size: 18px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 -1px 0 #ed4a89, 0 1px 0 #ee82ab; 
+    cursor: pointer;
+}
+
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.overlay .wrapper{
+    position: absolute;
+    box-sizing: border-box;
+    width: 650px;
+    height: 265px;
+    top: 50%;
+    left: 50%;
+    margin-top: -137px;
+    margin-left: -325px;
+    background: rgba(0,0,0,0.9);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.overlay h3{
+    font-family: 'lavanderia_sturdysturdy', serif;
+    font-size: 52px;
+    font-weight: normal;
+    color: #ed4a89;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.overlay p{
+    font-size: 16px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 22px;
+    margin: 10px 40px;
+}
+
+.overlay .call-out{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px 40px 30px;
+}
+.overlay .reset-button{
+    display: block;
+    margin: 20px auto;
+}
+
+.credits{
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 20px auto;
+    padding: 0 20px;
+    text-align: right;
+}
+
+.credits p{
+    color: #555;
+    font-size: 11px;
+}
+
+.credits a{
+    font-style: italic;
+    color: #666;
+    text-decoration: none;
+}
+
