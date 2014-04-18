@@ -30,13 +30,14 @@ app.TilesView = Backbone.View.extend({
         this.$el.append( tileView.render().el );
     },
 
-    events: {
-        'click .tileContainer': function() {
-            this.gameController.trigger( 'tileSelection', {
-                opt1: this
-            });
-        }
-    }
+    // events: {
+        // 'click .tileContainer': function( e ) {
+            // this.gameController.trigger( 'tileSelection', {
+                // opt1: this,
+                // opt2: e
+            // });
+        // }
+    // }
 
     // tileSelection: function() {
         // console.log( 'tileSelection in TilesView called' );

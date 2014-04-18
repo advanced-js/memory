@@ -5,7 +5,7 @@ app.TileView = Backbone.View.extend({
     className: 'tileContainer',
     template: _.template( $( '#tileTemplate' ).html() ),
 
-    initialize: function() {
+    initialize: function( options ) {
         console.log( 'TileView initialized for Tile ' + this.model.cid );
         this.listenTo( this.model, 'change:flipped', this.renderFlip );
     },
@@ -21,6 +21,12 @@ app.TileView = Backbone.View.extend({
         console.log( 'renderFlip in TileView called');
         this.$el.find( '.cover' ).fadeToggle( 150 );
     },
+
+    events: {
+        'click': function() {
+            app.gameController.trigger( 'tileSelection', this.model );
+        }
+    }
 
     // events: {
         // 'click': 'handleTileSelection'

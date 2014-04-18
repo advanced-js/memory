@@ -15,6 +15,9 @@ $(function() {
             { value: 'H' }, { value: 'H' }
         ];
 
+    app.gameController = _.extend( {}, Backbone.Events );
+
+
     new app.TilesView({
         controller: gameController,
         initialTiles: tiles
