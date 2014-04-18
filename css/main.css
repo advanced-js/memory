@@ -162,7 +162,7 @@ hgroup h2{
     position: absolute;
     box-sizing: border-box;
     width: 650px;
-    height: 275px;
+    height: 265px;
     top: 50%;
     left: 50%;
     margin-top: -137px;
@@ -193,7 +193,7 @@ hgroup h2{
     font-size: 18px;
     font-weight: 600;
     text-align: center;
-    margin: 30px 40px;
+    margin: 20px 40px 30px;
 }
 .overlay .reset-button{
     display: block;
