@@ -1,0 +1,24 @@
+td {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  text-align: center;
+}
+
+td span {
+  width: 100px;
+  height: 100px;
+  background: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+td.flipped span{
+  background: none;
+}
+
+td.green span{
+  background: green;
+}
