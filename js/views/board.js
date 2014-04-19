@@ -47,7 +47,14 @@ app.BoardView = Backbone.View.extend({
     },
 
     handleTurn: function( tiles ) {
-        console.log( 'compare ' + tiles[0] + ', ' + tiles[1] );
+        var a = tiles[0],
+            b = tiles[1];
+        console.log( 'compare ' + a + ', ' + b );
+        if ( a.get( 'value' ) === b.get( 'value' ) ){
+            console.log( 'match!' );
+        } else {
+            console.log( 'no match!');
+        }
         _.each( tiles, function( tile ) {
             tile.toggleFlip();
         });
