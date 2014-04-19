@@ -33,12 +33,5 @@ app.TileView = Backbone.View.extend({
         this.$el.addClass( 'resolved' );
     }
 
-    // events: {
-        // 'click': 'handleTileSelection'
-    // },
-
-    // handleTileSelection: function() {
-        // this.model.toggleFlip();
-    // }
 
 });
