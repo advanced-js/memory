@@ -2,7 +2,7 @@ body {
     background-color: #f5f5f5;
     padding: 1em 1.5em 1.5em;
 }
-#tiles {
+#board {
     margin: 0 auto;
     max-width: 36em;
     overflow: hidden;
