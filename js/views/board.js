@@ -33,10 +33,20 @@ app.BoardView = Backbone.View.extend({
     },
 
     tileSelection: function( tile ) {
-        console.log( 'tileSelection in BoardView called' );
+        var flippedTiles;
         tile.toggleFlip();
-        console.log( this.collection.flippedCount() )
-        
+        flippedTiles = this.collection.where({ flipped: true });
+        console.log( flippedTiles.length );
+        if ( flippedTiles.length === 2 ) {
+            this.handleTurn( flippedTiles );
+        }
+    },
+
+    handleTurn: function( tiles ) {
+        console.log( 'compare ' + tiles[0] + ', ' + tiles[1] );
+        _.each( tiles, function( tile ) {
+            tile.toggleFlip();
+        });
     }
 
 });
