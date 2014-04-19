@@ -65,6 +65,22 @@ app.BoardView = Backbone.View.extend({
             };
         }
         _.each( tiles, resultHandler );
+        this.checkGameStatus();
+    },
+
+    checkGameStatus: function() {
+        console.log( 'checking game status' );
+        var unresolvedTiles = this.collection.where({
+            resolved: false
+        });
+        console.log ( unresolvedTiles.length + ' to go' );
+        if ( unresolvedTiles.length === 0 ) {
+            this.endGame();
+        }
+    },
+
+    endGame: function() {
+        console.log( 'you win!' );
     }
 
 });
