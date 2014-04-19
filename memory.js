@@ -5,7 +5,7 @@ var table, currentSize, lastTile, score=0;
 
 Array.prototype.shuffle = function() {
   var i = this.length, j, temp;
-  if ( i == 0 ) return this;
+  if ( i === 0 ) return this;
   while ( --i ) {
      j = Math.floor( Math.random() * ( i + 1 ) );
      temp = this[i];
@@ -33,35 +33,38 @@ var PairedRandomValues = {
     pairedValues.shuffle();
     return pairedValues;
   }
-}
+};
 
 var Table = function(m,n){
   this.rows = m;
   this.columns = n;
-}
+};
 
 Table.prototype.initialize = function(){
   var randomValues = PairedRandomValues.generate(this.rows, this.columns);
+
+  function addTileToEachRow(){
+    $('tr').each(function(i, val){
+      var value = randomValues.pop();
+      var tile = new Tile(value, i, j);
+      $(this).append(tile.$el);
+    });
+  }
 
   $('body').append('<table></table>');
   for(var i=0, l=this.rows; i<l; ++i){
     $('table').append('<tr></tr>');
   }
   for(var j=0, l2=this.columns; j<l2; ++j){
-    var rows = $('tr');
-    $.each(rows, function(i, val){
-      var value = randomValues.pop();
-      var tile = new Tile(value, i, j);
-      $(this).append(tile.$el);
-    });
+    addTileToEachRow();
   }
-}
+};
 
 Table.prototype.destroy = function(){
   if($('table').length > 0){
     $('table').remove();
   }
-}
+};
 
 Table.prototype.reset = function(){
   this.destroy();
@@ -69,16 +72,16 @@ Table.prototype.reset = function(){
   this.resetScore();
   table = new Table(currentSize, currentSize);
   table.initialize();
-}
+};
 
 Table.prototype.resetLastTile = function(){
   lastTile = undefined;
-}
+};
 
 Table.prototype.resetScore = function(){
   score = 0;
   $('#score').html(score);
-}
+};
 
 var Tile = function(value, x, y){
   this.value = value;
@@ -86,7 +89,7 @@ var Tile = function(value, x, y){
   this.$el = $('<td><span></span>' + value + '</td>');
   this.visible = !this.$el.hasClass('flipped');
   this.$el.on('click', this.flip.bind(this));
-}
+};
 
 Tile.prototype.flip = function(){
   $(this.$el).toggleClass('flipped');
@@ -110,7 +113,7 @@ Tile.prototype.flip = function(){
   }else{
     lastTile = this;
   }
-}
+};
 
 Tile.prototype.disapear = function(){
   (function($el){
@@ -119,7 +122,7 @@ Tile.prototype.disapear = function(){
   }, 400);
   })(this.$el);
   this.$el.unbind('click');
-}
+};
 
 Tile.prototype.close = function(){
   (function($el){
@@ -127,7 +130,7 @@ Tile.prototype.close = function(){
     $el.removeClass('flipped');
   }, 400);
   })(this.$el);
-}
+};
 
 $(document).ready(function(){
 
