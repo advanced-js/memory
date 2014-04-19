@@ -8,6 +8,6 @@ app.Tiles = Backbone.Collection.extend({
 
     flippedCount: function() {
         var flippedTiles = this.where({ flipped: true });
-        console.log( flippedTiles );
+        return flippedTiles.length;
     }
 });

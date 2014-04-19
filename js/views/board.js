@@ -35,6 +35,7 @@ app.BoardView = Backbone.View.extend({
     tileSelection: function( tile ) {
         console.log( 'tileSelection in BoardView called' );
         tile.toggleFlip();
+        console.log( this.collection.flippedCount() )
         
     }
 
