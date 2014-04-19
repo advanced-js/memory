@@ -34,6 +34,10 @@ app.BoardView = Backbone.View.extend({
 
     tileSelection: function( tile ) {
         var flippedTiles;
+        if ( tile.get( 'flipped' ) === true ) {
+            console.log( 'a flipped tile should be ignored' );
+            return;
+        }
         tile.toggleFlip();
         flippedTiles = this.collection.where({ flipped: true });
         console.log( flippedTiles.length );

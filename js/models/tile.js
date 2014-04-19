@@ -8,9 +8,9 @@ app.Tile = Backbone.Model.extend({
     },
 
     initialize: function() {
-        this.on( 'change:flipped', function() {
-            console.log( 'app.Tile resigistering change:flipped' );
-        });
+        // this.on( 'change:flipped', function() {
+            // console.log( 'app.Tile resigistering change:flipped' );
+        // });
     },
 
     toggleFlip: function() {

@@ -6,7 +6,6 @@ app.TileView = Backbone.View.extend({
     template: _.template( $( '#tileTemplate' ).html() ),
 
     initialize: function( options ) {
-        console.log( 'TileView initialized for Tile ' + this.model.cid );
         this.listenTo( this.model, 'change:flipped', this.renderFlip );
     },
 
