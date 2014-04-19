@@ -1,40 +1,21 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Memory exercise</title>
-    <script src="memory.js"></script>
-    <style>
-		a {
-			display: block;
-			height: 100%;
-		}
-		.green {
-			background-color: green;
-		}
-		.red {
-			background-color: red;
-		}
-		.hidden {
-			background-color: black;
-		}
-		.match {
-			background-color: transparent;
-		}
-		
-	</style>
-  </head>
-  <body>
-  
-  	<table width="400" border="1">
-    	<tr>
-        	<td width="200" height="200"><a class="red hidden" href="#"></a></td>
-        	<td width="200" height="200"><a class="green hidden" href="#"></a></td>
-        </tr>
-    	<tr>
-        	<td width="200" height="200"><a class="green hidden" href="#"></a></td>
-        	<td width="200" height="200"><a class="red hidden" href="#"></a></td>
-        </tr>
-    </table>
-    
-  </body>
+    <head>
+    	 <link rel="stylesheet" href="memory.css"  type="text/css" />
+    </head>
+    <body>
+        <div id="memory">
+            <div id="tiles">
+            	
+            </div>
+        </div>
+        <div id="startover">
+            start over
+        </div>
+        <div id="scorekeeper">
+        	<div id="numCorrect" class="score"><h2>Number of Correct Guess</h2><span>0</span></div>
+        	<div id="numWrong" class="score"><h2>Number of Incorrect Guess</h2><span>0</span></div>
+        </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="memory.js"></script>
+    </body>
 </html>
