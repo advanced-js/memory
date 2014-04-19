@@ -34,30 +34,37 @@ app.BoardView = Backbone.View.extend({
 
     tileSelection: function( tile ) {
         var flippedTiles;
-        if ( tile.get( 'flipped' ) === true ) {
-            console.log( 'a flipped tile should be ignored' );
+        if ( tile.get( 'flipped' ) || tile.get( 'resolved' ) ) {
+            console.log( 'a flipped or resolved tile should be ignored' );
             return;
         }
         tile.toggleFlip();
-        flippedTiles = this.collection.where({ flipped: true });
-        console.log( flippedTiles.length );
-        if ( flippedTiles.length === 2 ) {
-            this.handleTurn( flippedTiles );
+        selectedTiles = this.collection.where({
+            flipped: true,
+            resolved: false
+        });
+        console.log( selectedTiles.length );
+        if ( selectedTiles.length === 2 ) {
+            this.handleTurn( selectedTiles );
         }
     },
 
     handleTurn: function( tiles ) {
         var a = tiles[0],
-            b = tiles[1];
-        console.log( 'compare ' + a + ', ' + b );
+            b = tiles[1],
+            resultHandler;
         if ( a.get( 'value' ) === b.get( 'value' ) ){
             console.log( 'match!' );
+            resultHandler = function( tile ) {
+                tile.set( 'resolved', true );
+            };
         } else {
             console.log( 'no match!');
+            resultHandler = function( tile ) {
+                tile.toggleFlip();
+            };
         }
-        _.each( tiles, function( tile ) {
-            tile.toggleFlip();
-        });
+        _.each( tiles, resultHandler );
     }
 
 });

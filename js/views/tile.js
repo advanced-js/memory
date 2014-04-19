@@ -7,6 +7,7 @@ app.TileView = Backbone.View.extend({
 
     initialize: function( options ) {
         this.listenTo( this.model, 'change:flipped', this.renderFlip );
+        this.listenTo( this.model, 'change:resolved', this.renderResolved );
     },
 
     events: {
@@ -25,6 +26,11 @@ app.TileView = Backbone.View.extend({
     renderFlip: function() {
         console.log( 'renderFlip in TileView called');
         this.$el.find( '.cover' ).fadeToggle( 150 );
+    },
+
+    renderResolved: function() {
+        console.log( 'do something to mark tiles as resolved' );
+        this.$el.addClass( 'resolved' );
     }
 
     // events: {
