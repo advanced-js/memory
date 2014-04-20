@@ -2,8 +2,20 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <script src="jquery-1.11.0.min.js"></script>
     <script src="memory.js"></script>
+    <style type="text/css">
+    td {background:#ccc;width:50px;height:50px;}
+    td.foo.open {background:#000;}
+    td.bar.open {background:#fff;}
+    td.match {background:#ff0000;}
+    </style>
   </head>
   <body>
+  	<table>
+     <tr><td class="foo"></td><td class="bar"></td></tr>
+     <tr><td class="foo"></td><td class="bar"></td></tr>
+  	</table>
+    <p><a href="#" class="reset">Reset</a></p>
   </body>
 </html>
