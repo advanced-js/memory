@@ -2,7 +2,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
       files: {
-        src: ['*.js']
+        src: [
+        'js/collections/*.js',
+        'js/models/*.js',
+        'js/views/*.js',
+        'js/*.js']
       }
     },
     validation: {
