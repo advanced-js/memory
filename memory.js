@@ -67,7 +67,7 @@ var numWrong = 0;
 var numCorrect = 0;
 var MemoryGame = function(){
     this.init();
-}
+};
 
     //initialize memory game
     MemoryGame.prototype.init = function () {
@@ -85,7 +85,7 @@ var MemoryGame = function(){
             tileArr[i] = tempj;
             tileArr[j] = tempi;
         }
-    },
+    };
     //append tiles based on length of tile object
     MemoryGame.prototype.addTiles = function (tiles) {
         for (var i = 0; i < tiles.length; i++) {
@@ -94,7 +94,7 @@ var MemoryGame = function(){
             var tile = '<div class="tile" data-id="' + tiles[i].id + '"">' + tileOff + tileOn + '</div>';
             $("#tiles").append(tile);
         }
-    },
+    };
     // select tiles and prepare tiles for compare
     MemoryGame.prototype.selectTile = function (selected) {
         if (!$(selected).hasClass("active") && $("#memory #tiles .tile.active").length < 2) {
@@ -108,7 +108,7 @@ var MemoryGame = function(){
             });
             this.compareTiles(selectedTiles);
         }
-    },
+    };
     //compare two tiles 
     MemoryGame.prototype.compareTiles = function (selectedIds) {
         if (selectedIds.id1 == selectedIds.id2) {
@@ -122,16 +122,16 @@ var MemoryGame = function(){
             $('#scorekeeper #numWrong span').text(numWrong);
             selectedTiles = {};
         }
-    },
+    };
     //functionality for correct tiles selected
     MemoryGame.prototype.hideCorrect = function () {
         $("#memory #tiles .tile.active").addClass('correct');
         $("#memory #tiles .tile.active").removeClass('active');
-    },
+    };
     //functionality to reset wrong tiles selected
     MemoryGame.prototype.resetWrong = function () {
         $("#memory #tiles .tile").removeClass('active');
-    },
+    };
     //reset the game
     MemoryGame.prototype.resetGame = function () {
         numCorrect = 0;
@@ -145,7 +145,7 @@ var MemoryGame = function(){
             memory_game.selectTile($(this));
         });
 
-    }
+    };
 
 
 
