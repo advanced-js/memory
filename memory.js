@@ -65,10 +65,17 @@ var data = {
 var selectedTiles = {};
 var numWrong = 0;
 var numCorrect = 0;
-var memory_game = {
+var MemoryGame = function(){
+    this.init();
+}
 
+    //initialize memory game
+    MemoryGame.prototype.init = function () {
+        this.randomTiles(data.tiles);
+        this.addTiles(data.tiles);
+    },
     //randomizes tile object
-    randomTiles: function (tileArr) {
+    MemoryGame.prototype.randomTiles = function (tileArr) {
         var i = tileArr.length;
         if (i == 0) return false;
         while (--i) {
@@ -80,7 +87,7 @@ var memory_game = {
         }
     },
     //append tiles based on length of tile object
-    addTiles: function (tiles) {
+    MemoryGame.prototype.addTiles = function (tiles) {
         for (var i = 0; i < tiles.length; i++) {
             var tileOff = '<div class="off"><img src="images/steeringwheel.png" /></div>';
             var tileOn = '<div class="on"><img src="' + tiles[i].image + '" /></div>';
@@ -89,7 +96,7 @@ var memory_game = {
         }
     },
     // select tiles and prepare tiles for compare
-    selectTile: function (selected) {
+    MemoryGame.prototype.selectTile = function (selected) {
         if (!$(selected).hasClass("active") && $("#memory #tiles .tile.active").length < 2) {
             $(selected).addClass("active");
 
@@ -103,7 +110,7 @@ var memory_game = {
         }
     },
     //compare two tiles 
-    compareTiles: function (selectedIds) {
+    MemoryGame.prototype.compareTiles = function (selectedIds) {
         if (selectedIds.id1 == selectedIds.id2) {
             setTimeout(this.hideCorrect, 1000);
             numCorrect++;
@@ -117,35 +124,34 @@ var memory_game = {
         }
     },
     //functionality for correct tiles selected
-    hideCorrect: function () {
+    MemoryGame.prototype.hideCorrect = function () {
         $("#memory #tiles .tile.active").addClass('correct');
         $("#memory #tiles .tile.active").removeClass('active');
     },
     //functionality to reset wrong tiles selected
-    resetWrong: function () {
+    MemoryGame.prototype.resetWrong = function () {
         $("#memory #tiles .tile").removeClass('active');
     },
     //reset the game
-    resetGame: function () {
+    MemoryGame.prototype.resetGame = function () {
         numCorrect = 0;
         numWrong = 0;
         $('#scorekeeper #numCorrect span').text(numCorrect);
         $('#scorekeeper #numWrong span').text(numWrong);
         selectedTiles = {};
         $("#memory #tiles .tile").remove();
-        this.randomTiles(data.tiles);
-        this.addTiles(data.tiles);
+        var memory_game = new MemoryGame;
         $("#memory #tiles .tile").on("click", function () {
             memory_game.selectTile($(this));
         });
 
     }
-};
+
 
 
 $(document).ready(function () {
-    memory_game.randomTiles(data.tiles);
-    memory_game.addTiles(data.tiles);
+    var memory_game = new MemoryGame;
+    
     $("#memory #tiles .tile").on("click", function () {
         memory_game.selectTile($(this));
     });
