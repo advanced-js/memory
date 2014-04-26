@@ -73,11 +73,11 @@ var MemoryGame = function(){
     MemoryGame.prototype.init = function () {
         this.randomTiles(data.tiles);
         this.addTiles(data.tiles);
-    },
+    };
     //randomizes tile object
     MemoryGame.prototype.randomTiles = function (tileArr) {
         var i = tileArr.length;
-        if (i == 0) return false;
+        if (i === 0) return false;
         while (--i) {
             var j = Math.floor(Math.random() * (i + 1));
             var tempi = tileArr[i];
@@ -140,7 +140,7 @@ var MemoryGame = function(){
         $('#scorekeeper #numWrong span').text(numWrong);
         selectedTiles = {};
         $("#memory #tiles .tile").remove();
-        var memory_game = new MemoryGame;
+        var memory_game = new MemoryGame();
         $("#memory #tiles .tile").on("click", function () {
             memory_game.selectTile($(this));
         });
@@ -150,7 +150,7 @@ var MemoryGame = function(){
 
 
 $(document).ready(function () {
-    var memory_game = new MemoryGame;
+    var memory_game = new MemoryGame();
     
     $("#memory #tiles .tile").on("click", function () {
         memory_game.selectTile($(this));
