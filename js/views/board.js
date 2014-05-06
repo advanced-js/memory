@@ -65,13 +65,12 @@ app.BoardView = Backbone.View.extend({
         this.checkGameStatus();
     },
 
+    allTilesResolved: function() {
+        return this.collection.resolvedCount() === this.collection.totalCount()
+    },
+
     checkGameStatus: function() {
-        console.log( 'checking game status' );
-        var unresolvedTiles = this.collection.where({
-            resolved: false
-        });
-        console.log ( unresolvedTiles.length + ' to go' );
-        if ( unresolvedTiles.length === 0 ) {
+        if ( this.allTilesResolved() ) {
             this.endGame();
         }
     },
