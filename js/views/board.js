@@ -32,10 +32,14 @@ app.BoardView = Backbone.View.extend({
         this.$el.append( tileView.render().el );
     },
 
+    flip: function( tile ) {
+        tile.toggleFlip();
+    },
+
     tileSelection: function( tile ) {
         var selectedTiles;
         if ( tile.isAvailable() ) {
-            tile.toggleFlip();
+            this.flip( tile );
             selectedTiles = this.collection.getSelected();
             if ( selectedTiles.length === 2 ) {
                 this.handleTurn( selectedTiles );
@@ -58,11 +62,7 @@ app.BoardView = Backbone.View.extend({
     },
 
     handleUnsuccessfulMatch: function( tiles ) {
-        function flipBack( tile ) {
-            tile.toggleFlip();
-        }
-
-        _.each( tiles, flipBack );
+        _.each( tiles, this.flip );
     },
 
     handleTurn: function( tiles ) {
