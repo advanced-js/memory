@@ -46,24 +46,6 @@ app.BoardView = Backbone.View.extend({
         }
     },
 
-    areMatch: function( tiles ) {
-        var a = tiles[0],
-            b = tiles[1];
-        return a.get( 'value' ) === b.get( 'value' );
-    },
-
-    resolve: function( tiles ) {
-        _.each( tiles, function( tile ) {
-            tile.set( 'resolved', true );
-        });
-    },
-
-    flipBack: function( tiles ) {
-        _.each( tiles, function( tile ) {
-            tile.toggleFlip();
-        });
-    },
-
     handleTurn: function( tiles ) {
 
         function areMatch( tiles ) {
@@ -89,6 +71,7 @@ app.BoardView = Backbone.View.extend({
         } else {
             flipBack( tiles );
         }
+        
         this.checkGameStatus();
     },
 
