@@ -43,30 +43,34 @@ app.BoardView = Backbone.View.extend({
         }
     },
 
+     areMatch: function( tiles ) {
+        var a = tiles[0],
+            b = tiles[1];
+        return a.get( 'value' ) === b.get( 'value' );
+    },
+ 
+    handleSuccessfulMatch: function( tiles ) {
+        function markAsResolved( tile ) {
+            tile.set( 'resolved', true );
+        }
+
+        _.each( tiles, markAsResolved ); 
+    },
+
+    handleUnsuccessfulMatch: function( tiles ) {
+        function flipBack( tile ) {
+            tile.toggleFlip();
+        }
+
+        _.each( tiles, flipBack );
+    },
+
     handleTurn: function( tiles ) {
 
-        function areMatch( tiles ) {
-            var a = tiles[0],
-                b = tiles[1];
-            return a.get( 'value' ) === b.get( 'value' );
-        }
-
-        function flipBack( tiles ) {
-            _.each( tiles, function( tile ) {
-                tile.toggleFlip();
-            });
-        }
-
-        function resolve( tiles ) {
-            _.each( tiles, function( tile ) {
-                tile.set( 'resolved', true );
-            });
-        }
-
-        if ( areMatch( tiles ) ){
-            resolve( tiles );
+        if ( this.areMatch( tiles ) ) {
+            this.handleSuccessfulMatch( tiles );
         } else {
-            flipBack( tiles );
+            this.handleUnsuccessfulMatch( tiles );
         }
         
         this.checkGameStatus();
