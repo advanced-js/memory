@@ -12,7 +12,10 @@ app.TileView = Backbone.View.extend({
 
     events: {
         'click': function() {
-            app.gameController.trigger( 'tileSelection', this.model );
+            var tile = this.model;
+            if ( tile.isAvailable() ) {
+                tile.trigger( 'selected', tile );
+            }
         }
     },
 

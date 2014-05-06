@@ -3,8 +3,6 @@ var app = app || {};
 $(function() {
     var tileValues = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' ];
 
-    app.gameController = _.extend( {}, Backbone.Events );
-
     app.generateTiles = function( tileValues ) {
         var tiles = [];
         // For each tileValue, create 2 tile models

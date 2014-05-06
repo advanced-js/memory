@@ -5,8 +5,7 @@ app.BoardView = Backbone.View.extend({
 
     initialize: function( options ) {
         this.collection = new app.Tiles( options.initialTiles );
-        _.bindAll( this, 'tileSelection' );
-        app.gameController.bind( 'tileSelection', this.tileSelection );
+        this.listenTo( this.collection, 'selected', this.tileSelection );
         this.render();
     },
 
@@ -38,12 +37,10 @@ app.BoardView = Backbone.View.extend({
 
     tileSelection: function( tile ) {
         var selectedTiles;
-        if ( tile.isAvailable() ) {
-            this.flip( tile );
-            selectedTiles = this.collection.getSelected();
-            if ( selectedTiles.length === 2 ) {
-                this.handleTurn( selectedTiles );
-            }
+        this.flip( tile );
+        selectedTiles = this.collection.getSelected();
+        if ( selectedTiles.length === 2 ) {
+            this.handleTurn( selectedTiles );
         }
     },
 
