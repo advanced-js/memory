@@ -66,7 +66,7 @@ app.BoardView = Backbone.View.extend({
     },
 
     allTilesResolved: function() {
-        return this.collection.resolvedCount() === this.collection.totalCount()
+        return this.collection.resolvedCount() === this.collection.totalCount();
     },
 
     checkGameStatus: function() {
