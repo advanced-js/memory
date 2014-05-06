@@ -34,12 +34,9 @@ app.BoardView = Backbone.View.extend({
 
     tileSelection: function( tile ) {
         var selectedTiles;
-        if ( ! ( tile.get( 'flipped' ) || tile.get( 'resolved' ))) {
+        if ( tile.isAvailable() ) {
             tile.toggleFlip();
-            selectedTiles = this.collection.where({
-                flipped: true,
-                resolved: false
-            });
+            selectedTiles = this.collection.getSelected();
             if ( selectedTiles.length === 2 ) {
                 this.handleTurn( selectedTiles );
             }
