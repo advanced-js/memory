@@ -4,30 +4,32 @@ app.BoardView = Backbone.View.extend({
     el: '#board',
 
     initialize: function( options ) {
-        this.collection = new app.Tiles( options.initialTiles );
-        this.listenTo( this.collection, 'selected', this.tileSelection );
+        this.tilesCollection = new app.Tiles( options.initialTiles );
         this.render();
+        this.listenTo( this.tilesCollection, 'selected', this.tileSelection );
     },
 
-    // render tiles by rendering each tile in its collection
     render: function() {
-        var items = [];
-        this.collection.each(function( item ) {
-            items.push( item );
+        var shuffledTiles = [],
+            tilesArray = [];
+
+        this.tilesCollection.each( function( tile ) {
+            tilesArray.push( tile );
         });
 
         // put the tiles in random order
-        items = _.shuffle( items );
+        shuffledTiles = _.shuffle( tilesArray );
 
-        _.each( items, function( item ) {
-            this.renderTile( item );
+        _.each( shuffledTiles, function( tile ) {
+            this.renderTile( tile );
         }, this );
     },
 
-    renderTile: function( item ) {
+    renderTile: function( tile ) {
         var tileView = new app.TileView({
-            model: item
+            model: tile
         });
+
         this.$el.append( tileView.render().el );
     },
 
@@ -38,7 +40,7 @@ app.BoardView = Backbone.View.extend({
     tileSelection: function( tile ) {
         var selectedTiles;
         this.flip( tile );
-        selectedTiles = this.collection.getSelected();
+        selectedTiles = this.tilesCollection.getSelected();
         if ( selectedTiles.length === 2 ) {
             this.handleTurn( selectedTiles );
         }
@@ -74,7 +76,7 @@ app.BoardView = Backbone.View.extend({
     },
 
     allTilesResolved: function() {
-        return this.collection.resolvedCount() === this.collection.totalCount();
+        return this.tilesCollection.resolvedCount() === this.tilesCollection.totalCount();
     },
 
     checkGameStatus: function() {

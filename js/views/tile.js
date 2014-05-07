@@ -20,20 +20,18 @@ app.TileView = Backbone.View.extend({
     },
 
     render: function() {
-        console.log( 'render in TileView called');
-        // this.el defined in tagName; use $el to access jQuery html() function
         this.$el.html( this.template( this.model.toJSON() ) );
         return this;
     },
 
     renderFlip: function() {
-        console.log( 'renderFlip in TileView called');
         this.$el.find( '.cover' ).fadeToggle( 150 );
+        return this;
     },
 
     renderResolved: function() {
-        console.log( 'do something to mark tiles as resolved' );
         this.$el.addClass( 'resolved' );
+        return this;
     }
 
 
