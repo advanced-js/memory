@@ -39,7 +39,9 @@ app.BoardView = Backbone.View.extend({
 
     tileSelection: function( tile ) {
         var selectedTiles;
-        app.game.isStarted() || app.game.start();
+        if ( ! app.game.isStarted() ) {
+            app.game.start();
+        }
         this.flip( tile );
         selectedTiles = this.tilesCollection.getSelected();
         if ( selectedTiles.length === 2 ) {
