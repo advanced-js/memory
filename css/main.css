@@ -2,10 +2,20 @@ body {
     background-color: #f5f5f5;
     padding: 1em 1.5em 1.5em;
 }
-#board {
+#board,
+#messageDisplay {
     margin: 0 auto;
     max-width: 36em;
     overflow: hidden;
+}
+
+#messageDisplay div {
+    font-size: 2em;
+    margin: 1%;
+    padding: .5em 20%;
+    text-align: center;
+    background-color: #ffffff;
+    color: #8ba1cc;
 }
 .tileContainer {
     float: left;

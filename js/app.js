@@ -16,7 +16,9 @@ $(function() {
         return tiles;
     };
 
-    new app.BoardView({
+    app.board = new app.BoardView({
         initialTiles: app.generateTiles( tileValues )
     });
+
+    app.messageDisplay = new app.MessageDisplayView();
 });

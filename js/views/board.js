@@ -86,7 +86,7 @@ app.BoardView = Backbone.View.extend({
     },
 
     endGame: function() {
-        console.log( 'you win!' );
+        app.messageDisplay.displayMessage( 'You win!' );
     }
 
 });
