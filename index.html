@@ -5,8 +5,10 @@
     <link href="css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="board"></div>
-    <div id="messageDisplay"></div>
+    <div id="game">
+        <div id="board"></div>
+        <div id="messageDisplay"></div>
+    </div>
     <script id="tileTemplate" type="text/template">
         <div class="cover">*</div>
         <div class="tile"><%= value %></div>
@@ -19,11 +21,13 @@
     <script src="js/lib/backbone-min.js"></script>
     <script src="js/models/tile.js"></script>
     <script src="js/models/message.js"></script>
+    <script src="js/models/game.js"></script>
     <script src="js/collections/tiles.js"></script>
     <script src="js/views/tile.js"></script>
     <script src="js/views/board.js"></script>
     <script src="js/views/message.js"></script>
     <script src="js/views/message_display.js"></script>
+    <script src="js/views/game.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

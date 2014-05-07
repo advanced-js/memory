@@ -10,11 +10,10 @@ body {
 }
 
 #messageDisplay div {
-    font-size: 2em;
+    font-size: 1.5em;
     margin: 1%;
     padding: .5em 20%;
     text-align: center;
-    background-color: #ffffff;
     color: #8ba1cc;
 }
 .tileContainer {
@@ -34,7 +33,6 @@ body {
 .tile {
     color: #454545;
     background-color: #add4cc;
-    border-top: 1px solid #badfcf;
 }
 .cover {
     position: absolute;
@@ -42,7 +40,6 @@ body {
     left: 0;
     background-color: #99b0da;
     color: #8ba1cc;
-    border-bottom: 1px solid #8ba1cc;
 }
 .resolved div {
     background-color: #b9b6da;

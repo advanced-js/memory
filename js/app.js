@@ -16,9 +16,9 @@ $(function() {
         return tiles;
     };
 
-    app.board = new app.BoardView({
-        initialTiles: app.generateTiles( tileValues )
-    });
-
+    app.tiles = new app.Tiles( app.generateTiles( tileValues ) );
+    app.game = new app.Game();
+    app.gameView = new app.GameView();
     app.messageDisplay = new app.MessageDisplayView();
+    app.board = new app.BoardView();
 });
