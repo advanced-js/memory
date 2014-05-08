@@ -19,6 +19,6 @@ $(function() {
     app.tiles = new app.Tiles( app.generateTiles( tileValues ) );
     app.game = new app.Game();
     app.gameView = new app.GameView();
-    app.messageDisplay = new app.MessageDisplayView();
+    app.messages = new app.MessageView();
     app.board = new app.BoardView();
 });
