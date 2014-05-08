@@ -1,6 +1,6 @@
 var app = app || {};
 
-app.Tile = Backbone.Model.extend({
+app.TileModel = Backbone.Model.extend({
     defaults: {
         value: '',
         resolved: false,

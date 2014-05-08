@@ -4,7 +4,7 @@ app.BoardView = Backbone.View.extend({
     el: '#board',
 
     initialize: function( options ) {
-        this.tilesCollection = app.tiles;
+        this.tilesCollection = app.tilesCollection;
         this.render();
         this.listenTo( this.tilesCollection, 'selected', this.tileSelection );
     },
@@ -87,7 +87,7 @@ app.BoardView = Backbone.View.extend({
     },
 
     endGame: function() {
-        app.game.set( 'ended', true );
+        app.gameModel.end();
     }
 
 });

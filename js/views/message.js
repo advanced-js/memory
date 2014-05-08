@@ -11,8 +11,8 @@ app.MessageView = Backbone.View.extend({
 
     initialize: function( options ) {
         this.displayWelcome();
-        this.listenToOnce( app.game, 'change:started', this.removeMessage );
-        this.listenToOnce( app.game, 'change:ended', this.displayWin );
+        this.listenToOnce( app.gameModel, 'change:started', this.removeMessage );
+        this.listenToOnce( app.gameModel, 'change:ended', this.displayWin );
     },
 
     displayWelcome: function() {

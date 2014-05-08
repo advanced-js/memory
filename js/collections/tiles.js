@@ -1,8 +1,8 @@
 var app = app || {};
 
-app.Tiles = Backbone.Collection.extend({
+app.TilesCollection = Backbone.Collection.extend({
 
-    model: app.Tile,
+    model: app.TileModel,
 
     flippedCount: function() {
         var flippedTiles = this.where({ flipped: true });

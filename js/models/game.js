@@ -1,6 +1,6 @@
 var app = app || {};
 
-app.Game = Backbone.Model.extend({
+app.GameModel = Backbone.Model.extend({
     defaults: {
         started: false,
         ended: false,

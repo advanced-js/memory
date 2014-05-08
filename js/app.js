@@ -1,6 +1,6 @@
 var app = app || {};
 
-$(function() {
+$( function() {
     var tileValues = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' ];
 
     app.generateTiles = function( tileValues ) {
@@ -8,7 +8,7 @@ $(function() {
         // For each tileValue, create 2 tile models
         for ( var i = 0, l = tileValues.length; i < l; i += 1 ){
             for ( var j = 0; j < 2; j += 1 ) {
-                tiles.push( new app.Tile({
+                tiles.push( new app.TileModel({
                     value: tileValues[ i ]
                 }));
             }
@@ -16,9 +16,9 @@ $(function() {
         return tiles;
     };
 
-    app.tiles = new app.Tiles( app.generateTiles( tileValues ) );
-    app.game = new app.Game();
+    app.tilesCollection = new app.TilesCollection( app.generateTiles( tileValues ) );
+    app.gameModel = new app.GameModel();
     app.gameView = new app.GameView();
-    app.messages = new app.MessageView();
-    app.board = new app.BoardView();
+    app.messageView = new app.MessageView();
+    app.boardView = new app.BoardView();
 });
