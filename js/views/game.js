@@ -4,9 +4,11 @@ app.GameView = Backbone.View.extend({
     el: '#game',
 
     initialize: function( options ) {
+        this.listenToOnce( app.tiles, 'selected', this.startGame );
     },
 
-    render: function() {
+    startGame: function() {
+        app.game.start();
     }
 
 });
