@@ -29,7 +29,9 @@ app.MessageView = Backbone.View.extend({
 
     displayMessage: function( message ) {
         this.removeMessage();
-        this.$el.html( this.template( message ) );
+        this.$el.html( this.template({
+            content: message
+        }));
     }
 
 });

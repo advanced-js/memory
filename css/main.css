@@ -3,13 +3,13 @@ body {
     padding: 1em 1.5em 1.5em;
 }
 #board,
-#messageDisplay {
+#messages {
     margin: 0 auto;
     max-width: 36em;
     overflow: hidden;
 }
 
-#messageDisplay div {
+#messages p {
     font-size: 1.5em;
     margin: 1%;
     padding: .5em 20%;
