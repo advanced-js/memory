@@ -5,6 +5,7 @@ app.GameView = Backbone.View.extend({
 
     initialize: function( options ) {
         this.listenForStart();
+        this.listenTo( app.restart, 'restart', this.handleRestart );
     },
 
     listenForStart: function() {
@@ -13,6 +14,11 @@ app.GameView = Backbone.View.extend({
 
     startGame: function() {
         app.gameModel.start();
+    },
+
+    handleRestart: function() {
+        app.gameModel.restart();
+        this.listenForStart();
     }
 
 });

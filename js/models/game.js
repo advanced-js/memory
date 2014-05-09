@@ -17,5 +17,10 @@ app.GameModel = Backbone.Model.extend({
 
     completeGame: function() {
         this.set( 'completed', true );
+    },
+
+    restart: function() {
+        this.set( 'started', false );
+        this.set( 'completed', false );
     }
 });

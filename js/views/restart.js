@@ -5,12 +5,12 @@ app.RestartView = Backbone.View.extend({
 
     events: {
         'click': function() {
-            this.restart();
+            this.handleRestart();
         }
     },
 
-    restart: function() {
-        app.gameModel.trigger( 'restart' );
+    handleRestart: function() {
+        this.trigger( 'restart' );
     }
 
 });

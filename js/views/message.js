@@ -12,9 +12,18 @@ app.MessageView = Backbone.View.extend({
 
     initialize: function( options ) {
         this.displayWelcome();
-        this.listenTo( app.gameModel, 'change:started', this.removeMessage );
+        this.listenTo( app.gameModel, 'change:started', this.handleStart );
         this.listenTo( app.gameModel, 'change:completed', this.displayCompleted );
-        this.listenTo( app.gameModel, 'restart', this.displayRestart );
+        this.listenTo( app.restart, 'restart', this.displayRestart );
+        this.listenTo( app.restart, 'foo', function() {
+            console.log( 'foo' );
+        });
+    },
+
+    handleStart: function( game ) {
+        if ( game.isStarted() ) {
+            this.removeMessage();
+        }
     },
 
     displayWelcome: function() {
@@ -29,7 +38,7 @@ app.MessageView = Backbone.View.extend({
         this.renderMessage( this.messages.restart );
     },
 
-    removeMessage: function() {
+    removeMessage: function( ) {
         this.$el.empty();
         return this;
     },

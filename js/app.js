@@ -17,9 +17,9 @@ $( function() {
     };
 
     app.tilesCollection = new app.TilesCollection( app.generateTiles( tileValues ) );
+    app.restart = new app.RestartView();
     app.gameModel = new app.GameModel();
     app.gameView = new app.GameView();
     app.messageView = new app.MessageView();
     app.boardView = new app.BoardView();
-    app.restart = new app.RestartView();
 });

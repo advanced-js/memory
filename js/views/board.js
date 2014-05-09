@@ -7,7 +7,7 @@ app.BoardView = Backbone.View.extend({
         this.tilesCollection = app.tilesCollection;
         this.render();
         this.listenTo( this.tilesCollection, 'selected', this.tileSelection );
-        this.listenTo( app.gameModel, 'restart', this.reset );
+        this.listenTo( app.restart, 'restart', this.reset );
     },
 
     getShuffledItems: function( collection ) {
