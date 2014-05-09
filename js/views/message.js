@@ -15,9 +15,6 @@ app.MessageView = Backbone.View.extend({
         this.listenTo( app.gameModel, 'change:started', this.handleStart );
         this.listenTo( app.gameModel, 'change:completed', this.displayCompleted );
         this.listenTo( app.restart, 'restart', this.displayRestart );
-        this.listenTo( app.restart, 'foo', function() {
-            console.log( 'foo' );
-        });
     },
 
     handleStart: function( game ) {
