@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Memory exercise</title>
-    <script src="memory.js"></script>
-  </head>
-  <body>
-  </body>
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="game">
+        <div id="board"></div>
+        <div><button id="restart">Restart</button></div>
+        <div id="messages"></div>
+    </div>
+    <script id="tileTemplate" type="text/template">
+        <div class="cover">*</div>
+        <div class="tile"><%= value %></div>
+    </script>
+    <script id="messageTemplate" type="text/template">
+        <p><%= content %></p>
+    </script>
+    <script src="js/lib/jquery-1.11.0.min.js"></script>
+    <script src="js/lib/underscore-min.js"></script>
+    <script src="js/lib/backbone-min.js"></script>
+    <script src="js/models/tile.js"></script>
+    <script src="js/models/game.js"></script>
+    <script src="js/collections/tiles.js"></script>
+    <script src="js/views/tile.js"></script>
+    <script src="js/views/board.js"></script>
+    <script src="js/views/message.js"></script>
+    <script src="js/views/game.js"></script>
+    <script src="js/views/restart.js"></script>
+    <script src="js/app.js"></script>
+</body>
 </html>

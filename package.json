@@ -1,5 +1,6 @@
 {
   "name": "memory",
+  "version": "0.1.0",
   "description": "memory() exercise",
   "scripts": {
     "test": "grunt"
@@ -13,8 +14,8 @@
   },
   "homepage": "https://github.com/advanced-js/memory",
   "devDependencies": {
-    "grunt": "^0.4.4",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-html-validation": "^0.1.15"
+    "grunt": "~0.4.4",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-html-validation": "~0.1.15"
   }
 }
