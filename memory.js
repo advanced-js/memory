@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var table = $('#container');
-    var boxNum = 18;
+    var numberOfBoxes = 18;
     var boxSize = 100;
     var enterNum = $("#enterNum");
     var enterSize = $("#enterSize");
@@ -11,7 +11,9 @@ $(document).ready(function() {
     var clickCount = 0;
     var allClicks = 0;
     var matchCount = 0;
+    var run = false;
 
+    // Shuffle function from here: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     Array.prototype.shuffle = function() {
       var i = this.length, j, temp;
       if (i === 0) { return this; }
@@ -24,69 +26,77 @@ $(document).ready(function() {
       return this;
     };
 
-    function loadArr(loader){
-    	for(var i = 0; i < boxNum / 2; i += 1) {
-    	currentArr.push(loader[i]);
-    	currentArr.push(loader[i]);
-    	}
-    }
-
     var Card = function(size,id) {
         this.size = size;
         this.id = id;
-        this.$el = $('<div id="'+id+'" style="width:' + size +'px; line-height:'+ size +'px; height:' + size + 'px;"><figure class="front"></figure><figure class="back">' + id + '</figure></div>');
+        this.$el = $('<div id="' + id + '" style="width:' + size + 'px; line-height:' + size + 'px; height:' + size + 'px;">' +
+                    '<figure class="front"></figure>' +
+                    '<figure class="back">' + id + '</figure>' +
+                    '</div>');
+        this.$el.bind('click', this.flipCard);
     };
 
     Card.prototype.flipCard = function() {
-        this.$el.click(function() {
-            if (!$(this).hasClass('show')) {
-                $(this).toggleClass('show');
-                clickCount++;
-                allClicks++;
-                $('#score').html(allClicks);
-                matchArr.push(this);
-            if (clickCount > 1) {
-                if (matchArr[0].id === matchArr[1].id) {
-                    clickCount = 0;
-                    matchArr=[];
-                    matchCount++;
-                    if(matchCount === boxNum / 2){
-                        alert("You Win!");
-                    }
-                    return;
-                }
-                if (matchArr[0].id !== matchArr[1].id) {
-                    var tempCard = matchArr[0];
-                    var tempCard1 = matchArr[1];
-                    setTimeout(function() {
-                        $(tempCard).removeClass('show');
-                        $(tempCard1).removeClass('show');
-                        },800);
-                    clickCount = 0;
-                    matchArr=[];
-                    }
-                }
-            }
-        });
+        if (run && !$(this).hasClass('show')) {
+            $(this).toggleClass('show');
+            clickCount++;
+            allClicks++;
+            $('#score').html(allClicks);
+            matchArr.push(this);
+        }
+        if (clickCount > 1 && matchArr[0].id === matchArr[1].id) {
+            cardMatch();
+            checkForWin();
+        } else if (clickCount > 1 && matchArr[0].id !== matchArr[1].id) {
+            noMatch();
+        }
     };
 
-    function createCards() {
+    function cardMatch() {
+        clickCount = 0;
+        matchArr=[];
+        matchCount++;
+    }
+
+    function noMatch() {
+        var tempCard = matchArr[0];
+        var tempCard1 = matchArr[1];
+        setTimeout(function() {
+            $(tempCard).removeClass('show');
+            $(tempCard1).removeClass('show');
+            },675);
+        clickCount = 0;
+        matchArr=[];
+    }
+
+    function checkForWin() {
+        if(matchCount === numberOfBoxes / 2) {
+            alert("You Win!");
+        }
+    }
+
+    function createCards(loader) {
+        for(var i = 0; i < numberOfBoxes / 2; i += 1) {
+            currentArr.push(loader[i]);
+            currentArr.push(loader[i]);
+        }
         var cards = [];
-        for (var i = 0; i < boxNum; i += 1) {
-            cards[i] = new Card(boxSize,currentArr[i]);
+        for (var j = 0; j < numberOfBoxes; j += 1) {
+            cards[j] = new Card(boxSize,currentArr[j]);
         }
         return cards.shuffle();
     }
 
     function reBuild(){
+        run = false;
+        matchCount = 0;
         allClicks = 0;
         $('#score').html(allClicks);
         boxSize = $('#enterSize').val();
-        boxNum = $('#enterNum').val();
+        numberOfBoxes = $('#enterNum').val();
         defaultVal($(enterNum));
         defaultVal($(enterSize));
-        loadArr(cardArr.shuffle());
-        create = createCards();
+        create = createCards(cardArr.shuffle());
         parseCards(create);
     }
 
@@ -103,7 +113,7 @@ $(document).ready(function() {
         });
     }
 
-    $(enterNum).on("change", function() {
+    $(enterNum).on("change", function minMaxCardNum() {
         var val = Math.abs(parseInt(this.value, 10) || 1);
         if (val > 26 ){
             val = 26;
@@ -119,7 +129,7 @@ $(document).ready(function() {
         }
     });
 
-    $(enterSize).on("change", function() {
+    $(enterSize).on("change", function minMaxCardSize() {
         var val = Math.abs(parseInt(this.value, 10) || 1);
         if ( val > 100){
             val = 100;
@@ -132,16 +142,12 @@ $(document).ready(function() {
         }
     });
 
-    $("#btn").click(function() {
+    $("#btn").click(function resetButton() {
         $('#container div').remove();
         setTimeout(function() {
             reBuild();
         },500);
     });
-
-    loadArr(cardArr.shuffle());
-    var create = createCards();
-    parseCards(create);
 
     function parseCards(split){
         var splitCard = split;
@@ -154,6 +160,9 @@ $(document).ready(function() {
             $(table).append(splitCard[i].$el);
             splitCard[i].flipCard();
         }
+        run = true;
     }
+
+    parseCards(createCards(cardArr.shuffle()));
 
 });
