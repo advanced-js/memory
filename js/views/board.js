@@ -33,6 +33,12 @@ app.BoardView = Backbone.View.extend({
         this.$el.append( tileView.render().el );
     },
 
+    reset: function() {
+        this.$el.empty();
+        this.tilesCollection.resetTiles();
+        this.render();        
+    },
+
     flip: function( tile ) {
         tile.toggleFlip();
     },

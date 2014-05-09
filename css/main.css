@@ -2,18 +2,28 @@ body {
     background-color: #f5f5f5;
     padding: 1em 1.5em 1.5em;
 }
-#board,
-#messages {
+#game > div {
     margin: 0 auto;
     max-width: 36em;
     overflow: hidden;
+    text-align: center;
+}
+
+button {
+    font-size: .8em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background-color: #dedede;
+    color: #888;
+    border: none;
+    padding: .5em 1em;
+    margin: 2.5em auto;
 }
 
 #messages p {
+    margin: 0;
     font-size: 1.5em;
-    margin: 1%;
-    padding: .5em 20%;
-    text-align: center;
+    padding: 0 20%;
     color: #8ba1cc;
 }
 .tileContainer {

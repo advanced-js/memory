@@ -21,4 +21,5 @@ $( function() {
     app.gameView = new app.GameView();
     app.messageView = new app.MessageView();
     app.boardView = new app.BoardView();
+    app.restart = new app.RestartView();
 });

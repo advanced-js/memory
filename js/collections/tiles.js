@@ -23,5 +23,12 @@ app.TilesCollection = Backbone.Collection.extend({
 
     totalCount: function() {
         return this.length;
+    },
+
+    resetTiles: function() {
+        console.log( 'tiles collection reset' );
+        _.each(this.models, function( model ) {
+            model.reset();
+        });
     }
 });
