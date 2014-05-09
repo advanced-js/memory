@@ -3,7 +3,7 @@ var app = app || {};
 app.GameModel = Backbone.Model.extend({
     defaults: {
         started: false,
-        ended: false,
+        completed: false,
         turns: 0
     },
 
@@ -15,7 +15,7 @@ app.GameModel = Backbone.Model.extend({
         this.set( 'started', true );
     },
 
-    end: function() {
-        this.set( 'ended', true );
+    completeGame: function() {
+        this.set( 'completed', true );
     }
 });

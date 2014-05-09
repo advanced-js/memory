@@ -5,23 +5,30 @@ app.MessageView = Backbone.View.extend({
     template: _.template( $( '#messageTemplate' ).html() ),
 
     messages: {
-        welcome: 'Welcome to memory. Select a tile to get started',
-        win: 'You win!'
+        completed: 'You matched all the tiles!',
+        restart: 'Select a tile to get started.',
+        welcome: 'Welcome to memory, select a tile to get started.'
     },
 
     initialize: function( options ) {
         this.displayWelcome();
-        this.listenToOnce( app.gameModel, 'change:started', this.removeMessage );
-        this.listenToOnce( app.gameModel, 'change:ended', this.displayWin );
+        this.listenTo( app.gameModel, 'change:started', this.removeMessage );
+        this.listenTo( app.gameModel, 'change:completed', this.displayCompleted );
+        this.listenTo( app.gameModel, 'restart', this.displayRestart );
     },
 
     displayWelcome: function() {
         this.displayMessage( this.messages.welcome );
     },
 
-    displayWin: function() {
-        this.displayMessage( this.messages.win );
+    displayCompleted: function() {
+        this.displayMessage( this.messages.completed );
     },
+
+    displayRestart: function() {
+        this.displayMessage( this.messages.restart );
+    },
+
 
     removeMessage: function() {
         this.$el.empty();

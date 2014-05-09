@@ -7,6 +7,7 @@ app.BoardView = Backbone.View.extend({
         this.tilesCollection = app.tilesCollection;
         this.render();
         this.listenTo( this.tilesCollection, 'selected', this.tileSelection );
+        this.listenTo( app.gameModel, 'restart', this.reset );
     },
 
     render: function() {
@@ -88,12 +89,12 @@ app.BoardView = Backbone.View.extend({
 
     checkGameStatus: function() {
         if ( this.allTilesResolved() ) {
-            this.endGame();
+            this.completeGame();
         }
     },
 
-    endGame: function() {
-        app.gameModel.end();
+    completeGame: function() {
+        app.gameModel.completeGame();
     }
 
 });
