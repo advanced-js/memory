@@ -18,7 +18,6 @@ app.TileModel = Backbone.Model.extend({
     },
 
     reset: function() {
-        console.log( 'tile reset called' );
         this.set( 'resolved', false );
         this.set( 'flipped', false );
     }

@@ -10,16 +10,18 @@ app.BoardView = Backbone.View.extend({
         this.listenTo( app.gameModel, 'restart', this.reset );
     },
 
-    render: function() {
-        var shuffledTiles = [],
-            tilesArray = [];
+    getShuffledItems: function( collection ) {
+        var itemsArray = [];
 
-        this.tilesCollection.each( function( tile ) {
-            tilesArray.push( tile );
+        collection.each( function( item ) {
+            itemsArray.push( item );
         });
 
-        // put the tiles in random order
-        shuffledTiles = _.shuffle( tilesArray );
+        return _.shuffle( itemsArray );
+    },
+
+    render: function() {
+        var shuffledTiles = this.getShuffledItems( this.tilesCollection );
 
         _.each( shuffledTiles, function( tile ) {
             this.renderTile( tile );
@@ -73,7 +75,6 @@ app.BoardView = Backbone.View.extend({
     },
 
     handleTurn: function( tiles ) {
-
         if ( this.areMatch( tiles ) ) {
             this.handleSuccessfulMatch( tiles );
         } else {

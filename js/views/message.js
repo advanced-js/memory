@@ -18,27 +18,28 @@ app.MessageView = Backbone.View.extend({
     },
 
     displayWelcome: function() {
-        this.displayMessage( this.messages.welcome );
+        this.renderMessage( this.messages.welcome );
     },
 
     displayCompleted: function() {
-        this.displayMessage( this.messages.completed );
+        this.renderMessage( this.messages.completed );
     },
 
     displayRestart: function() {
-        this.displayMessage( this.messages.restart );
+        this.renderMessage( this.messages.restart );
     },
-
 
     removeMessage: function() {
         this.$el.empty();
+        return this;
     },
 
-    displayMessage: function( message ) {
+    renderMessage: function( message ) {
         this.removeMessage();
         this.$el.html( this.template({
             content: message
         }));
+        return this;
     }
 
 });
