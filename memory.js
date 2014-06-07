@@ -1,16 +1,20 @@
 // YOUR CODE GOES HERE
 
-
 $(document).ready(function() {
 
 	var selectedCells = [];
-	var $cells = $('.hidden');
+	var $cells = $('#grid td');		//console.log($cells.length);
 
-	$('table').on('click', '.not-found', function () {
+	$('#grid').on('click', '.not-found', doTDClick);
+
+
+	function doTDClick() {
+		// $(this) is the <td>		console.log("id="+$(this).attr('id'));
 		var $span = $(this).find('span');
 		$span.removeClass('hidden');
 		$(this).removeClass('not-found');
-		selectedCells.push($span);
+		selectedCells.push($(this));
+		console.log("selectedCells...");
 		console.log(selectedCells);
 
 		if (selectedCells.length === 2) {
@@ -19,47 +23,35 @@ $(document).ready(function() {
 				selectedCells[0].addClass('found');
 				selectedCells[1].addClass('found');
 				selectedCells = [];
+				if (isGameOver()) {alert("WIN!"); document.location.reload();}
 			} else {
+				console.log("BOO");
+				$('#grid').off('click', '.not-found', doTDClick);		//no clicking allowed until 1000mx	//OFF
 				setTimeout(function () {
 					for (var i = 0; i < selectedCells.length; i++) {
-						selectedCells[i].addClass('hidden');
-						selectedCells[i].parent().addClass('not-found');
+						selectedCells[i].find('span').addClass('hidden');
+						selectedCells[i].addClass('not-found');
 						console.log(i);
 					}
 					selectedCells = [];
+					$('#grid').on('click', '.not-found', doTDClick);	//clicking allowed again	//ON
+					//isGameOver();	duh, no need
 				}, 1000);
 			}
-		}
-		console.log(isGameOver());
-	});
-
-	function isGameOver() {
-		var bool=true
-		var $cells = $('#grid tr td');
-		
-		//console.log($($cells[0]).hasClass('found'));
-		
-		for (var i=0; i<$cells.length; i++) {
-			if (!$($cells[i]).hasClass('found')) {
-				bool = false;
-			}
-			//console.log($($cells[i]).hasClass('found'));
-		}
-
-		return bool;
+		}		
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
+	function isGameOver() {		//console.log("isGameOver...");
+		var found_cntr = 0;
+		for (var i=0; i<$cells.length; i++) {
+			//console.log($cells[i]);
+			//console.log($($cells[i]));
+			//console.log($cells[i].hasClass('found'));			//Uncaught TypeError: undefined is not a function 
+			//console.log($($cells[i]).hasClass('found'));		//hmmm... why is $() necessary?
+			if ( $($cells[i]).hasClass('found') ) {found_cntr++;}
+		}
+		if (found_cntr === $cells.length) {return true;}
+		return false;
+	}
 
 });

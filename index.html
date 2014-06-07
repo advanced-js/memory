@@ -8,28 +8,40 @@
 
   <style>
 
+    body  {
+    }
+
   	.found {
-  		color: red;
+  		color: green;
+      font-weight: bold;
   	}
 
   	.hidden {
   		visibility: hidden;
   	}
 
-  	table, td {
+    #grid {
+      border: solid 1px black;
+      margin: 20px auto;
+      
+    }
+  	#grid td {
   		border: solid 1px black;
+      font-size: 400%;
+      padding: 10px 20px
   	}
+
   </style>
 
 
   <table id="grid">
   	<tr>
-  		<td class="not-found"><span class="hidden">A</span></td>
-  		<td class="not-found"><span class="hidden">B</span></td>
+  		<td id="td_1_1" class="not-found"><span id="cell_1_1" class="hidden">A</span></td>
+  		<td id="td_1_2" class="not-found"><span id="cell_1_2" class="hidden">B</span></td>
   	</tr>
   	<tr>
-  		<td class="not-found"><span class="hidden">A</span></td>
-  		<td class="not-found"><span class="hidden">B</span></td>
+  		<td id="td_2_1" class="not-found"><span id="cell_2_1" class="hidden">A</span></td>
+  		<td id="td_2_2" class="not-found"><span id="cell_2_2" class="hidden">B</span></td>
   	</tr>
   </table>
 
