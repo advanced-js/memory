@@ -2,8 +2,37 @@
 <html>
   <head>
     <title>Memory exercise</title>
-    <script src="memory.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   </head>
   <body>
+
+  <style>
+
+  	.found {
+  		color: red;
+  	}
+
+  	.hidden {
+  		visibility: hidden;
+  	}
+
+  	table, td {
+  		border: solid 1px black;
+  	}
+  </style>
+
+
+  <table id="grid">
+  	<tr>
+  		<td class="not-found"><span class="hidden">A</span></td>
+  		<td class="not-found"><span class="hidden">B</span></td>
+  	</tr>
+  	<tr>
+  		<td class="not-found"><span class="hidden">A</span></td>
+  		<td class="not-found"><span class="hidden">B</span></td>
+  	</tr>
+  </table>
+
+  <script src="memory.js"></script>
   </body>
 </html>
