@@ -17,6 +17,9 @@ http://www.zefrank.com/memory/
 
 * Finish independently
 * If you were using the other person's repository, **make a fork from theirs** and then submit a pull request back to the original repository using this URL: `https://github.com/YOUR_USERNAME/countdown/compare/advanced-js:gh-pages...gh-pages`
+
+## V3
+
 * Refactor to use OOP (Views, maybe Models, etc).
 
 ## Bonus points
