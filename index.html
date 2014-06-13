@@ -1,50 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-  </head>
-  <body>
+    <head>
+        <title>Memory exercise</title>
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script data-main="js/main" src="js/require.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    </head>
 
-  <style>
+    <body>
 
-    body  {
-    }
+        <div id="wrapper">
+            <h1>Memory!</h1>
 
-  	.found {
-  		color: green;
-      font-weight: bold;
-  	}
+            <p>What size board would you like?</p>
+            <select id="board-select">
+                <option value="2">Silly</option>
+                <option value="4">Easy</option>
+                <option value="6">Normal</option>
+                <option value="8">Hard</option>
+            </select>
 
-  	.hidden {
-  		visibility: hidden;
-  	}
+            <button id="choose-board">Start Game</button>
 
-    #grid {
-      border: solid 1px black;
-      margin: 20px auto;
-      
-    }
-  	#grid td {
-  		border: solid 1px black;
-      font-size: 400%;
-      padding: 10px 20px
-  	}
+            <div id="message">&nbsp;</div>
 
-  </style>
+            <div id="game">
+                <div id="score-box">
+                    Score:
+                    <span id="score">&nbsp;</span>
+                </div>
 
+                <table id="board"></table>
+            </div>
+            
+        </div>
 
-  <table id="grid">
-  	<tr>
-  		<td id="td_1_1" class="not-found"><span id="cell_1_1" class="hidden">A</span></td>
-  		<td id="td_1_2" class="not-found"><span id="cell_1_2" class="hidden">B</span></td>
-  	</tr>
-  	<tr>
-  		<td id="td_2_1" class="not-found"><span id="cell_2_1" class="hidden">A</span></td>
-  		<td id="td_2_2" class="not-found"><span id="cell_2_2" class="hidden">B</span></td>
-  	</tr>
-  </table>
-
-  <script src="memory.js"></script>
-  </body>
+    </body>
 </html>
