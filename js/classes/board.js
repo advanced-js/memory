@@ -155,7 +155,7 @@ define(['./tile'], function (Tile) {
 		this.registerEvents();
 
 		// Loop through td elements with class 'tile' and
-		// set the 'cell' prop of each tile object to that td element
+		// set the 'cell' prop of each tile object to that td object
 		var cells = $('.tile');
 		for (var i = 0; i < cells.length; i++) {
 			this.tiles[+cells[i].id].cell = cells[i]; // cast td element id from string to int
