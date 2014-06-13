@@ -158,7 +158,7 @@ define(['./tile'], function (Tile) {
 		// set the 'cell' prop of each tile object to that td element
 		var cells = $('.tile');
 		for (var i = 0; i < cells.length; i++) {
-			this.tiles[+cells[i].id].cell = cells[i];
+			this.tiles[+cells[i].id].cell = cells[i]; // cast td element id from string to int
 		}
 	};
 
