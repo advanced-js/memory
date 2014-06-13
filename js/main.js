@@ -1,6 +1,5 @@
 define(function (require) {
 	var Board = require('classes/board');
-	var Tile = require('classes/tile');
 
 	var initialize = function (size) {
 		var b = new Board(size);
@@ -13,11 +12,17 @@ define(function (require) {
 	var board = null;
 
 	$('#choose-board').click(function () {
+		// Get the size from the select element
 		var size = $('#board-select').val();
-		$('#message').html('&nbsp;');
 		board = initialize(size);
-		board.score = 0;
-		$('#score').html(board.score);
+
+		// Reset the message
+		$('#message').html('&nbsp;');
+
+		// Reset the score to 0 and display
+		board.resetScore();
+
+		// Show the game div
 		$('#game').show();
 	});
 

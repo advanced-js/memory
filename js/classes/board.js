@@ -192,6 +192,12 @@ define(['./tile'], function (Tile) {
 		}
 	};
 
+	// Reset the score to 0 and display it
+	Board.prototype.resetScore = function () {
+		this.score = 0;
+		$('#score').html(this.score);
+	};
+
 	// Check to see if the game has been won
 	Board.prototype.checkWin = function () {
 		var tiles = this.tiles;
