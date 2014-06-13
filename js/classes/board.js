@@ -47,9 +47,6 @@ define(['./tile'], function (Tile) {
 	// The current score
 	Board.prototype.score = 0;
 
-	// Is the board IN_PROGRESS or COMPLETE?
-	Board.prototype.state = null;
-
 	// The tiles contained in this board
 	Board.prototype.tiles = null;
 
