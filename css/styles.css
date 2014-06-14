@@ -1,0 +1,47 @@
+body {
+	font-family: helvetica, arial, sans-serif;
+}
+
+#wrapper {
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#board {
+	border: solid 2px lightblue;
+	margin: 1em auto 0;
+}
+
+.tile {
+	padding: 0.2em;
+	text-align: center;
+	font: 34px helvetica, arial, sans-serif;
+	background-color: lightgray;
+	width: 2em;
+	height: 2em;
+}
+
+.tile-value {
+	color: rgb(100, 100, 100);
+}
+
+#game {
+	display: none;
+	margin-bottom: 2em;
+}
+
+#score-box {
+	margin: 1em 0;
+	font-size: 0.75em;
+}
+
+#score {
+	font-weight: bold;
+}
+
+#message {
+	margin-top: 1em;
+	font-weight: bold;
+	color: green;
+}

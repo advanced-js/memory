@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-    <script src="memory.js"></script>
-  </head>
-  <body>
-  </body>
+    <head>
+        <title>Memory exercise</title>
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script data-main="js/main" src="js/require.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+            <h1>Memory!</h1>
+
+            <p>What size board would you like?</p>
+            <select id="board-select">
+                <option value="2">Silly</option>
+                <option value="4">Easy</option>
+                <option value="6">Normal</option>
+                <option value="8">Hard</option>
+            </select>
+
+            <button id="choose-board">Start Game</button>
+
+            <div id="message">&nbsp;</div>
+
+            <div id="game">
+                <div id="score-box">
+                    Score:
+                    <span id="score">&nbsp;</span>
+                </div>
+
+                <table id="board"></table>
+            </div>
+            
+        </div>
+
+    </body>
 </html>
