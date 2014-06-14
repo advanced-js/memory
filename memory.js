@@ -14,7 +14,7 @@ var createBoard = function(form){
 		symbols[index]=String.fromCharCode(x);
 		index++;
 	}
-	for 
+
 };
 
 var Box = function(contents){
