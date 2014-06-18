@@ -1,11 +1,36 @@
 // YOUR CODE GOES HERE
 
 $(document).ready(function() {
+	
+	this.grid;
+
+	var initGame = function(e) {	//console.log("e",e);
+		var gridsize = parseInt($('#gridsize_select').val());
+		if (gridsize > 0){
+			grid = new Grid(gridsize);			
+		}
+	}
+	
+	$('#gridsize_select').on('change', initGame).trigger("change");
+	$('#msg').html('Select grid size to begin game.');
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 	var selectedCells = [];
-	var $cells = $('#grid td');		//console.log($cells.length);
+	var $cells = $('#gridtable td');		//console.log($cells.length);
 
-	$('#grid').on('click', '.not-found', doTDClick);
+	$('#gridtable').on('click', '.not-found', doTDClick);
 
 
 	function doTDClick() {
@@ -26,7 +51,7 @@ $(document).ready(function() {
 				if (isGameOver()) {alert("WIN!"); document.location.reload();}
 			} else {
 				console.log("BOO");
-				$('#grid').off('click', '.not-found', doTDClick);		//no clicking allowed until 1000mx	//OFF
+				$('#gridtable').off('click', '.not-found', doTDClick);		//no clicking allowed until 1000mx	//OFF
 				setTimeout(function () {
 					for (var i = 0; i < selectedCells.length; i++) {
 						selectedCells[i].find('span').addClass('hidden');
@@ -34,7 +59,7 @@ $(document).ready(function() {
 						console.log(i);
 					}
 					selectedCells = [];
-					$('#grid').on('click', '.not-found', doTDClick);	//clicking allowed again	//ON
+					$('#gridtable').on('click', '.not-found', doTDClick);	//clicking allowed again	//ON
 					//isGameOver();	duh, no need
 				}, 1000);
 			}
@@ -53,5 +78,7 @@ $(document).ready(function() {
 		if (found_cntr === $cells.length) {return true;}
 		return false;
 	}
+
+*/
 
 });

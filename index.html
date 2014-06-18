@@ -2,49 +2,29 @@
 <html>
   <head>
     <title>Memory exercise</title>
-    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <link href="css/memory.css" rel="stylesheet" type="text/css" media="all" />    
+    <script src="js/jquery-2.1.0.min.js"></script>
   </head>
   <body>
 
-  <style>
+    <h1>Memory v3</h1>
 
-    body  {
-    }
+    <div id="dd-div">
+      <select id="gridsize_select">
+        <option value="0">Select grid size...</option>
+        <option value="2">2x2</option>
+        <option value="4">4x4</option>
+        <option value="6">6x6</option>
+        <option value="8">8x8</option>
+      </select>
+    </div>
 
-  	.found {
-  		color: green;
-      font-weight: bold;
-  	}
+    <div id="msg"></div>
 
-  	.hidden {
-  		visibility: hidden;
-  	}
+    <div id="grid_holder"></div>
 
-    #grid {
-      border: solid 1px black;
-      margin: 20px auto;
-      
-    }
-  	#grid td {
-  		border: solid 1px black;
-      font-size: 400%;
-      padding: 10px 20px
-  	}
-
-  </style>
-
-
-  <table id="grid">
-  	<tr>
-  		<td id="td_1_1" class="not-found"><span id="cell_1_1" class="hidden">A</span></td>
-  		<td id="td_1_2" class="not-found"><span id="cell_1_2" class="hidden">B</span></td>
-  	</tr>
-  	<tr>
-  		<td id="td_2_1" class="not-found"><span id="cell_2_1" class="hidden">A</span></td>
-  		<td id="td_2_2" class="not-found"><span id="cell_2_2" class="hidden">B</span></td>
-  	</tr>
-  </table>
-
-  <script src="memory.js"></script>
+    <script src="js/cell.js"></script>    
+    <script src="js/grid.js"></script>    
+    <script src="js/memory.js"></script>
   </body>
 </html>
