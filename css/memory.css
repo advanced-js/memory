@@ -1,0 +1,37 @@
+  	body {text-align: center; font-family: verdana;}
+
+    #msg, #dd-div {margin-bottom: 20px;}
+
+    .found {
+  		color: green;
+      font-weight: bold;
+  	}
+  	.hidden {
+  		/*visibility: hidden;*/
+      opacity: 0.1;
+  	}
+    #grid_table {
+      border: solid 1px black;
+      margin: 20px auto;
+      background-color: #fff;
+    }
+  	#grid_table td {
+  		border: solid 1px black;
+      font-size: 400%;
+      padding: 10px 0;
+      text-align: center;
+      min-height: 100px;
+      min-width: 100px;
+      cursor: default;
+      
+  	}
+    #grid_table td.unmatched  {background-color: #333;}
+    #grid_table td:hover  {background-color: #666;}
+    #grid_table td.selected {
+      background-color: #ccc;
+    }
+
+    #grid_table td span   {
+      /*background-color: #fff;
+      width: 100%;*/
+    }
