@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Memory exercise</title>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="memory.js"></script>
-</head>
-<body>
-<table>
-    <tr>
-        <td data-id="1" data-value="!" >X</td>
-        <td data-id="2" data-value="!" >X</td>
-        <td data-id="3" data-value="@" >X</td>
-        <td data-id="4" data-value="@" >X</td>
-    </tr>
-    <tr>
-        <td data-id="5" data-value="#" >X</td>
-        <td data-id="6" data-value="#" >X</td>
-        <td data-id="7" data-value="$" >X</td>
-        <td data-id="8" data-value="$" >X</td>
-    </tr>
-    <tr>
-        <td data-id="9" data-value="%" >X</td>
-        <td data-id="10" data-value="%" >X</td>
-        <td data-id="11" data-value="^" >X</td>
-        <td data-id="12" data-value="^" >X</td>
-    </tr>
-    <tr>
-        <td data-id="13" data-value="&" >X</td>
-        <td data-id="14" data-value="&" >X</td>
-        <td data-id="15" data-value="*" >X</td>
-        <td data-id="16" data-value="*" >X</td>
-    </tr>
+    <head>
+        <title>Memory exercise</title>
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="memory.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+    </head>
 
-</table>
-</body>
+    <body align="center">
+		<div id="container">
+			<select id="app-select">
+				<option value="2">Small</option>
+				<option value="4">Medium</option>
+				<option value="8">Large</option>
+			</select>
 
+			<button id="app-button">Start Game</button>
 
+			<div id="app-game">
+			Score:
+				<div id="app-score">
+				</div>
 
+				<table id="app-board"></table>
+			</div>
+			<div id="app-message">&nbsp;</div>
+		</div>
+    </body>
 </html>
