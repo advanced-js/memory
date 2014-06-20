@@ -1,64 +1,51 @@
-    <!DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+<html>
     <head>
-    <title>Memory exercise</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="memory.js"></script>
-    <style type="text/css">
-    #wrapper{
-    width: 960px;
-    margin: auto;
-    }
-    td{
-    width: 50px;
-    height: 50px;
-    background-color: teal;
-    font-size: 30px;
-    text-align: center;
-    }
+        <title>Memory exercise</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="memory.js"></script>
+        <style type="text/css">
+            *{
+                font-family: sans-serif;
+            }
+            #wrapper{
+                width: 960px;
+                margin: auto;
+                background-color: #c0c0c0;
+                padding: 10px;
+            }
+            td{
+            width: 50px;
+            height: 50px;
+            background-color: teal;
+            font-size: 30px;
+            text-align: center;
+            }
+            #errors{
+                height: 12px;
+                color: red;
+                padding: 10px 0;
+            }
 
-    </style>
+        </style>
     </head>
     <body>
         <div id="wrapper">
-        <form>
-            How many rows:
-            <input name="rows" type="text"></br>
-            How many columns:
-            <input name="columns" type="text"></br>
-            <input type="button" name="button" value="Create!" onClick="createBoard(this.form)">
-        </form>
-
-          <table>
-          	<tr>
-          		<td data-value="!" data-active="false"></td>
-          		<td data-value="!" data-active="false"></td>
-          		<td data-value="#" data-active="false"></td>
-          		<td data-value="#" data-active="false"></td>
-          	</tr>
-          	<tr>
-          		<td data-value="%" data-active="false"></td>
-          		<td data-value="%" data-active="false"></td>
-          		<td data-value="^" data-active="false"></td>
-          		<td data-value="^" data-active="false"></td>
-          	</tr>
-          	<tr>
-          		<td data-value="$" data-active="false"></td>
-          		<td data-value="$" data-active="false"></td>
-          		<td data-value="*" data-active="false"></td>
-          		<td data-value="*" data-active="false"></td>
-          	</tr>
-          	<tr>
-          		<td data-value="A" data-active="false"></td>
-          		<td data-value="A" data-active="false"></td>
-          		<td data-value="B" data-active="false"></td>
-          		<td data-value="B" data-active="false"></td>
-          	</tr>
-
-          </table>
+          <h1>Let's Play Memory!</h1>
+          <div>Start by customizing your board (even numbers only!)</div>
+          <div id="errors"></div>
+          <form>
+              <label>How many rows?</label></br>
+              <input name="rows" id="rows" type="text" /></br>
+              <label>How many columns?</label></br>
+              <input name="columns" id="columns" type="text" /></br>
+              <input id="board_select" type="button" name="button" value="Create!" onClick="validate()">
+          </form>
+          <table id="game_board"></table>
+          	<!--<td data-value="!" data-active="false"></td>-->
         </div>
     </body>
 
 
 
-    </html>
+</html>
