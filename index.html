@@ -1,9 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-    <script src="memory.js"></script>
-  </head>
-  <body>
-  </body>
+    <head>
+        <title>Memory exercise</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="memory.js"></script>
+        <style type="text/css">
+            *{
+                font-family: sans-serif;
+            }
+            #wrapper{
+                width: 960px;
+                margin: auto;
+                background-color: #c0c0c0;
+                padding: 10px;
+            }
+            td{
+            width: 50px;
+            height: 50px;
+            background-color: teal;
+            font-size: 30px;
+            text-align: center;
+            }
+            #errors{
+                height: 12px;
+                color: red;
+                padding: 10px 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+          <h1>Let's Play Memory!</h1>
+          <div>Start by customizing your board (even numbers only!)</div>
+          <div id="errors"></div>
+          <form>
+              <label>How many rows?</label></br>
+              <input name="rows" id="rows" type="text" /></br>
+              <label>How many columns?</label></br>
+              <input name="columns" id="columns" type="text" /></br>
+              <input id="board_select" type="button" name="button" value="Create!" onClick="validate()">
+          </form>
+          <table id="game_board"></table>
+          	<!--<td data-value="!" data-active="false"></td>-->
+        </div>
+    </body>
+
+
+
 </html>
