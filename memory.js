@@ -5,19 +5,19 @@ var Tile = function(id, value) {
 	this.id = id;
 	this.value = value;
 	this.state = null;
-}
+};
 
 Tile.prototype.reveal = function() {
 		this.state = 'DISPLAYED'
-}
+};
 	
 Tile.prototype.hide = function() {
 		this.state = 'HIDDEN'
-}
+};
 	
 Tile.prototype.matched = function() {
 		this.state = 'MATCHED'
-}
+};
 
 // end of Tile object definition
 
@@ -26,7 +26,7 @@ var Board = function(size) {
 	this.size = size;
 	this.tiles = [];
 	this.cTiles = [];
-}
+};
 
 // symbols borrowed from https://github.com/zenahirsch/memory/
 Board.prototype.symbols = [
@@ -71,7 +71,7 @@ Board.prototype.populate = function() {
 		this.tiles[i].id = i; // well, technically id should be private
 		this.tiles[i].hide();
 	}
-}
+};
 
 Board.prototype.checkWin = function() {
 	var i;
@@ -83,60 +83,73 @@ Board.prototype.checkWin = function() {
 	}
 	
 	return true;
-}
+};
 
 Board.prototype.goLive = function() {
 	var cBoard = this; // grab a hold of this
-	
+	var match = 0;
+
 	$('.tile').click(function () {
 		var id = $(this).attr('id');
 		
-		// enforce that NOTHING happens while checking result
-		// if it's HIDDEN, reveal it
-		if (cBoard.cTiles.length < 2 && cBoard.tiles[id].state === 'HIDDEN') {
-			cBoard.tiles[id].reveal();
-			$(this).html(cBoard.tiles[id].value);
-			cBoard.cTiles.push(cBoard.tiles[id]);
-			//$('#app-message').html(cBoard.cTiles.toString());
+		// this looks tedious but it works in the sense that it enforces
+		// that NOTHING happens while checking result
+		// otherwise, clicking quickly could leave 3 tiles open -> missing check
+        // and results in unfinishable games
+		if (cBoard.cTiles[0] === undefined) {
+            if (cBoard.tiles[id].state === 'HIDDEN') { // if it's HIDDEN, reveal it
+                cBoard.tiles[id].reveal();
+                $(this).html(cBoard.tiles[id].value);
+                cBoard.cTiles.push(cBoard.tiles[id]);
+                cBoard.score += 1;
+            }
+        } else {
+            if (cBoard.cTiles[1] === undefined) {
+                // if cTiles (current tiles) contains 2 elements, compare them
+                if (cBoard.tiles[id].state === 'HIDDEN') {
+                    cBoard.tiles[id].reveal();
+                    $(this).html(cBoard.tiles[id].value);
+                    cBoard.cTiles.push(cBoard.tiles[id]);
+                    cBoard.score += 1;
+                }
+
+                var Tiles = cBoard.cTiles; // redundant, however makes it easier to refer to current tiles
+                if (Tiles[0].value === Tiles[1].value) {
+                    cBoard.tiles[Tiles[0].id].matched();
+                    $('#app-board').find('td#' + Tiles[0].id).css('background-color', 'lightgreen');
+                    cBoard.tiles[Tiles[1].id].matched();
+                    $('#app-board').find('td#' + Tiles[1].id).css('background-color', 'lightgreen');
+                    match += 2;
+                    cBoard.cTiles = [];
+                } else {
+                    $('#app-board').find('td#' + Tiles[0].id).css('background-color', 'red');
+                    $('#app-board').find('td#' + Tiles[1].id).css('background-color', 'red');
+                    setTimeout(function () {
+                        $('#app-board').find('td#' + Tiles[0].id).html('');
+                        $('#app-board').find('td#' + Tiles[0].id).css('background-color', 'lightgray');
+                        $('#app-board').find('td#' + Tiles[1].id).html('');
+                        $('#app-board').find('td#' + Tiles[1].id).css('background-color', 'lightgray');
+
+                        cBoard.cTiles = [];
+
+                        cBoard.tiles[Tiles[0].id].hide();
+                        cBoard.tiles[Tiles[1].id].hide();
+                    }, 750);
+                }
+            }
 		}
-				
-		if (cBoard.cTiles.length === 2) {
-		// if cTiles (current tiles) contains 2 elements, compare them
-		
-			var Tiles = cBoard.cTiles;
-			if (Tiles[0].value === Tiles[1].value) {
-				cBoard.tiles[Tiles[0].id].matched();
-				$('#app-board').find('td#' + Tiles[0].id).css('background-color', 'lightgreen');
-				cBoard.tiles[Tiles[1].id].matched();
-				$('#app-board').find('td#' + Tiles[1].id).css('background-color', 'lightgreen');
-				
-				cBoard.cTiles = [];
-			} else {
-				$('#app-board').find('td#' + Tiles[0].id).css('background-color', 'red');
-				$('#app-board').find('td#' + Tiles[1].id).css('background-color', 'red');
-				setTimeout(function(){
-								$('#app-board').find('td#' + Tiles[0].id).html('');
-								$('#app-board').find('td#' + Tiles[0].id).css('background-color', 'lightgray');
-								$('#app-board').find('td#' + Tiles[1].id).html('');
-								$('#app-board').find('td#' + Tiles[1].id).css('background-color', 'lightgray');
-								
-								cBoard.cTiles = [];
-								
-								cBoard.tiles[Tiles[0].id].hide();
-								cBoard.tiles[Tiles[1].id].hide();
-								//$('#app-message').html('&nbsp;');
-							}, 750);
-			}
-		}
+
+        $('#app-score').html(Math.floor((match/cBoard.score)*100) + '');
+        //$('#app-message').html(match + ' ' + cBoard.score);
 
 		// check if whole board is revealed, this is fired up every time there's a click, is there a way to do this more efficiently? 
 		// maybe put this in checkWin with a condition?
 		if (cBoard.checkWin()) {
-			$('#app-message').html('Your score is: ' + cBoard.score + '%, you won!');
+			$('#app-message').html('You won!');
 		}
 
 	});
-}
+};
 
 Board.prototype.draw = function() {
 	var tInd = 0;
@@ -159,7 +172,7 @@ Board.prototype.draw = function() {
 
 	// Add the event listeners
 	this.goLive();
-}
+};
 // end of Board object definition
 
 // actual app
@@ -170,7 +183,8 @@ $(function() {
 		
 		board.populate();
 		board.draw();
-		
+
+        $('#app-score').html('0');
 		$('#app-message').html('&nbsp;');
 	});
 });
