@@ -8,15 +8,15 @@ var Tile = function(id, value) {
 };
 
 Tile.prototype.reveal = function() {
-		this.state = 'DISPLAYED'
+		this.state = 'DISPLAYED';
 };
 	
 Tile.prototype.hide = function() {
-		this.state = 'HIDDEN'
+		this.state = 'HIDDEN';
 };
 	
 Tile.prototype.matched = function() {
-		this.state = 'MATCHED'
+		this.state = 'MATCHED';
 };
 
 // end of Tile object definition
