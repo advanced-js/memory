@@ -1,0 +1,25 @@
+﻿div#memory_board
+{
+	background:#BBB;
+	border:#000 1px solid;
+	width:738px;
+	height:494px;
+	padding:12px;
+	margin:0px auto;
+	box-shadow: #000 2px 2px 1px;
+}
+/*This is for the individual tiles*/
+div#memory_board > div{
+	background: #DDD;
+	border:#000 1px solid;
+	width:71px;
+	height:71px;
+	float:left;
+	margin:5px;
+	padding:20px;
+	font-size:72px;
+	cursor:pointer;
+	text-align:center;
+	box-shadow:#000 1px 1px 1px;
+	color:#000;
+}
