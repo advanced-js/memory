@@ -2,7 +2,145 @@
 <html>
   <head>
     <title>Memory exercise</title>
+
+    <style>
+
+        * { margin: 0; padding: 0; }
+
+        .memory {
+            margin: 0 auto;
+            width: 400px;
+        }
+
+        div.game-board {
+            float: left;
+            margin-top:20px;
+        }
+
+        .game-board > div {
+            background-color: #BBBDBF;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #999;
+            border-bottom: 1px solid #999;
+            border-left: 1px solid #ccc;
+            cursor: pointer;
+            float: left;
+            height: 125px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            width: 125px;
+        }
+
+        .game-board > div:hover {
+            border: 1px solid #000;
+        }
+
+        .pressed {
+            background-color: #fff!important;
+            border-top: 1px solid #666!important;
+            border-right: 1px solid #ccc!important;
+            border-bottom: 1px solid #ccc!important;
+            border-left: 1px solid #666!important;
+        }
+
+        .left-square {
+            clear: left;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .match {
+            visibility: hidden;
+        }
+
+    </style>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
   </head>
   <body>
+
+    <div class='memory'>
+        <div class='game-board'>
+            <div class='memory_button' data-location='0' data-color='#c00'></div>
+            <div class='memory_button' data-location='1' data-color='#339'></div>
+
+            <div class='memory_button left-square' data-location='2' data-color='#c00'></div>
+            <div class='memory_button' data-location='3' data-color='#339'></div>
+
+        </div>
+        <div class='clear'></div>
+    </div>
+
+    <script>
+
+        //LISTENERS
+        var click_state = false;
+        var current_color = '';
+
+        $('.memory_button').on('click', function() {
+            $(this).addClass('active');
+
+            //Step 1. Check the State
+            if ( click_state === false ) {
+                console.log('first click');
+
+                //store the selected button color
+                var selected_color = $(this).attr('data-color');
+
+                //set the current color global variable
+                current_color = selected_color;
+
+                //change the button background color
+                $(this).css('background-color',selected_color);
+
+                //set click state to true for second click
+                click_state = true;
+            }
+            else {
+                console.log('second click');
+
+                //reset the click state
+                click_state = false;
+
+                //store the selected button color
+                var selected_color = $(this).attr('data-color');
+
+                //set the background color
+                $(this).css('background-color',selected_color);
+
+                if ( selected_color == current_color ) {
+                    console.log('there is a match');
+
+                    //reset the current color
+                    current_color = '';
+
+                    $('.active').addClass('match');
+                    $('.active').removeClass('active');
+
+                }
+                else {
+                    console.log('there is not a match');
+
+                    setTimeout(function () {
+                        //reset the current color
+                        current_color = '';
+
+                        //reset the background colors
+                        $('.active').css('background-color','');
+                        $('.active').removeClass('active');
+                    }, 1000);
+                }
+            }
+
+            console.log('clicked a memory button');
+            console.log('color: ', $(this).attr('data-color') );
+
+        });
+
+    </script>
+
   </body>
 </html>
