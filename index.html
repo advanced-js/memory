@@ -2,22 +2,98 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <style>
+        @import url(http://fonts.googleapis.com/css?family=Handlee);
 
         * { margin: 0; padding: 0; }
 
+        body {
+            background-color: #333;
+            font-family: 'Handlee', cursive;
+        }
+
         .memory {
             margin: 0 auto;
-            width: 400px;
+            padding-bottom: 100px;
+            width: 1060px;
         }
 
-        div.game-board {
+        .game_name {
+            color: #fff;
+            font-size: 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .generate_game {
+            background-color: #777;
+            border-radius: 6px;
             float: left;
-            margin-top:20px;
+            padding: 50px;
+            text-align: center;
         }
 
-        .game-board > div {
+        .generate_game input {
+            background-color: #333;
+            border: none;
+            color: #e1e1e1;
+            font-size: 24px;
+            height: 45px;
+            text-align: center;
+            width: 100px;
+        }
+
+        .generate_game .generate_game_text {
+            color: #000;
+            display: inline;
+            font-size: 24px;
+        }
+
+        .generate_game .generate_game_button {
+            background-color: #333;
+            border-radius: 4px;
+            color: #e1e1e1;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 6px 10px 10px;
+            text-transform: uppercase;
+        }
+
+        .generate_game .generate_game_button:hover {
+            background-color: #ccc;
+            color: #000;
+        }
+
+        .game_admin_bar {
+            height: 50px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .game_admin_bar .total_moves {
+            color: #ccc;
+            float: left;
+            font-size: 16px;
+        }
+
+        .game_admin_bar .reset_button {
+            background-color: #999;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+            padding: 10px 6px 10px 6px;
+        }
+
+        .game_board {
+            float: left;
+        }
+
+        .game_board .memory_button {
             background-color: #BBBDBF;
             border-top: 1px solid #ccc;
             border-right: 1px solid #999;
@@ -25,13 +101,19 @@
             border-left: 1px solid #ccc;
             cursor: pointer;
             float: left;
+            font-size: 30px;
             height: 125px;
+            line-height: 125px;
             margin-right: 4px;
             margin-bottom: 4px;
+            position: relative;
+            text-align: center;
+            overflow-y: hidden;
+            vertical-align: middle;
             width: 125px;
         }
 
-        .game-board > div:hover {
+        .game_board :not(.match).memory_button:hover {
             border: 1px solid #000;
         }
 
@@ -43,7 +125,7 @@
             border-left: 1px solid #666!important;
         }
 
-        .left-square {
+        .left_square {
             clear: left;
         }
 
@@ -52,93 +134,348 @@
         }
 
         .match {
-            visibility: hidden;
+            opacity: 0.4;
+        }
+
+        .highlight {
+            background-color: #e1e1e1!important;
+            cursor: default;
+            opacity: 1!important;
         }
 
     </style>
-
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
   </head>
   <body>
 
     <div class='memory'>
-        <div class='game-board'>
-            <div class='memory_button' data-location='0' data-color='#c00'></div>
-            <div class='memory_button' data-location='1' data-color='#339'></div>
+        <div class='game_name'>Advanced JS - Memory Game</div>
 
-            <div class='memory_button left-square' data-location='2' data-color='#c00'></div>
-            <div class='memory_button' data-location='3' data-color='#339'></div>
-
+        <div class='game_admin_bar' style="display:none;">
+            <div class='total_moves'>Total Moves: <span>0</span></div>
+            <div class='reset_button'>RESET</div>
         </div>
+
+        <div class='generate_game'>
+            <input type='text' placeholder='Enter a Number' value='10'>
+            <div class='generate_game_text'>Matches To Find</div>
+            <div class='clear'></div>
+            <div class='generate_game_button'>Generate Gameboard</div>
+        </div>
+
+        <div class='game_board'></div>
         <div class='clear'></div>
     </div>
 
     <script>
+        //GLOBAL VARIABLES
 
-        //LISTENERS
-        var click_state = false;
-        var current_color = '';
+        //ARRAY TO HOLD THE NUMBERS
+        var number_set = [];
 
-        $('.memory_button').on('click', function() {
-            $(this).addClass('active');
+        var row_size;
 
-            //Step 1. Check the State
-            if ( click_state === false ) {
-                console.log('first click');
+        var total_squares;
 
-                //store the selected button color
-                var selected_color = $(this).attr('data-color');
+        var total_moves = 0;
 
-                //set the current color global variable
-                current_color = selected_color;
+        function init_game_board( match_sets ) {
 
-                //change the button background color
-                $(this).css('background-color',selected_color);
+            //TOTAL NUMBER OF SQUARES IN THE GRID
+            total_squares = match_sets * 2;
 
-                //set click state to true for second click
-                click_state = true;
+            determine_row_size();
+
+            for ( var i = 0; i < match_sets; i++ ) {
+                number_set.push(i);
+                number_set.push(i);
             }
-            else {
-                console.log('second click');
 
-                //reset the click state
-                click_state = false;
+            generate_memory_board();
 
-                //store the selected button color
-                var selected_color = $(this).attr('data-color');
+        }
 
-                //set the background color
-                $(this).css('background-color',selected_color);
+        function determine_row_size() {
 
-                if ( selected_color == current_color ) {
-                    console.log('there is a match');
+            var square_root = Math.sqrt( total_squares );
 
-                    //reset the current color
-                    current_color = '';
+            if ( square_root <= 8 && square_root % 1 === 0 ) {
+                row_size = square_root;
+            }
+            else if ( total_squares % 8 === 0) {
+                row_size = 8;
+            }
+            else if ( total_squares % 7 === 0) {
+                row_size = 7;
+            }
+            else if ( total_squares % 6 === 0) {
+                row_size = 6;
+            }
+            else if ( total_squares % 5 === 0) {
+                row_size = 5;
+            }
+            else if ( total_squares % 4 === 0) {
+                row_size = 4;
+            }
+            else if ( total_squares % 3 === 0) {
+                row_size = 3;
+            }
+            else if ( total_squares % 2 === 0) {
+                row_size = 2;
+            }
 
-                    $('.active').addClass('match');
-                    $('.active').removeClass('active');
+        }
 
+        //SHUFFLE THE NUMBERS
+        function shuffle_numbers(number_set) {
+
+            //TOTAL NUMBERS LEFT IN ARRAY
+            var numbers_remaining = number_set.length;
+
+            //LAST NUMBER IN THE NUMBER SET
+            var last_number_in_array;
+
+            //RANDOMLY SELECTED INDEX
+            var random_index;
+
+            // WHILE NUMBERS REMAINING IN THE NUMBER_SET
+            while ( numbers_remaining > 0 ) {
+
+                //PICK A RANDOM INDEX BASED ON THE NUMBERS REMAINING
+                random_index = Math.floor(Math.random() * numbers_remaining);
+
+                //TOTAL NUMBERS IN ARRAY MINUS 1 TO MATCH 0 BASED INDEX
+                numbers_remaining -= 1;
+
+                //LAST NUMBER IN THE ARRAY
+                last_number_in_array = number_set[numbers_remaining];
+
+                /* ==== SWAP THE CARDS ==== */
+                //LAST NUMBER IN ARRAY IS EQUAL TO RANDOM INDEX
+                number_set[numbers_remaining] = number_set[random_index];
+
+                //RANDOM INDEX IS EQUAL TO LAST NUMBER IN THE ARRAY
+                number_set[random_index] = last_number_in_array;
+            }
+
+            return number_set;
+        }
+
+        //GENERATE GAME BOARD
+        function generate_memory_board() {
+
+            var shuffled_number_set = shuffle_numbers(number_set);
+
+            var j = 1;
+            var memory_button_html = '';
+
+            for ( var i = 0; i < total_squares; i++ ) {
+
+                if ( j === 1 ) {
+                    memory_button_html = '<div class="memory_button left_square" data-location="' + i + '" data-number="' + shuffled_number_set[i] + '"></div>';
+                    j++;
+                }
+
+                else if ( j < row_size ) {
+                    memory_button_html = '<div class="memory_button" data-location="' + i + '" data-number="' + shuffled_number_set[i] + '"></div>';
+                    j++;
+                }
+
+                else {
+                    memory_button_html = '<div class="memory_button" data-location="' + i + '" data-number="' + shuffled_number_set[i] + '"></div>';
+                    j = 1;
+                }
+
+                $('.game_board').append(memory_button_html);
+            }
+
+            add_listeners();
+        }
+
+        //
+
+        function add_listeners() {
+
+            //LISTENERS
+            var click_state = false;
+            var current_number = null;
+            var current_location = null;
+            var game_paused = false;
+            var total_sets_to_match = total_squares / 2;
+
+            $('.memory_button').on('click', function() {
+
+                //CHECK IF THE BOARD IS CLICKABLE
+                if ( game_paused === true ) {
+                    return;
+                }
+
+                if ( $(this).hasClass('match') ) {
+                    return;
+                }
+
+                $(this).addClass('active');
+
+                //Step 1. Check the State
+                if ( click_state === false ) {
+                    //console.log('first click');
+
+                    //store the selected button color
+                    var selected_number = $(this).attr('data-number');
+
+                    //set the current color global variable
+                    current_number = selected_number;
+
+                    //set the current location
+                    current_location = $(this).attr('data-location');
+
+                    //change the button background color
+                    $(this).html(selected_number);
+
+                    //set click state to true for second click
+                    click_state = true;
                 }
                 else {
-                    console.log('there is not a match');
+                    //console.log('second click');
 
-                    setTimeout(function () {
+                    //selected data location
+                    var selected_location = $(this).attr('data-location');
+
+                    if ( selected_location === current_location ) {
+                        return;
+                    }
+
+                    //reset the click state
+                    click_state = false;
+
+                    //store the selected button color
+                    var selected_number = $(this).attr('data-number');
+
+                    //set the background color
+                    $(this).html(selected_number);
+
+                    if ( selected_number == current_number ) {
+                        //console.log('there is a match');
+
                         //reset the current color
-                        current_color = '';
+                        current_number = '';
 
-                        //reset the background colors
-                        $('.active').css('background-color','');
+                        $('.active').addClass('match');
                         $('.active').removeClass('active');
-                    }, 1000);
+
+                        total_sets_to_match -= 1;
+                        console.log('total sets to match: ', total_sets_to_match);
+
+                        if ( total_sets_to_match === 0 ) {
+                            console.log('game won');
+                            game_won();
+                        }
+
+                    }
+                    else {
+                        //console.log('there is not a match');
+
+                        game_paused = true;
+
+                        setTimeout(function () {
+
+                            current_number = null;
+                            current_location = null;
+
+                            //empty the active containers
+                            $('.active').empty();
+
+                            $('.active').removeClass('active');
+
+                            game_paused = false;
+
+                        }, 1000);
+                    }
+
+                    total_moves += 1;
+                    $('.game_admin_bar .total_moves span').html(total_moves);
+
                 }
+
+                //console.log('clicked a memory button');
+                //console.log('number: ', $(this).attr('data-number') );
+
+            });
+
+        }
+
+        //INITIAL GAME SCREEN
+        $('.memory').on('click','.generate_game_button', function() {
+            generate_game_board();
+        });
+
+        $('.memory').on('keypress', '.generate_game input', function(e) {
+            if (e.keyCode == 13) {
+                generate_game_board();
+            }
+        });
+
+        function generate_game_board() {
+            var matches_to_find = $('.memory .generate_game input').val();
+
+            //Check if the input box is empty
+            if ( $('.memory .generate_game input').length === 0 ) {
+                return;
             }
 
-            console.log('clicked a memory button');
-            console.log('color: ', $(this).attr('data-color') );
+            if ( matches_to_find == 0 ) {
+                return;
+            }
 
+            //Check if an integer was entered
+            var matches_to_find_number = Number(matches_to_find);
+
+            if (Math.floor( matches_to_find_number ) == matches_to_find_number) {
+                //console.log('generate game board');
+
+                $('.generate_game').hide();
+
+                init_game_board(matches_to_find);
+
+                $('.game_admin_bar').show();
+            }
+            else {
+                alert('please enter a valid integer');
+            }
+        }
+
+
+
+        $('.memory').on('click','.reset_button',function() {
+            //console.log('reset the game');
+            $('.game_board').empty();
+            $('.generate_game').show();
+            number_set = [];
+
+            $('.game_admin_bar').hide();
+
+            total_moves = 0;
+            $('.game_admin_bar .total_moves span').html(total_moves);
         });
+
+        function game_won() {
+
+            var highlight_timer = 100;
+
+            $('.game_board .memory_button').each(function(){
+
+                var that = $(this);
+
+                highlight_timer += 100;
+
+                setTimeout( function(){
+
+                    that.addClass('highlight');
+
+                }, highlight_timer);
+
+            });
+        }
 
     </script>
 
