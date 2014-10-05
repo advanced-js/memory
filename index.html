@@ -1,8 +1,168 @@
 <!DOCTYPE html>
+<style>
+table, td, tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td {
+  background-color:red;
+  width: 20px;
+  height: 20px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script>
+  var row = 6;
+  var column = 6;
+  var TDcount = 0;
+  var TDArr = new Array();
+
+  function randomNumberGenerator(maxRange)
+  {
+    return Math.floor(Math.random() * maxRange);
+  }
+  function randomCharGenerator()
+  {
+    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    var rand = randomNumberGenerator(chars.length)
+    return chars[rand];
+  }
+
+  function createColumn()
+  {
+    var str = "";
+    var i = 0;
+    for(i = 0; i < column; i++)
+    {
+      TDcount++;
+      TDArr.push(TDcount);
+      str += "<td id='" + TDcount + "'></td>";
+    }
+    return str;
+  }
+
+  function createRow()
+  {
+    var str = "<tr>";
+    str += createColumn();
+    str += "</tr>";
+
+    return str;
+  }
+
+  function createTable()
+  {
+    var str = "";
+    var i = 0;
+    for(i = 0; i < row; i++)
+    {
+      str += createRow();
+    }
+    return str;
+  }
+
+  function assignValueToSquare(value)
+  {
+    var index = randomNumberGenerator(TDArr.length);
+    $("#" + TDArr[index]).attr("value", value);
+    TDArr.splice(index, 1);
+  }
+
+  function showHiddenValue(square)
+  {
+    square.html(square.attr("value"));
+  }
+
+  function hideHiddenValue(square)
+  {
+    square.html("");
+  }
+
+
+  var firstSquare = null;
+  var secondSquare = null;
+  var lock = 0;
+  $(document).ready(function() {
+    $("#memoryTable").append(createTable());
+
+    $("td").bind({
+      click: function() {
+        if(lock === 1)
+          return;
+
+        if($(this).attr("value") === undefined)
+          return;
+
+        if(firstSquare !== null && secondSquare !== null)
+          return;
+
+        if(firstSquare === null)
+        {
+          lock = 1;
+          firstSquare = $(this);
+          showHiddenValue(firstSquare);
+          lock = 0;
+        }
+        else if(firstSquare !== null)
+        {
+          lock = 1;
+          secondSquare = $(this);
+          showHiddenValue(secondSquare);
+          if(firstSquare.attr("id") === secondSquare.attr("id"))
+          {
+            hideHiddenValue(firstSquare);
+            hideHiddenValue(secondSquare);
+            firstSquare = secondSquare = null;
+            lock = 0;
+            return;
+          }
+
+          if(firstSquare.attr("value") == secondSquare.attr("value"))
+          {
+            setTimeout(function(){
+              lock = 1;
+              firstSquare.removeAttr("value");
+              secondSquare.removeAttr("value");
+              hideHiddenValue(firstSquare);
+              hideHiddenValue(secondSquare);
+              firstSquare.css("background-color", "white");
+              secondSquare.css("background-color", "white");
+              firstSquare = secondSquare = null;
+              lock = 0;
+            }, 1000);
+          }
+          else
+          {
+            setTimeout(function(){
+              lock = 1;
+              hideHiddenValue(firstSquare);
+              hideHiddenValue(secondSquare);
+              firstSquare = secondSquare = null;
+              lock = 0;
+            }, 1000);
+          }
+
+          lock = 0;
+        }
+      }
+    });
+
+    while(TDArr.length > 0)
+    {
+      var value = randomCharGenerator();
+      assignValueToSquare(value);
+      assignValueToSquare(value);
+    }
+  });
+</script>
+
 <html>
   <head>
     <title>Memory exercise</title>
   </head>
   <body>
+    <table id="memoryTable">
+    </table>
   </body>
 </html>
