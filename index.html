@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <style>
 table, td, tr {
-  border: 1px solid black;
+  border: 0px solid black;
   border-collapse: collapse;
 }
-td {
+
+div[rel='show'] {
+  background-color:white;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+div[rel='cover'] {
   background-color:red;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
 }
 </style>
 
 <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
 <script>
-  var row = 6;
-  var column = 6;
+  var row = 4;
+  var column = 4;
   var TDcount = 0;
   var TDArr = new Array();
 
@@ -37,7 +48,8 @@ td {
     {
       TDcount++;
       TDArr.push(TDcount);
-      str += "<td id='" + TDcount + "'></td>";
+      str += "<td><div><div id='" + TDcount + "' rel='cover'></div>";
+      str += "<div id='s" + TDcount + "' style='display:none' rel='show'></div></div></td>";
     }
     return str;
   }
@@ -66,19 +78,34 @@ td {
   {
     var index = randomNumberGenerator(TDArr.length);
     $("#" + TDArr[index]).attr("value", value);
+    $("#s" + TDArr[index]).html(value);
+
     TDArr.splice(index, 1);
   }
 
   function showHiddenValue(square)
   {
-    square.html(square.attr("value"));
+    var id = square.attr("id");
+    $("#" + id).slideUp({
+      complete:function()
+      {
+        $("#s" + id).show();
+        lock = 0;
+      }
+    });
   }
 
-  function hideHiddenValue(square)
+  function hideBothValue()
   {
-    square.html("");
-  }
+    $("#s"+firstSquare.attr("id")).hide();
+    $("#s"+secondSquare.attr("id")).hide();
 
+    firstSquare.slideDown();
+    secondSquare.slideDown();
+
+    firstSquare = secondSquare = null;
+    lock = 0;
+  }
 
   var firstSquare = null;
   var secondSquare = null;
@@ -86,7 +113,7 @@ td {
   $(document).ready(function() {
     $("#memoryTable").append(createTable());
 
-    $("td").bind({
+    $("div[rel='cover']").bind({
       click: function() {
         if(lock === 1)
           return;
@@ -102,21 +129,12 @@ td {
           lock = 1;
           firstSquare = $(this);
           showHiddenValue(firstSquare);
-          lock = 0;
         }
         else if(firstSquare !== null)
         {
           lock = 1;
           secondSquare = $(this);
           showHiddenValue(secondSquare);
-          if(firstSquare.attr("id") === secondSquare.attr("id"))
-          {
-            hideHiddenValue(firstSquare);
-            hideHiddenValue(secondSquare);
-            firstSquare = secondSquare = null;
-            lock = 0;
-            return;
-          }
 
           if(firstSquare.attr("value") == secondSquare.attr("value"))
           {
@@ -124,10 +142,6 @@ td {
               lock = 1;
               firstSquare.removeAttr("value");
               secondSquare.removeAttr("value");
-              hideHiddenValue(firstSquare);
-              hideHiddenValue(secondSquare);
-              firstSquare.css("background-color", "white");
-              secondSquare.css("background-color", "white");
               firstSquare = secondSquare = null;
               lock = 0;
             }, 1000);
@@ -136,14 +150,10 @@ td {
           {
             setTimeout(function(){
               lock = 1;
-              hideHiddenValue(firstSquare);
-              hideHiddenValue(secondSquare);
+              hideBothValue();
               firstSquare = secondSquare = null;
-              lock = 0;
             }, 1000);
           }
-
-          lock = 0;
         }
       }
     });
