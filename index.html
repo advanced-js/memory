@@ -24,6 +24,7 @@ div[rel='cover'] {
 
 <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
 <script>
+  var score = 0;
   var row = 4;
   var column = 4;
   var TDcount = 0;
@@ -107,10 +108,8 @@ div[rel='cover'] {
     lock = 0;
   }
 
-  var firstSquare = null;
-  var secondSquare = null;
-  var lock = 0;
-  $(document).ready(function() {
+  function setup()
+  {
     $("#memoryTable").append(createTable());
 
     $("div[rel='cover']").bind({
@@ -132,12 +131,13 @@ div[rel='cover'] {
         }
         else if(firstSquare !== null)
         {
-          lock = 1;
           secondSquare = $(this);
           showHiddenValue(secondSquare);
 
           if(firstSquare.attr("value") == secondSquare.attr("value"))
           {
+            score++;
+            $("#score").html(score);
             setTimeout(function(){
               lock = 1;
               firstSquare.removeAttr("value");
@@ -148,10 +148,11 @@ div[rel='cover'] {
           }
           else
           {
+            score--;
+            $("#score").html(score);
             setTimeout(function(){
               lock = 1;
               hideBothValue();
-              firstSquare = secondSquare = null;
             }, 1000);
           }
         }
@@ -164,6 +165,42 @@ div[rel='cover'] {
       assignValueToSquare(value);
       assignValueToSquare(value);
     }
+  }
+
+  function changeSize()
+  {
+    row = $("#row").val();
+    column = $("#column").val();
+    if((row * column) % 2 === 1)
+    {
+      alert((row * column) + " is not even! Row times column must be even");
+      return;
+    }
+    $("#memoryTable").empty();
+    setup();
+  }
+
+  function reset()
+  {
+    score = 0;
+    $("#score").html(score);
+    firstSquare = secondSquare = null;
+    $("div[rel='show']:visible").each(function(){
+      $(this).hide();
+      var value = $(this).html();
+      var id = $(this).attr("id").substring(1);
+      $("#"+id).attr("value", value);
+      $("#"+id).show();
+    });
+  }
+  var firstSquare = null;
+  var secondSquare = null;
+  var lock = 0;
+  $(document).ready(function() {
+    setup();
+    $("#row").val(row);
+    $("#column").val(column);
+    $("#score").html(score);
   });
 </script>
 
@@ -172,7 +209,23 @@ div[rel='cover'] {
     <title>Memory exercise</title>
   </head>
   <body>
+    <table>
+    <tr>
+      <td>Rows:</td><td><input type="input" id="row" style="width:30px"></td>
+    </tr>
+    <tr>
+      <td>Height:</td><td><input type="input" id="column" style="width:30px"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="Change" onClick="changeSize();";></td><td></td>
+    </tr>
+    </table>
+
+    <br>
+    <input type="button" value="Reset" onClick="reset();">
     <table id="memoryTable">
     </table>
+    <br>
+    Score: <div id="score"></div>
   </body>
 </html>
