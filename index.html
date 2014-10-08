@@ -1,8 +1,239 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Memory exercise</title>
+    <title>MEMORY</title>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="blink.js"></script>
+
+    <style>
+      body{
+        background: rgb(38, 193, 253);
+      }
+      h1{
+        font-family: sans-serif;
+        font-size: 20px;
+      }
+      .box{
+        background: #FFF;
+      }
+    </style>
   </head>
   <body>
+  <h1>50 Shades Of Gray - The Hardest Game Of Memory Like Ever</h1>
+    <table width="400" height="400" cellspacing="20">
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+        <td id="" class="box" data-color="black"></td>
+        <td id="" class="box" data-color="gray"></td>
+      </tr>
+    </table>
+    <script>
+
+    var fiftyShades = [
+                            '#262626', '#292929', '#2B2B2B', '#2E2E2E', '#303030', '#333', '#363636', '#383838', '#3B3B3B', '#3D3D3D',
+                            '#404040', '#424242', '#454545', '#474747', '#4A4A4A', '#4D4D4D', '#4F4F4F', '#525252', '#545454', '#555',
+                            '#575757', '#595959', '#5C5C5C', '#5E5E5E', '#616161', '#636363', '#666', '#696969', '#6B6B6B', '#6E6E6E',
+                            '#707070', '#737373', '#757575', '#777', '#787878', '#7A7A7A', '#7D7D7D', '#7F7F7F', '#828282', '#858585',
+                            '#878787', '#888', '#8A8A8A', '#8C8C8C', '#8F8F8F', '#919191', '#949494', '#969696', '#999', '#9C9C9C',
+                            '#262626', '#292929', '#2B2B2B', '#2E2E2E', '#303030', '#333', '#363636', '#383838', '#3B3B3B', '#3D3D3D',
+                            '#404040', '#424242', '#454545', '#474747', '#4A4A4A', '#4D4D4D', '#4F4F4F', '#525252', '#545454', '#555',
+                            '#575757', '#595959', '#5C5C5C', '#5E5E5E', '#616161', '#636363', '#666', '#696969', '#6B6B6B', '#6E6E6E',
+                            '#707070', '#737373', '#757575', '#777', '#787878', '#7A7A7A', '#7D7D7D', '#7F7F7F', '#828282', '#858585',
+                            '#878787', '#888', '#8A8A8A', '#8C8C8C', '#8F8F8F', '#919191', '#949494', '#969696', '#999', '#9C9C9C'
+                          ];
+
+    var APP = APP || {};
+
+      APP.activeCards = [];
+
+      APP.determineMatch = function(){
+        if(APP.activeCards[0].color === APP.activeCards[1].color){ //MATCH
+          alert('Congratulations you won! The board will now be reset');
+          APP.blackoutActiveCards();
+          APP.resetStatus();
+        }
+        else{ //NO MATCH
+          alert('No match, please try again');
+          APP.blackoutActiveCards();
+          APP.resetStatus();
+        }
+      };
+
+      APP.blackoutActiveCards = function(){
+        var box1 = $('#' + APP.activeCards[0].id);
+        var box2 = $('#' + APP.activeCards[1].id);
+
+        setTimeout(function(){
+            box1.css('background-color', '#FFF');
+            box2.css('background-color', '#FFF');
+        }, 1000);
+      };
+
+      APP.resetStatus = function(){
+        APP.activeCards = [];
+      };
+
+      //REVEAL THE BOX's COLOR ON CLICK
+      $('.box').click(function setBgToDataColor(){
+        $(this).css('background-color', ($(this).attr('data-color')));
+      });
+
+      //LOGIC
+      $('.box').click(function touchCardsActive(){
+        
+        //Add the new card to the total active cards
+        APP.activeCards.push({
+                                  color: $(this).attr('data-color'),
+                                  id: $(this).attr('id')
+                                });
+
+        if(APP.activeCards.length >= 2){
+          APP.determineMatch();
+        }
+      });
+
+      APP.setGreys = function(){
+        var boxes = $('.box'),
+            shadesUsed = [];
+            //numTimesUsed = [];
+
+        for(var i = 0; i < boxes.length; i ++){
+          boxes[i].id = 'box' + (i + 1); //set the box ids
+        }
+
+        for(var i = 0; i < fiftyShades.length; i ++){
+          var randNum = Math.floor((Math.random() * fiftyShades.length)); // random number
+          
+          console.log('random number', randNum);
+
+            boxes[i].setAttribute('data-color', fiftyShades[randNum]);
+            fiftyShades.splice(randNum, 1);
+            console.log(fiftyShades.length + 'new length');
+            //DELETE fiftyShades[randNum]
+            //remove the value @ randNum from the array after it has been used TWICE
+        	//uuugh deal with you later
+        }
+
+      }
+      APP.setGreys();
+
+      
+      
+    </script>
   </body>
 </html>
