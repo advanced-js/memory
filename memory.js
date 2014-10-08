@@ -2,7 +2,7 @@ var first;
 var second;
 
 function storeVal(val) {
-    if(!first) {  
+    if( !first ) {  
         first = val;
     } else {
         second = val;
@@ -10,10 +10,9 @@ function storeVal(val) {
 }
 
 function isMatch(){
-    if (first === second) {
+    if ( first === second ) {
         return true;
     }
-    
     return false;
 }
 
