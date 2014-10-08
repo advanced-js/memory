@@ -4,19 +4,14 @@ var second;
 function storeVal(val) {
     if(!first) {  
         first = val;
-    } else if(!second) {
-        second = val;
     } else {
-        first = second;
         second = val;
-    }
+    } 
 }
 
 function isMatch(){
-    if(first && second){
-        if (first === second) {
-            return true;
-        }
+    if (first === second) {
+        return true;
     }
     
     return false;
@@ -30,18 +25,15 @@ function resetGrid(){
 
 $(".cell").click(function(e){
     var $obj = $(this);
-    if(!$obj.hasClass('clicked')){
+    if( !$obj.hasClass('clicked') && !$obj.hasClass('match') ){
         var val = $obj.html();
         $obj.addClass('clicked');
         storeVal(val);
-        if(second && first) {
+        if(first && second) {
             if ( isMatch() ){
-                $('.clicked').addClass('match').removeClass('clicked');
-                resetGrid();
-            } else {
-                resetGrid();
+                $('.clicked').addClass('match');
             }
+            resetGrid();
         }
     }
-    
 });

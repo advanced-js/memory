@@ -4,12 +4,15 @@
     color: grey;
     background-color: grey;
     margin-bottom: 5px;
+    padding: 10px;
 }
 
 .match {
     background-color: green;
+    color: white;
 }
 
 .clicked{
     background-color: orange;
+    color: blue;
 }
