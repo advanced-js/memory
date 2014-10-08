@@ -1,0 +1,15 @@
+.cell {
+    border: 1px solid black;
+    text-align: center;
+    color: grey;
+    background-color: grey;
+    margin-bottom: 5px;
+}
+
+.match {
+    background-color: green;
+}
+
+.clicked{
+    background-color: orange;
+}
