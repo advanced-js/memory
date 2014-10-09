@@ -1,52 +1,47 @@
 (function($) {
 	var colors = ['red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue', 'purple', 'purple', 'black', 'black', 'pink', 'pink'];
-	var clicked = ['',''];
+	var clicked = [];
 	var index = 0;
 	var colors = _.shuffle(colors);
-	var x =0;
 	for(var i = 0; i < 16; ++i ) {
-		var markup = '<div class="card ' + colors[i] + '"></div>';
+		var markup = '<article class=" ' + colors[i] + '"></article>';
 		$('.container').append(markup);
 	}
 
-	clickCard = function() {
-		$('.card').click(function(){
-			var color = $(this).attr('class').split(' ')[1];
+	$('article').click(function(){
+		// console.log(clicked.length);
+		if(clicked.length <= 1) {
 			var view = this;
-			$(this).css('background-color', color);
-			clicked[index] = color;
+			clicked[index] = $.trim($(view).attr('class'));
+			var color = $(view).attr('class');
+
+			// console.log(clicked);
+
+			$(view).css('background-color', color);
 
 			// flip flop the index
 			if(index === 0) {
 				index = 1;
 			} else {
-				// disable click
-				$('.card').off('click');
-
 				// hide both cards when they are equal
 				if(clicked[0] === clicked[1]){
-					color = '.' + color;
+					color = '.' + $.trim(color);
 					setTimeout(function(){
 						$(color).css('opacity', '0');
 					}, 500);
+					clicked = [];
 				}
-				// Timeout
+				// Flip the cards back
 				setTimeout(function(){
-					clicked[0] = '.' + clicked[0];
-					$(clicked[0]).css('background-color', '#CCC');
-
+					$("." + clicked[0]).css('background-color', '#CCC');
 					$(view).css('background-color', '#CCC');
-
-					clicked[0] = '';
-					clicked[1] = '';
-
-				}, 1000);
-
+					clicked = [];
+				}, 750);
 				index = 0;
-				$('.card').on('click', clickCard);
 			}
-		});
-	};
-	
-clickCard();
+		} else {
+			$('article').click(false);
+		}
+	});
+
 }(jQuery));
