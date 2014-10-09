@@ -149,13 +149,11 @@ div[rel='cover'] {
             if(firstSquare.attr("value") == secondSquare.attr("value"))
             {
               setScore(++score);
-              setTimeout(function(){
-                lock = 1;
-                firstSquare.removeAttr("value");
-                secondSquare.removeAttr("value");
-                firstSquare = secondSquare = null;
-                lock = 0;
-              }, 1000);
+              lock = 1;
+              firstSquare.removeAttr("value");
+              secondSquare.removeAttr("value");
+              firstSquare = secondSquare = null;
+              lock = 0;
             }
             else
             {
