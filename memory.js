@@ -2,7 +2,7 @@
 	var colors = ['red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue', 'purple', 'purple', 'black', 'black', 'pink', 'pink'];
 	var clicked = [];
 	var index = 0;
-	var colors = _.shuffle(colors);
+	colors = _.shuffle(colors);
 
 	// Generate cards
 	for(var i = 0; i < 16; ++i ) {
