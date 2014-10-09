@@ -5,19 +5,22 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="memory.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script src="memory.js"></script>
   </head>
   <body>
     <div class="container">
       <h1>Memory Game</h1>
       <div class="row">
-        <div class="col-md-6 cell">1</div>
-        <div class="col-md-6 cell">2</div>
+        <div class="col-xs-12">
+          <p>Please enter an even number greater than 0 to start memory game!</p>
+          <input type="number" id="gridSizeInput">
+          <button type="button" class="btn btn-primary" id="generateBtn">Generate</button>
+          <button type="button" class="btn btn-danger" id="resetBtn" style="display:none;">Reset</button>
+        </div>
       </div>
-      <div class="row">
-        <div class="col-md-6 cell">1</div>
-        <div class="col-md-6 cell">2</div>
+      <div class="row" id="board">
       </div>
-      <script src="memory.js"></script>
     </div>
   </body>
 </html>
