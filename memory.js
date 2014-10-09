@@ -10,7 +10,7 @@ $( function() {
         for (i=0; i < uniqueValues ; i++){
             arr.push(i);
             arr.push(i);
-        };
+        }
         arr = _.shuffle(arr); //randomize values
         for (i=0; i < values; i++){
             $board.append("<div class='col-md-2 col-sm-4 col-xs-6 cell'>" + arr[i] + "</div>"); 
