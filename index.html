@@ -2,7 +2,31 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <link href="memory.css" rel="stylesheet" type="text/css"/>
+    <script src="jquery.js"></script>
+    <script src="memory.js"></script>
   </head>
   <body>
+    <div class="control-container">
+      <div class="button">
+        <span class="counter">0</span>
+        Clicks
+      </div>
+      <div class="button">
+        <a onclick="reset();">Reset</a>
+      </div>
+    </div>
+    <div class="card-container">
+      <table>
+        <tr>
+          <td class="A"></td>
+          <td class="B"></td>
+        </tr>
+        <tr>
+          <td class="A"></td>
+          <td class="B"></td>
+        </tr>
+      </table>
+    </div>  
   </body>
-</html>
+</html> 
