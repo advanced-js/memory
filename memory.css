@@ -33,14 +33,18 @@ body {
 }
 
 table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 td {
   background-color: red;
   width:80px;
   height:80px;
   cursor: pointer;
+}
+
+.clicked{
+  display: hidden;
 }
 
 
