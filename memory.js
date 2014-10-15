@@ -42,12 +42,13 @@ $( function() {
 
     function clickHandler(event){
         var $obj = $(this);
+        //only allow clicks on cells that are not already matched or clicked
         if( !$obj.hasClass('clicked') && !$obj.hasClass('match') ){
             var val = $obj.html();
             $obj.addClass('clicked');
             storeVal(val);
-            if(first && second) {
-                disableClick();
+            if(first && second) { //check for match if 2 different cells are clicked
+                disableClick(); //disable any clicks to allow processing
                 if ( isMatch() ){
                     $('.clicked').addClass('match');
                     resetGrid(); //allow immediate next click
@@ -69,7 +70,7 @@ $( function() {
     
     $("#generateBtn").click(function(e){
         var gridSize = $("#gridSizeInput").val();
-        if (gridSize && gridSize % 2 === 0){
+        if (gridSize && gridSize % 2 === 0 && gridSize > 0){
             generateBoard(gridSize);
             $(this).prop("disabled",true);
             $("#resetBtn").show();
