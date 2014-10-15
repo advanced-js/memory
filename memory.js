@@ -3,6 +3,10 @@ $( function() {
     var first;
     var second;
     var $board = $('#board');
+    var $score = $('#score');
+    var $scoreValue = $('#scoreValue');
+
+    var score = 0;
 
     function generateBoard(values){
         var arr = [];
@@ -40,10 +44,16 @@ $( function() {
         enableClick();
     }
 
+    function incrementScore(){
+        score = score + 1;
+        $scoreValue.html(score);
+    }
+
     function clickHandler(event){
         var $obj = $(this);
         //only allow clicks on cells that are not already matched or clicked
         if( !$obj.hasClass('clicked') && !$obj.hasClass('match') ){
+            incrementScore();
             var val = $obj.html();
             $obj.addClass('clicked');
             storeVal(val);
@@ -74,6 +84,7 @@ $( function() {
             generateBoard(gridSize);
             $(this).prop("disabled",true);
             $("#resetBtn").show();
+            $score.show();
         } else {
             alert('Please enter valid value!');
         }
@@ -83,6 +94,9 @@ $( function() {
         $board.empty();
         $("#generateBtn").prop("disabled", false);
         $(this).hide();
+        score = 0;
+        $score.hide();
+        $scoreValue.html(score);
     });
 
 });
