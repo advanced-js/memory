@@ -24,7 +24,7 @@ MemoryGame.prototype.updateScore = function() {
 MemoryGame.prototype.showScore = function() {
 	$('.score').empty()
 			   .append(this.score);
-}
+};
 
 MemoryGame.prototype.registerEvents = function() {
 	var view = this;
