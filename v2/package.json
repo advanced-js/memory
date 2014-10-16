@@ -1,0 +1,20 @@
+{
+  "name": "memory",
+  "description": "memory() exercise",
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/advanced-js/memory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advanced-js/memory/issues"
+  },
+  "homepage": "https://github.com/advanced-js/memory",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-html-validation": "^0.1.15"
+  }
+}

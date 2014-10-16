@@ -1,0 +1,62 @@
+body {
+  margin: 20px;
+  font-family: helvetica;
+  font-size: 14px;
+}
+
+.control-container {
+  margin: 10px;
+  text-align: center;
+  display: block;
+}
+
+.button, .reset-button {
+  width: 80px;
+  padding: 7px 10px;
+  margin: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #bf1;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #8b1;
+}
+
+.reset-button:hover {
+  background-color: #8b1;
+}
+
+.card-container {
+  width: 372px;
+  height: 372px;
+  margin: 20px auto;
+}
+
+.card {
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  background-color: #8D005A;
+  color: #8D005A;
+  display: inline-block;
+}
+
+.card:hover {
+  background-color: #54003b;
+  color: #54003b;
+}
+
+.card.flipped {
+  background-color: white;
+  color: black;
+}
+
+.card.matched {
+  background-color: black;
+  color: black;
+}
