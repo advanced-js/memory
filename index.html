@@ -148,6 +148,7 @@ function resetBoard() {
   score = 0;
   $('h3 span').text(score);
   $('td').removeClass().find(cover).css({'display':'block','visibility':'visible'});
+  $(base).attr('class', 'base');
   newBoard();
 }
 
