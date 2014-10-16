@@ -1,7 +1,7 @@
 
-var memory = window.memory || {};
+var game = window.game || {};
 
-memory = (function() {
+game.memory = (function() {
     
     var self= {};
     var first;
@@ -41,7 +41,7 @@ memory = (function() {
 
     var getIcon = function() {
         var iconCount = icons.length;
-        var num = memory.helper.getRandomArbitrary(iconCount);
+        var num = game.memory.helper.getRandomArbitrary(iconCount);
         return icons.splice(num, 1)[0];
     };
 
@@ -97,7 +97,7 @@ memory = (function() {
 })();
 
 
-memory.helper = (function(){
+game.memory.helper = (function(){
     var self = {};
     self.getRandomArbitrary = function(max) {
         var min = 0;
