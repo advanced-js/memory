@@ -1,4 +1,3 @@
-function Memory() {
-  var model = new Memory.Model();
-  return new Memory.Controller(model);
-}
+window.Memory = function() {
+  return new Memory.Controller();
+};

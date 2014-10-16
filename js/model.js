@@ -36,6 +36,14 @@ Memory.Model.prototype.takeGuess = function(guess) {
 	}
 }
 
+Memory.Model.prototype.resetBoard = function(colors) {
+	
+	$('.container').empty();
+	console.log(this);
+	$(this).empty();
+	console.log(this);
+};
+
 
 
 

@@ -3,9 +3,10 @@
 var Memory = window.Memory = window.Memory || {};
 
 Memory.View = function(colors) {
+	this.$el = $('.container');
 	for(var i = 0; i < 16; ++i ) {
 		var markup = '<article class="' + colors[i] + '"></article>';
-		$('.container').append(markup);
+		this.$el.append(markup);
 	}
 };
 
