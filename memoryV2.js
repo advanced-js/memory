@@ -1,3 +1,5 @@
+$( document ).ready(function() {
+  
 var index = 0;
 var cell1;
 var cell1t;
@@ -48,3 +50,4 @@ var cell2t;
     });
 
 
+});
