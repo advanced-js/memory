@@ -1,47 +1,75 @@
 (function($) {
-	var colors = ['red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue', 'purple', 'purple', 'black', 'black', 'pink', 'pink'];
-	var clicked = [];
-	var index = 0;
-	colors = _.shuffle(colors);
+
+	var MemoryGame = function() {
+	this.colors = ['AA26FF', 'AA26FF', 'AAE4FF', 'AAE4FF', 'AAE457', 'AAE457', 'DB3270', 'DB3270', '2BDB93', '2BDB93', 'FF0000', 'FF0000', '000000', '000000', '1784FF', '1784FF'];
+	this.clicked = [];
+	this.index = 0;
+	this.score = 0;
+
+}; // end memory game
+
+MemoryGame.prototype.shuffleColors = function() {
+	this.colors = _.shuffle(this.colors);
+};
+MemoryGame.prototype.renderBoard = function() {
+	this.shuffleColors();
 	for(var i = 0; i < 16; ++i ) {
-		var markup = '<article class=" ' + colors[i] + '"></article>';
+		var markup = '<article class="' + this.colors[i] + '"></article>';
 		$('.container').append(markup);
 	}
+};
+MemoryGame.prototype.updateScore = function() {
+	this.score += 10;
+};
+MemoryGame.prototype.showScore = function() {
+	$('.score').empty()
+			   .append(this.score);
+}
 
-	$('article').click(function(){
-		// console.log(clicked.length);
-		if(clicked.length <= 1) {
-			var view = this;
-			clicked[index] = $.trim($(view).attr('class'));
-			var color = $(view).attr('class');
+MemoryGame.prototype.registerEvents = function() {
+	var view = this;
+	$('article').click(function() {
+		// You can't click on empty items
+		if($(this).css('opacity') === '0') {
+			return;
+		}
 
-			// console.log(clicked);
-
-			$(view).css('background-color', color);
+		if(view.clicked.length <= 1) {
+			view.clicked[view.index] = $(this).attr('class');
+			var color = $(this).attr('class');
+			$(this).css('background-color', '#' + color);
 
 			// flip flop the index
-			if(index === 0) {
-				index = 1;
+			if(view.index === 0) {
+				view.index = 1;
 			} else {
 				// hide both cards when they are equal
-				if(clicked[0] === clicked[1]){
-					color = '.' + $.trim(color);
+				if(view.clicked[0] === view.clicked[1]){
+					color = '.' + color;
 					setTimeout(function(){
 						$(color).css('opacity', '0');
 					}, 500);
-					clicked = [];
+					view.clicked = [];
+					view.updateScore();
+					view.showScore();
 				}
+				var self = this;
 				// Flip the cards back
 				setTimeout(function(){
-					$("." + clicked[0]).css('background-color', '#CCC');
-					$(view).css('background-color', '#CCC');
-					clicked = [];
+					$("." + view.clicked[0]).css('background-color', '#CCC');
+					$(self).css('background-color', '#CCC');
+					view.clicked = [];
 				}, 750);
-				index = 0;
+				view.index = 0;
 			}
 		} else {
 			$('article').click(false);
 		}
 	});
+};
+var game = new MemoryGame();
+	game.renderBoard();
+	game.showScore();
+	game.registerEvents();
 
 }(jQuery));

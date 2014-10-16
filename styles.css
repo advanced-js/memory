@@ -11,3 +11,7 @@ article {
 	display: inline-block;
 	margin: 10px;
 }
+h1,
+h2 {
+    text-align: center;
+}
