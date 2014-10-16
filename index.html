@@ -112,13 +112,11 @@ $('td').click(function() {
   if (!$(this).hasClass("uncovered") && square1 === '') {
     uncover(this);
     square1 = $(this);
-    console.log("square1 = " + $(this).find(base).attr("class"));
   }
 
   else if (!$(this).hasClass("uncovered") && square1 !== '') {
      uncover(this);
      square2 = $(this);
-     console.log("square2 = " + $(this).find(base).attr("class"));
     
     if ($('.uncovered').length === 2 && !$(this).hasClass('match')) {
       checkMatch();
@@ -173,7 +171,6 @@ function checkMatch() {
     $(square2).addClass("match").removeClass("uncovered").find(cover).css('display', 'none');
     score = score + 1;
     $('h3 span').text(score);
-    console.log("match!");
     square1 = '';
     square2 = '';
   } else {
