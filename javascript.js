@@ -41,7 +41,7 @@ game.memory = (function() {
 
     var getIcon = function() {
         var iconCount = icons.length;
-        var num = game.memory.helper.getRandomArbitrary(iconCount);
+        var num = game.helper.getRandomArbitrary(iconCount);
         return icons.splice(num, 1)[0];
     };
 
@@ -97,7 +97,7 @@ game.memory = (function() {
 })();
 
 
-game.memory.helper = (function(){
+game.helper = (function(){
     var self = {};
     self.getRandomArbitrary = function(max) {
         var min = 0;
