@@ -2,7 +2,190 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <style>
+      body {
+        font-family: Arial;
+      }
+      h1 {
+        margin: 40px auto 20px;
+        text-align: center;
+        color: #666;
+      }
+      h3 {
+        margin: 20px auto;
+        text-align: center;
+        color: #666;
+      }
+      table {
+        border: collapse;
+        width: 400px;
+        height: 400px;
+        margin: 0 auto 0;
+      }
+      td {
+        border: 1px solid #aaa;
+        cursor: pointer;
+        background-color: #fff;
+        border: 2px solid #ddd;
+        height: 98px;
+        width: 98px;
+      }
+      .base {
+        background-color: #fff;
+        border: 2px solid #ddd;
+        height: 100px;
+        width: 100px;
+      }
+      .cover {
+        background-color: #eee;
+        height: 100px;
+        width: 100px;
+        float: left;
+        margin: 2px 0 0 2px;
+      }
+      button {
+        display: block;
+        color: #333;
+        margin: 10px auto;
+        font-size: 14px;
+        padding: 8px 25px;
+        background-color: lightgreen;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:focus {
+        outline: none;
+      }
+    </style>
   </head>
   <body>
+    <h1>Memory!</h1>
+    <h3>Score: <span></span></h3>
+    <table>
+      <tr>
+        <td class="test"><div class="cover"></div><div class="base"></div></td>
+        <td class="test"><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+      </tr>
+      <tr>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+      </tr>
+      <tr>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+      </tr>
+      <tr>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+        <td><div class="cover"></div><div class="base"></div></td>
+      </tr>
+    </table>
+    <button id="reset">reset</button>
   </body>
 </html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+var memoryArray = ['red', 'red', 'blue', 'blue', 'lightgreen', 'lightgreen', 'purple', 'purple', 'pink', 'pink', 'yellow', 'yellow', 'orange', 'orange', 'lightblue', 'lightblue'];
+var cover = $('.cover');
+var base = $('.base');
+var square1 = '';
+var square2 = '';
+var score = 0;
+
+$('#reset').click(function() {
+  resetBoard();
+});
+
+$('td').click(function() {
+  
+
+  if (!$(this).hasClass("uncovered") && square1 === '') {
+    uncover(this);
+    square1 = $(this);
+    console.log("square1 = " + $(this).find(base).attr("class"));
+  }
+
+  else if (!$(this).hasClass("uncovered") && square1 !== '') {
+     uncover(this);
+     square2 = $(this);
+     console.log("square2 = " + $(this).find(base).attr("class"));
+    
+    if ($('.uncovered').length === 2 && !$(this).hasClass('match')) {
+      checkMatch();
+    }
+  }
+});
+
+Array.prototype.memoryShuffle = function() {
+  var i = this.length, j, temp;
+  while (--i > 0) {
+    j = Math.floor(Math.random() * (i+1));
+    temp = this[j];
+    this[j] = this[i];
+    this[i] = temp;
+  }
+}
+
+function newBoard() {
+  var bases = $('td .base');
+  
+  memoryArray.memoryShuffle();
+  
+  for (var i=0; i < memoryArray.length; i++) {
+    $(bases[i]).addClass(memoryArray[i]).css('background-color', memoryArray[i]);
+  }
+}
+
+function resetBoard() {
+  score = 0;
+  $('h3 span').text(score);
+  $('td').removeClass().find(cover).css({'display':'block','visibility':'visible'});
+  newBoard();
+}
+
+function uncover(tile) {
+  $(tile).addClass('uncovered').find(cover).css('visibility', 'hidden');
+}
+
+function noMatch(tile1, tile2) {
+  $(tile1).removeClass('uncovered').find(cover).css('visibility', 'visible');
+  $(tile2).removeClass('uncovered').find(cover).css('visibility', 'visible');
+  val1 = '';
+  val2 = '';
+}
+
+function checkMatch() {
+  var val1 = square1.find(base).attr("class");
+  var val2 = square2.find(base).attr("class");
+
+  if (val1 === val2) {
+    $(square1).addClass("match").removeClass("uncovered").find(cover).css('display', 'none');
+    $(square2).addClass("match").removeClass("uncovered").find(cover).css('display', 'none');
+    score = score + 1;
+    $('h3 span').text(score);
+    console.log("match!");
+    square1 = '';
+    square2 = '';
+  } else {
+    setTimeout (function() {
+      noMatch(square1, square2);
+      square1 = '';
+      square2 = '';
+    }, 300);    
+  }
+}
+
+resetBoard();
+
+
+</script>
