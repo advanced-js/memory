@@ -1,22 +1,4 @@
-// 'use strict';
 
-		// startGame
-			// set points to zero
-			// create cards
-			// put cards on screen
-			// add numbers to boxes
-		// playGame
-			// flip card
-			// get flipped card value
-			// leave card unflipped
-			// flip second card
-			// get second card value
-			// check two cards if value is equal
-			// if value is equal leave unflipped
-			// add points to score
-			// if value is unequal reflip cards
-		// endGame
-	// }
 var app = angular.module('memoryApp', [
     'ngAnimate'
   ]);
