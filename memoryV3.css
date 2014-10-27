@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.card{
+	
+	background-color:#999;
+	width:100px;
+	height:100px;
+	padding: 2px;
+	margin: 2px;
+	float:left;
+}
+
+
+.Card{
+	
+	background-color:#999;
+	width:100px;
+	height:100px;
+	padding: 2px;
+	margin: 2px;
+	float:left;
+}
+
+#input{
+	border-style: solid;
+	border-color:#000;
+	border-width: 1px;
+	padding: 1px;
+	width: 500px;
+	height: 150px;
+	margin: 10px;
+	
+}
