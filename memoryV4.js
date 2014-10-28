@@ -3,10 +3,10 @@
 $( document ).ready(function() {
 var ABC = {};
 	ABC.index = 0;
-	ABC.cell1;
-	ABC.cell1t;
-	ABC.cell2;
-	ABC.cell2t;
+	ABC.cell1 = '';
+	ABC.cell1t = '';
+	ABC.cell2 = '';
+	ABC.cell2t = '';
 	ABC.score = 0;
 	ABC.turns = 0;
 	
@@ -40,7 +40,7 @@ var ABC = {};
 			array[j] = temp;
 		}
 		return array;
-	};
+	}
 	
 	
 	$('#reset').click(function(){
@@ -60,7 +60,6 @@ var ABC = {};
       if(ABC.index<2){
             //var cell = (event.target.id);
 			var arrayindex = this.id.split('id')[1];
-			console.log(arrayindex)
             if ($(this).css('background-color') == "rgb(0, 0, 0)"){
                 $(this).css('background-color', 'yellow'); 
                 ABC.index++;  
