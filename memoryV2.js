@@ -5,6 +5,8 @@ var cell1;
 var cell1t;
 var cell2;
 var cell2t;
+var score = 0;
+var turns = 0;
 
 
     $('td').click(function(event){
@@ -32,6 +34,8 @@ var cell2t;
                             $('#' + cell2).css('background-color', 'grey');
                             $('#' + cell2).css('color', 'grey');
                             index = 0;
+							score++;
+							turns++;
                         
                              }
                         
@@ -39,7 +43,8 @@ var cell2t;
                             alert('not a pair');
                             $('#' + cell1).css('background-color', 'black'); 
                             $('#' + cell2).css('background-color', 'black');
-                            index = 0;  
+                            index = 0; 
+							turns++; 
                         
                           }
                       
