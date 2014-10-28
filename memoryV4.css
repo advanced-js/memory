@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/* CSS Document */
+.board > div {
+    background-color: black;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    border-left: 1px solid #ccc;
+    cursor: pointer;
+    float: left;
+    height: 125px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    width: 125px;
+	text-align:center;
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:36px;
+}
+
+.left-square {
+    clear: left;
+}
+
+.leaderboard{
+	width: 125px;
+}
+
+.leadertable {
+    background-color:#DAD8D8;
+	border-bottom: solid;
+	border-bottom-color:#929398;
+}
+
+#reset {
+    float:left;
+	margin-top: 5px;
+	width: 100px;
+	background-color:#DAD8D8;
+	text-align: center;
+	border-bottom: solid;
+	border-color:#929398;
+	cursor: pointer;
+}
+/*
+.board > div {
+    -moz-box-shadow: 0px 0px 1px 1px #666;
+    -webkit-box-shadow: 0px 0px 1px 1px #666;
+    box-shadow: 0px 0px 1px 1px #666;
+    color: #000;
+    font-size: 125px;
+    line-height: 100px;
+    font-weight: bold;
+    text-align: center;
+}
+
+*/
