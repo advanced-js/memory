@@ -94,14 +94,15 @@ $( document ).ready(function() {
 		}
 	
 	
-		var totalcards = calcCards(ABC.rows, ABC.cols); 
-		if (totalcards ===0 || totalcards%2 !== 0 ){          		        
+		
+		ABC.totalcards = ABC.rows *ABC.cols;
+		if (ABC.totalcards ===0 || ABC.totalcards%2 !== 0 ){         		        
 			errorMsg = 'yes';
 			msg = '*product not % 2';
 			$('#outputcalce').html(msg).css('color', 'red'); 
 				
 		}
-		if (totalcards !==0 && totalcards%2 === 0 ){ 
+		if (ABC.totalcards !==0 && ABC.totalcards%2 === 0 ){ 
 		$('#outputcalce').html('');
 		}
 		
@@ -117,17 +118,6 @@ $( document ).ready(function() {
 		shuffleArray(ABC.cardvalues);			
 	}
 
-
-
-
-
-//function to calculate the total number of memory cards
-	function calcCards(rows, cols) {
-		var rows = rows;					
-		var cols = cols;					
-		ABC.totalcards =  rows * cols;   
-		return(ABC.totalcards);
-	}
 
 
 
