@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/* CSS Document */
+.memory{
+	font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+.board > div {
+    background-color: black;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    border-left: 1px solid #ccc;
+    cursor: pointer;
+    float: left;
+    height: 125px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    width: 125px;
+	text-align:center;
+	font-size:36px;
+	color:black;
+}
+
+.left-square {
+    clear: left;
+}
+
+#input {
+    float: left;
+	margin:10px;
+	border-bottom: solid;
+	border-bottom-color:#929398;
+}
+
+.leaderboard{
+	float:left;
+	margin: 10px;
+}
+
+.leadertable {
+    width: 200px;
+	border-bottom: solid;
+	border-bottom-color:#929398;
+}
+
+#outputcalc{
+	background-color:#ECECEC;
+	font: -webkit-small-control;
+	border-width:2px;
+	border-style:solid;
+	border-color:rgb(238, 238, 238);
+
+}
+
+#outputcalce, #rowe, #cole{
+	font: -webkit-small-control;
+}
+.space{
+	visibility: hidden;
+}
+
+
+legend, #leaderlabel{
+	font-size:25px;
+}
+
