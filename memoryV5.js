@@ -37,6 +37,8 @@ $( document ).ready(function() {
 		ABC.cols = 0;
 		ABC.cardvalues = [];
 		$('.board > div').remove();
+		$('form').find("input[type=text], textarea").val("");
+		$('#outputcalc').html('');
 		
 	});
 
