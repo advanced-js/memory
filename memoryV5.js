@@ -53,7 +53,7 @@ $( document ).ready(function() {
 		errorMsg = '';
 	
 		ABC.rows = document.getElementById('row').value;
-		if (ABC.rows =='' || isNaN(ABC.rows)) { 
+		if (ABC.rows ==='' || isNaN(ABC.rows)) { 
 			msg = '*Enter valid numeric values'; 
 			$('#rowe').html(msg).css('color', 'red');   
 			errorMsg = "yes";
@@ -64,7 +64,7 @@ $( document ).ready(function() {
 	
 	
 		ABC.cols = document.getElementById('col').value;
-		if (ABC.cols =='' || isNaN(ABC.cols)) {  
+		if (ABC.cols ==='' || isNaN(ABC.cols)) {  
 			msg = '*Enter valid numeric values'; 
 			$('#cole').html(msg).css('color', 'red');       		      
 			errorMsg = "yes";
@@ -95,19 +95,19 @@ $( document ).ready(function() {
 	
 	
 		var totalcards = calcCards(ABC.rows, ABC.cols); 
-		if (totalcards ==0 || totalcards%2 !== 0 ){          		        
+		if (totalcards ===0 || totalcards%2 !== 0 ){          		        
 			errorMsg = 'yes';
 			msg = '*product not % 2';
 			$('#outputcalce').html(msg).css('color', 'red'); 
 				
 		}
-		if (totalcards !==0 && totalcards%2 == 0 ){ 
+		if (totalcards !==0 && totalcards%2 === 0 ){ 
 		$('#outputcalce').html('');
 		}
 		
 		
 	
-		if (errorMsg != '') { 
+		if (errorMsg !== '') { 
 			$('#outputcalc').html('Fixes needed').css('color', 'red');
 			return(false);
 		}
@@ -115,7 +115,7 @@ $( document ).ready(function() {
 		$('#outputcalc').html(ABC.totalcards).css('color', 'black');
 		newCards(ABC.totalcards);
 		shuffleArray(ABC.cardvalues);			
-	};
+	}
 
 
 
@@ -127,7 +127,7 @@ $( document ).ready(function() {
 		var cols = cols;					
 		ABC.totalcards =  rows * cols;   
 		return(ABC.totalcards);
-	};
+	}
 
 
 
@@ -136,7 +136,7 @@ $( document ).ready(function() {
 		this.value = value;
 		$('.board').append('<div class='+divclass+' id='+divid+'>');
 		
-	};
+	}
 
 
 
@@ -168,7 +168,7 @@ $( document ).ready(function() {
 		}
 		
 	
-	};
+	}
 
 //memory logic from V2/V4 with some changes
 //this keeps track of the index (1st or second click)
