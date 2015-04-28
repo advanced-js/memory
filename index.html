@@ -1,8 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-  </head>
-  <body>
-  </body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="memory.css">
+        <script src="gameboard.js"></script>
+        <script src="piecesArray.js"></script>
+        <script src="clicks.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <title>Memory exercise</title>
+    </head>
+    <body>
+        <table>
+            <tbody class="gameboard">
+            </tbody>
+        </table>
+    </body>
+    <script>
+        $(document).ready(function() {
+            var gameboard = new Gameboard(6);
+            gameboard.buildBoard();
+
+            var clicks = new Clicks();
+            
+            $("td").click(function(e) {
+                clicks.incrementClicks();
+                gameboard.showPiece($(e.target).children(".piece"));
+                if (clicks.numberOfClicks === 2) {
+                    gameboard.checkMatch();
+                }
+            });
+        });
+    </script>
 </html>
