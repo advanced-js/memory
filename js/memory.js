@@ -1,65 +1,130 @@
 (function() {
+	'use strict';
+
+	var cardAlreadyShowing = null;
+	var totalTries = 0;
+
+	var checkForMatch = function(thisCard) {
+		$('#board').addClass('checking'); // disable clicks while processing
+		if (thisCard !== cardAlreadyShowing && thisCard.color === cardAlreadyShowing.color) {
+			/* if they clicked on two (different) cards of the same color */
+			handleMatch(thisCard)
+		} else {
+			handleMismatch(thisCard);
+		}
+		totalTries++;
+		if ($('.out-of-play').length === $('.each-card').length) {
+			alert('Congratulations, you won! It took you ' + totalTries + ' tries.');
+		}
+	};
+
+	var handleMatch = function(thisCard) {
+		alert('Hooray, you found a match!');
+		thisCard.removeFromPlay();
+		cardAlreadyShowing.removeFromPlay();
+		cardAlreadyShowing = null;
+		$('#board').removeClass('checking');
+	};
+
+	var handleMismatch = function(thisCard) {
+		/* show colors for one second, then hide again */
+		setTimeout(function() {
+			thisCard.hideCard();
+			cardAlreadyShowing.hideCard();
+			cardAlreadyShowing = null;
+			$('#board').removeClass('checking');
+		}, 1000);
+	};
+
+	var getNextColor = function() {
+		var redVal = Math.floor(Math.random() * 256);
+		var greenVal = Math.floor(Math.random() * 256);
+		var blueVal = Math.floor(Math.random() * 256);
+		return 'rgba(' + redVal + ',' + greenVal + ',' + blueVal + ', 0.7)';
+	};
+
+	/**
+	 * Card constructor
+	 *
+	 * @constructor
+	 * @param {string} color The color to make this card
+	 */
 	var Card = function(color) {
+		var thisCard = this;
+
 		this.color = color;
-		this.cardEl = $('<div>').addClass('each-card').data('background-color', color);
 		this.create = function() {
+			this.cardEl = $('<div>')
+				.addClass('each-card')
+				.data('background-color', color)
+				.on('click', function () {
+					thisCard.showCard();
+					if (cardAlreadyShowing) {
+						checkForMatch(thisCard);
+					} else {
+						cardAlreadyShowing = thisCard;
+					}
+				});
 			return this.cardEl;
 		};
-		this.show = function() {
-			this.cardEl.css('background-color', this.data('background-color'));
-
+		this.showCard = function() {
+			this.cardEl.css('background-color', this.cardEl.data('background-color'));
 		};
-		this.hide = function() {
+		this.hideCard = function() {
 			this.cardEl.css('background-color', '#ccc');
 		};
+		this.removeFromPlay = function() {
+			this.cardEl.addClass('out-of-play');
+		};
 	};
 
-	var Board = function(size) {
-		/* size represents number of cards on one side of the square */
-		this.size = size;
-		this.board = $('#board');
+	/**
+	 * Deck constructor
+	 *
+	 * @constructor
+	 * @param {number} totalCardCount The number of cards to put in the deck
+	 */
+	var Deck = function(totalCardCount) {
 		this.cards = [];
-		this.cardsShowing = [];
-		this.totalCardCount = this.size * this.size;
-		this.createDeck = function() {
-			var newCard;
-			var color = getRandomColor();
-			var totalCardCount = size * size;	
-			for (var i = 0; i < this.totalCardCount; i++) {
-				if (!(i % 2)) {
-					color = getRandomColor();
+		this.create = function() {
+			var color = getNextColor();
+			for (var i = 0; i < totalCardCount; i++) {
+				if (i % 2 === 0) {
+					color = getNextColor();
 				}
-				newCard = new Card(color);
-				newCard.cardEl.on('click', function() {
-					$(this).css('background-color', $(this).data('background-color'));
-				});
-				this.cards.push(newCard);
+				this.cards.push(new Card(color));
 			}
 		};
-		this.shuffleDeck = function() {
+		this.shuffle = function() {
 			this.cards = this.cards.sort(function() {
-		  		return .5 - Math.random();
+		  		return 0.5 - Math.random();
 			});
-		};
-		this.dealBoard = function() {
-			this.createDeck();
-			this.shuffleDeck();
-			for (var i = 0; i < size; i++) {
-				for (var j = 0; j < size; j++) {
-					var thisCard = this.cards.pop();
-					this.board.append(thisCard.create());
-				}
-				this.board.append('<br>');
-			}		
 		};
 	};
 
-	var getRandomColor = function() {
-		var redVal = Math.floor(Math.random() * 255);
-		var greenVal = Math.floor(Math.random() * 255);
-		var blueVal = Math.floor(Math.random() * 255);
-		var opacity = 0.5;
-		return 'rgba(' + redVal + ',' + greenVal + ',' + blueVal + ',' + opacity + ')';
+	/**
+	 * Board constructor
+	 *
+	 * @constructor
+	 * @param {number} size The number of cards on one side of the square
+	 */
+	var Board = function(size) {
+		this.size = size;
+		this.$boardEl = $('#board');
+		this.cardsShown = [];
+		this.totalCardCount = this.size * this.size;
+		this.dealBoard = function() {
+			var deck = new Deck(this.totalCardCount);
+			deck.create();
+			deck.shuffle();
+			for (var i = 0; i < size; i++) {
+				for (var j = 0; j < size; j++) {
+					var thisCard = deck.cards.pop();
+					this.$boardEl.append(thisCard.create());
+				}
+				this.$boardEl.append('<br>');
+			}		
+		};
 	};
 
 	$(document).ready(function() {

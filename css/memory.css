@@ -6,3 +6,10 @@
 	border: 1px solid #999;
 	background-color: #ccc;
 }
+.each-card.out-of-play {
+	visibility: hidden;
+	pointer-events: none;
+}
+.checking {
+	pointer-events: none;
+}
