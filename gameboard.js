@@ -24,7 +24,14 @@ Gameboard.prototype.buildBoard = function(){
   }
 };
 
-//  PREVENT SHOWING PIECES WHEN HIDE PIECES HASN'T HAPPENED YET
+Gameboard.prototype.reset = function() {
+  this.matchedPieces = 0;
+  this.currentPieces = [];
+  // hide ALL pieces
+  $(".piece").hide();
+}
+
+//  todo: PREVENT SHOWING PIECES WHEN HIDE PIECES HASN'T HAPPENED YET
 Gameboard.prototype.showPiece = function(piece) {
   piece.show();
   this.currentPieces.push(piece);
@@ -35,25 +42,25 @@ Gameboard.prototype.hidePieces = function() {
     var piece = this.currentPieces[i];
     piece.hide();
   }
-  // REMOVE SINGLE PIECE?
   this.currentPieces = [];
 }
 
 Gameboard.prototype.checkMatch = function() {
   var match = (this.currentPieces[0].data("piece-type") === this.currentPieces[1].data("piece-type"));
   if (match) {
-    console.log("it's a match!");
+    $("#message").html("it's a match!");
     this.matchedPieces += 2;
     this.currentPieces = [];
     if (this.matchedPieces === this.piecesArray.length) {
-      console.log("you win!");
+      $("#message").html("you win!");
     }
   } else {
-    console.log("sorry, you're wrong");
+    $("#message").html("sorry, you're wrong");
     var self = this;
 
     setTimeout (function() {
       self.hidePieces();
+      $("#message").html("");
     }, 1000);
   }
 }

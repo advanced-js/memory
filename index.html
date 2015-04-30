@@ -9,18 +9,33 @@
         <title>Memory exercise</title>
     </head>
     <body>
+        <h3>How large do you want your board to be? (even numbers, please)</h3>
+        <input id="board-size" type="number" min="2" max="100" />
+        <button id="start">Let's play!</button>
+        <button id="reset">Reset Board</button>
         <table>
             <tbody class="gameboard">
             </tbody>
         </table>
+        <h3 id="message"></h3>
     </body>
     <script>
-        $(document).ready(function() {
-            var gameboard = new Gameboard(6);
+        $("#reset").click(function() {
+            if (gameboard) { gameboard.reset(); }
+            if (clicks) { clicks.reset(); }
+            $("#message").html("");
+        });
+
+        $("#start").click(function() {
+            $("tbody.gameboard").html("");
+            $("#message").html("");
+
+            var boardSize = $("#board-size").val();
+            gameboard = new Gameboard(boardSize);
             gameboard.buildBoard();
 
-            var clicks = new Clicks();
-            
+            clicks = new Clicks();
+
             $("td").click(function(e) {
                 clicks.incrementClicks();
                 gameboard.showPiece($(e.target).children(".piece"));
