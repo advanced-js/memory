@@ -29,13 +29,13 @@ Gameboard.prototype.reset = function() {
   this.currentPieces = [];
   // hide ALL pieces
   $(".piece").hide();
-}
+};
 
 //  todo: PREVENT SHOWING PIECES WHEN HIDE PIECES HASN'T HAPPENED YET
 Gameboard.prototype.showPiece = function(piece) {
   piece.show();
   this.currentPieces.push(piece);
-}
+};
 
 Gameboard.prototype.hidePieces = function() {
   for (var i = 0; i < this.currentPieces.length; i++) {
@@ -43,7 +43,7 @@ Gameboard.prototype.hidePieces = function() {
     piece.hide();
   }
   this.currentPieces = [];
-}
+};
 
 Gameboard.prototype.checkMatch = function() {
   var match = (this.currentPieces[0].data("piece-type") === this.currentPieces[1].data("piece-type"));
@@ -63,4 +63,4 @@ Gameboard.prototype.checkMatch = function() {
       $("#message").html("");
     }, 1000);
   }
-}
+};

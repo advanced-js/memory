@@ -20,23 +20,24 @@
         <h3 id="message"></h3>
     </body>
     <script>
-        $("#reset").click(function() {
+        var self = this;
+        this.$("#reset").click(function() {
             if (gameboard) { gameboard.reset(); }
             if (clicks) { clicks.reset(); }
-            $("#message").html("");
+            self.$("#message").html("");
         });
 
-        $("#start").click(function() {
-            $("tbody.gameboard").html("");
-            $("#message").html("");
+        this.$("#start").click(function() {
+            self.$("tbody.gameboard").html("");
+            self.$("#message").html("");
 
-            var boardSize = $("#board-size").val();
+            var boardSize = self.$("#board-size").val();
             gameboard = new Gameboard(boardSize);
             gameboard.buildBoard();
 
             clicks = new Clicks();
 
-            $("td").click(function(e) {
+            self.$("td").click(function(e) {
                 clicks.incrementClicks();
                 gameboard.showPiece($(e.target).children(".piece"));
                 if (clicks.numberOfClicks === 2) {

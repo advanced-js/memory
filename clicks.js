@@ -8,8 +8,8 @@ Clicks.prototype.incrementClicks = function() {
 	} else {
 		this.numberOfClicks = 1;
 	}
-}
+};
 
 Clicks.prototype.reset = function() {
 	this.numberOfClicks = 0;
-}
+};
