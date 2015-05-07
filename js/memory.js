@@ -1,135 +1,142 @@
-(function() {
-	'use strict';
+$(document).ready(function() {
 
-	var cardAlreadyShowing = null;
-	var totalTries = 0;
+	(function() {
+		'use strict';
 
-	var checkForMatch = function(thisCard) {
-		$('#board').addClass('checking'); // disable clicks while processing
-		if (thisCard !== cardAlreadyShowing && thisCard.color === cardAlreadyShowing.color) {
-			/* if they clicked on two (different) cards of the same color */
-			handleMatch(thisCard)
-		} else {
-			handleMismatch(thisCard);
-		}
-		totalTries++;
-		if ($('.out-of-play').length === $('.each-card').length) {
-			alert('Congratulations, you won! It took you ' + totalTries + ' tries.');
-		}
-	};
+		var cardAlreadyShowing = null;
+		var totalTries = 0;
+		var $boardEl = $('#board');
 
-	var handleMatch = function(thisCard) {
-		alert('Hooray, you found a match!');
-		thisCard.removeFromPlay();
-		cardAlreadyShowing.removeFromPlay();
-		cardAlreadyShowing = null;
-		$('#board').removeClass('checking');
-	};
+		/**
+		 * Card constructor
+		 *
+		 * @constructor
+		 * @param {string} color The color to make this card
+		 */
+		var Card = function(color) {
+			this.color = color;
+		};
 
-	var handleMismatch = function(thisCard) {
-		/* show colors for one second, then hide again */
-		setTimeout(function() {
-			thisCard.hideCard();
-			cardAlreadyShowing.hideCard();
-			cardAlreadyShowing = null;
-			$('#board').removeClass('checking');
-		}, 1000);
-	};
-
-	var getNextColor = function() {
-		var redVal = Math.floor(Math.random() * 256);
-		var greenVal = Math.floor(Math.random() * 256);
-		var blueVal = Math.floor(Math.random() * 256);
-		return 'rgba(' + redVal + ',' + greenVal + ',' + blueVal + ', 0.7)';
-	};
-
-	/**
-	 * Card constructor
-	 *
-	 * @constructor
-	 * @param {string} color The color to make this card
-	 */
-	var Card = function(color) {
-		var thisCard = this;
-
-		this.color = color;
-		this.create = function() {
+		Card.prototype.createEl = function() {
+			var thisCard = this;
 			this.cardEl = $('<div>')
 				.addClass('each-card')
-				.data('background-color', color)
+				.data('background-color', this.color)
 				.on('click', function () {
 					thisCard.showCard();
 					if (cardAlreadyShowing) {
-						checkForMatch(thisCard);
+						thisCard.checkForMatch(thisCard);
 					} else {
 						cardAlreadyShowing = thisCard;
 					}
 				});
 			return this.cardEl;
 		};
-		this.showCard = function() {
+
+		Card.prototype.showCard = function() {
 			this.cardEl.css('background-color', this.cardEl.data('background-color'));
 		};
-		this.hideCard = function() {
+
+		Card.prototype.hideCard = function() {
 			this.cardEl.css('background-color', '#ccc');
 		};
-		this.removeFromPlay = function() {
+
+		Card.prototype.removeFromPlay = function() {
 			this.cardEl.addClass('out-of-play');
 		};
-	};
 
-	/**
-	 * Deck constructor
-	 *
-	 * @constructor
-	 * @param {number} totalCardCount The number of cards to put in the deck
-	 */
-	var Deck = function(totalCardCount) {
-		this.cards = [];
-		this.create = function() {
-			var color = getNextColor();
-			for (var i = 0; i < totalCardCount; i++) {
+		Card.prototype.checkForMatch = function(thisCard) {
+			$boardEl.addClass('checking'); // disable clicks while processing
+			if (thisCard !== cardAlreadyShowing && thisCard.color === cardAlreadyShowing.color) {
+				/* if they clicked on two (different) cards of the same color */
+				this.handleMatch(thisCard);
+			} else {
+				this.handleMismatch(thisCard);
+			}
+			totalTries++;
+			if ($('.out-of-play').length === $('.each-card').length) {
+				alert('Congratulations, you won! It took you ' + totalTries + ' tries.');
+			}
+		};
+
+		Card.prototype.handleMatch = function(thisCard) {
+			alert('Hooray, you found a match!');
+			thisCard.removeFromPlay();
+			cardAlreadyShowing.removeFromPlay();
+			cardAlreadyShowing = null;
+			$boardEl.removeClass('checking');
+		};
+
+		Card.prototype.handleMismatch = function(thisCard) {
+			/* show colors for one second, then hide again */
+			setTimeout(function() {
+				thisCard.hideCard();
+				cardAlreadyShowing.hideCard();
+				cardAlreadyShowing = null;
+				$boardEl.removeClass('checking');
+			}, 1000);
+		};
+
+		/**
+		 * Deck constructor
+		 *
+		 * @constructor
+		 * @param {number} totalCardCount The number of cards to put in the deck
+		 */
+		var Deck = function(totalCardCount) {
+			this.cards = [];
+			this.totalCardCount = totalCardCount;
+		};
+
+		Deck.prototype.build = function() {
+			var color = this.getNextColor();
+			for (var i = 0; i < this.totalCardCount; i++) {
 				if (i % 2 === 0) {
-					color = getNextColor();
+					color = this.getNextColor();
 				}
 				this.cards.push(new Card(color));
 			}
 		};
-		this.shuffle = function() {
+
+		Deck.prototype.shuffle = function() {
 			this.cards = this.cards.sort(function() {
-		  		return 0.5 - Math.random();
+				return 0.5 - Math.random();
 			});
 		};
-	};
 
-	/**
-	 * Board constructor
-	 *
-	 * @constructor
-	 * @param {number} size The number of cards on one side of the square
-	 */
-	var Board = function(size) {
-		this.size = size;
-		this.$boardEl = $('#board');
-		this.cardsShown = [];
-		this.totalCardCount = this.size * this.size;
-		this.dealBoard = function() {
-			var deck = new Deck(this.totalCardCount);
-			deck.create();
-			deck.shuffle();
-			for (var i = 0; i < size; i++) {
-				for (var j = 0; j < size; j++) {
-					var thisCard = deck.cards.pop();
-					this.$boardEl.append(thisCard.create());
-				}
-				this.$boardEl.append('<br>');
-			}		
+		Deck.prototype.getNextColor = function() {
+			var redVal = Math.floor(Math.random() * 256);
+			var greenVal = Math.floor(Math.random() * 256);
+			var blueVal = Math.floor(Math.random() * 256);
+			return 'rgba(' + redVal + ',' + greenVal + ',' + blueVal + ', 0.7)';
 		};
-	};
 
-	$(document).ready(function() {
+		/**
+		 * Board constructor
+		 *
+		 * @constructor
+		 * @param {number} size The number of cards on one side of the square
+		 */
+		var Board = function(size) {
+			this.size = size;
+			this.cardsShown = [];
+			this.totalCardCount = this.size * this.size;
+		};
+
+		Board.prototype.dealBoard = function() {
+			var deck = new Deck(this.totalCardCount);
+			deck.build();
+			deck.shuffle();
+			for (var i = 0; i < this.size; i++) {
+				for (var j = 0; j < this.size; j++) {
+					var thisCard = deck.cards.pop();
+					$boardEl.append(thisCard.createEl());
+				}
+				$boardEl.append('<br>');
+			}
+		};
+
 		var memoryBoard = new Board(4);
 		memoryBoard.dealBoard();
-	});
-
-})();
+	})();
+});
