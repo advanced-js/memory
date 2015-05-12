@@ -1,6 +1,6 @@
-//(function(){
+(function(){
 
-//$(document).ready(function(){
+  $(document).ready(function(){
     var Tile = function (){
         this.inner = '#48895e',
         this.outer = '#34495e',
@@ -37,6 +37,10 @@
       delayChangeColor: function() {
         this.toggleColor();
         setTimeout('this.changeColor()', 2000);
+      },
+      randomColor: function() {
+        var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+        this.inner = randomColor;
       }
     }
 
@@ -55,6 +59,10 @@
           var element = tile.element();
           assignTile(this.tds[i], element );
           var prop = $(this.tds[i]).attr('id');
+          var lastChar = prop.substr(prop.length - 1);
+          if (lastChar % 2 === 0) {
+            tile.randomColor();
+          }
           thisBoard.scape[prop] = tile;
         }
       },
@@ -79,16 +87,18 @@
         assignTile(cell, div);
       },
       this.flipFlop = function (id, cell) {
+        //Change color of the tile
         thisBoard.flipTile(id, cell);  
-        //thisBoard.checkForDups(id);
         setTimeout(function () {
           thisBoard.checkForDups(id);
         }, 1000);
+        //change the color of the tile back to original
         setTimeout(function () {
           var div = thisBoard.scape[id].changeColor();  
           assignTile(cell, div);
-        }, 1500);
-        //thisBoard.selected = { 'color': color, 'id': id } 
+        }, 2000);
+        //clear match when the tile is flipped back
+        thisBoard.flushMatch();
       }, 
       this.checkForDups = function (currentId) {
         if ( thisBoard.scape[currentId].current == thisBoard.selected.color ) {
@@ -96,11 +106,17 @@
           $('#' + currentId).remove();
           var previousId = thisBoard.selected.id
           $('#' + previousId).remove();
-
+          thisBoard.flushMatch();
         } else {
           var color = thisBoard.scape[currentId].current;
           thisBoard.selected = { 'color': color, 'id': currentId }; 
+          setTimeout(function () {
+            thisBoard.flushMatch();
+          }, 2000 );
         }
+      }, 
+      this.flushMatch = function() {
+        this.selected = {};
       }
     }
   
@@ -113,6 +129,6 @@
     board.listen();
 
 
-//});
-//})();
+  });
+})();
 
