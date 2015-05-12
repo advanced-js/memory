@@ -120,10 +120,6 @@
       }
     }
   
-
-
-
-
     var board = new Board;
     board.buildScape();
     board.listen();
