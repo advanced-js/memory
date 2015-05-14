@@ -99,6 +99,7 @@ $(document).ready(function() {
 		};
 
 		Deck.prototype.shuffle = function() {
+			/* from http://stackoverflow.com/a/18650169/3557749 */
 			this.cards = this.cards.sort(function() {
 				return 0.5 - Math.random();
 			});
