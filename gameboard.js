@@ -10,18 +10,19 @@ var Gameboard = function (size) {
 
 Gameboard.prototype.buildBoard = function(){
   var index = 0;
+  var gameboardString = "";
 
-  for (numRow = 0; numRow < this.size; numRow++) {
-    $(".gameboard").append("<tr>");
+  for (var numRow = 0; numRow < this.size; numRow++) {
+    gameboardString += "<tr>";
 
-    for (numCell = 0; numCell < this.size; numCell++) {
+    for (var numCell = 0; numCell < this.size; numCell++) {
       var piece = this.piecesArray[index];
-      $(".gameboard").append("<td><div class='piece' data-piece-type='" + piece + "'>" + piece + "</div></td>");
+      gameboardString += "<td><div class='piece' data-piece-type='" + piece + "'>" + piece + "</div></td>";
       index++;
     }
-
-    $(".gameboard").append("</tr>");
+    gameboardString += "</tr>";
   }
+  $(".gameboard").append(gameboardString);
 };
 
 Gameboard.prototype.reset = function() {

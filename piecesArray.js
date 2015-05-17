@@ -3,7 +3,7 @@ var PiecesArray = function(numberOfPieces) {
 	this.pieces = [];
 
 	// Choose pieces to fill given number of spaces
-	for (i = 0; i < (numberOfPieces / 2); i++) {
+	for (var i = 0; i < (numberOfPieces / 2); i++) {
 		var randomIndex = Math.floor(Math.random() * this.pieceTypes.length);
 		var randomPiece = this.pieceTypes[randomIndex];
 		this.pieces.push(randomPiece, randomPiece);
