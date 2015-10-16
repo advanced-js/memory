@@ -1,8 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-  </head>
-  <body>
-  </body>
+<head>
+	<title>Memory exercise</title>
+
+</head>
+<body>
+	<table id='tid'>
+		<tr><td id="one" onClick="memory();">x</td><td>x</td></tr>
+		<tr><td>y</td><td>y</td></tr>
+	</table>
+
+	<script>
+
+
+
+		var c = 0;
+		var firstval;
+
+		function memory() {
+          // alert();
+        // if {c == 0}(
+
+	//	);
+}
+
+
+var table = document.getElementById('tid'),
+cells = table.getElementsByTagName('td');
+
+for (var i=0,len=cells.length; i<len; i++){
+	cells[i].onclick = function(){
+
+		if (c==0) {
+			firstval = this.innerHTML;
+			c++;
+		}
+		else { 
+			if (firstval == this.innerHTML) { alert('MATCH'); }
+			else { alert('NO MATCH'); }
+			c=0;
+		}; 
+
+		console.log(this.innerHTML);
+
+    }
+}
+
+
+</script>
+
+</body>
+
 </html>
