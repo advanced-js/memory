@@ -12,8 +12,6 @@
 
 	<script>
 
-
-
 		var c = 0;
 		var firstval;
 
@@ -48,6 +46,37 @@ for (var i=0,len=cells.length; i<len; i++){
 
 
 </script>
+
+	<script>
+
+		document.write('<table border=1>');
+		document.write('<tr>');
+		document.write('<th bgcolor="pink">',"X",'</th>');
+
+		for(var col=1; col<=10; col++)
+		{
+			document.write('<th bgcolor="sky blue">',col,'</th>');
+		}
+		
+		
+		var row=1;
+
+		while (row <= 10)
+		{
+			document.write('<tr>');
+			document.write('<th bgcolor="sky blue">',row,'</th>');
+
+			for (col = 1; col <= 10; col++)
+			{
+				document.write('<td>' + col*row + "" + '</td>');
+			}
+			document.write('</tr>');
+			row++;
+		}
+
+		document.write('</table>');
+
+	</script>
 
 </body>
 
