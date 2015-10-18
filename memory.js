@@ -3,7 +3,6 @@ var values = [];
 var card_ids = [];
 var cards_flipped = 0;
 
-
 //Fisher Yates Shuffle Modern Algorithm
 Array.prototype.cardShuffle = function() {
 	var i = this.length, j, temp;
@@ -15,27 +14,17 @@ Array.prototype.cardShuffle = function() {
 	}
 };
 
-
+//function called when page is refreshed or 'New Game' button is pressed
 function newGame(){
 	cards_flipped = 0;
 	var output = '';
-	content_array.cardShuffle();
+    content_array.cardShuffle();
 	for(var i = 0; i < content_array.length; i++){
 		output += '<div id="card_'+i+'" onclick="flipcard(this,\''+content_array[i]+'\')"></div>';
 	}
 	document.getElementById('gameboard').innerHTML = output;
 }
 
-function tryAgain(){
-					var card_1 = document.getElementById(card_ids[0]);
-					var card_2 = document.getElementById(card_ids[1]);
-					card_1.style.background = 'url(cards/cardback.png) no-repeat';
-					card_1.innerHTML = "";
-					card_2.style.background = 'url(cards/cardback.png) no-repeat';
-					card_2.innerHTML = "";
-					values = [];
-					card_ids = [];
-				}
 
 function flipcard(card,val){
 	if(card.innerHTML === "" && values.length < 2){
@@ -46,7 +35,7 @@ function flipcard(card,val){
 			values.push(val);
 			card_ids.push(card.id);
 
-		} else if(values.length === 1){
+		} else if(values.length == 1){
 			values.push(val);
 			card_ids.push(card.id);
 
@@ -54,13 +43,23 @@ function flipcard(card,val){
 				cards_flipped += 2;
 
 				values = [];
-				card_ids = [];
+            	card_ids = [];
 
+            	//checks if all matches are complete and game is over
 				if(cards_flipped == content_array.length){
-					alert("You win! Click 'New Game' to play again.");
+					alert("You win! Click 'New Game' to play again!");
 				}
-			} else {
-				tryAgain();
+			} else { //incorrect match, flip back over
+				var tryAgain = function tryAgain(){
+				    var card_1 = document.getElementById(card_ids[0]);
+				    var card_2 = document.getElementById(card_ids[1]);
+				    card_1.style.background = 'url(cards/cardback.png) no-repeat';
+            	    card_1.innerHTML = "";
+				    card_2.style.background = 'url(cards/cardback.png) no-repeat';
+            	    card_2.innerHTML = "";
+				    values = [];
+            	    card_ids = [];
+				};
 				setTimeout(tryAgain, 1000);
 			}
 		}
