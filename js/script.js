@@ -30,3 +30,22 @@ function counter(num, tdId) {
 
   }
 }
+
+var Click = (function() {
+  this.numClicks = 0;
+});
+
+var clickTd = new Click();
+$("td").click(function(e) {
+  clickTd.incrementClicks();
+  // pieces.addToArr();
+})
+
+
+Click.prototype.incrementClicks = function() {
+  this.numClicks++;
+  console.log("Object: " + this.numClicks);
+  if ((this.numClicks % 2) === 0) {
+    check.checkCurrent();
+  }
+};
