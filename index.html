@@ -2,53 +2,84 @@
 <html>
   <head>
     <title>Memory exercise</title>
-
+    <style>
+	table, th, td {
+	   border: 1px solid black;
+	   color: white;
+	   padding: 5px;
+	}
+	</style>
   </head>
   <body>
   <table id='tid'>
-  <tr><td id="one" onClick="memory();">x</td><td>x</td></tr>
-  <tr><td>y</td><td>y</td></tr>
+  <tr>
+  	<td>x</td><td>a</td>
+  </tr>
+  <tr>
+  	<td>b</td><td>x</td>
+  </tr>
+  <tr>
+  	<td>y</td><td>b</td>
+  </tr>
+  <tr>
+  	<td>a</td><td>y</td>
+  </tr>
   </table>
 
-    <script>
+<script>
 
 
-	
-	var c = 0;
-	var firstval;
-
-      function memory() {
-          // alert();
-        // if {c == 0}(
-			
-	//	);
-      }
+// GLOBAL VARIABLES TO REMEMBER THE FIRST CARD FLIP
+var c = 0;
+var firstval;
 
 
-var table = document.getElementById('tid'),
-    cells = table.getElementsByTagName('td');
+var table = document.getElementById('tid');
+var cells = table.getElementsByTagName('td');
 
-for (var i=0,len=cells.length; i<len; i++){
-    cells[i].onclick = function(){
+// LOOP THROUGH ALL TABLE CELLS TO CREATE ONCLICK FUNCTION
+for (var i=0,len=cells.length; i<len; i++) {
+    cells[i].onclick = function() {
+    	// SET THE FONT COLOR FROM WHITE TO RED ONCLICK
+		this.style.color = 'red';
+		// IF C == 0 THEN IT'S FIRST CARD FLIP
+		if (c==0) {
+			firstval = this.innerHTML;
+			c++;
+		}
+		// IF C == 1 THEN IT'S SECOND CARD FLIP
+		else { 
+			// MATCH IF GLOBAL VAR firstval == THIS FLIP
+			if (firstval == this.innerHTML) { 
+				alert('MATCH');
+				// LOOP THROUGH ALL CELLS TO SET MATCHED CARDS TO GREEN
+				for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
+					var cell = document.getElementById('tid').getElementsByTagName('td')[j];
+					if (cell.innerHTML == firstval) { 
+						cell.style.color = 'green';
+					} 
+				}
+			}
+			else { 
+				// IF NOT A MATCH SET COLORS BACK TO WHITE
+				alert('NO MATCH'); 
+				this.style.color = 'white';
+				// LOOP THROUGH ALL CELLS AND SET FIRSTVAL BACK TO WHITE
+				for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
+					var cell = document.getElementById('tid').getElementsByTagName('td')[j];
+					if (cell.innerHTML == firstval) { 
+						cell.style.color = 'white';
+					} 
+				}
+				
+			}
+			// ON SECOND FLIP ALWAYS SET C TO ZERO TO RESET
+			c=0;
+		}; 
+	    console.log(this.innerHTML);
 
-	if (c==0) {
-		firstval = this.innerHTML;
-		c++;
 	}
-	else { 
-		if (firstval == this.innerHTML) { alert('MATCH'); }
-		else { alert('NO MATCH'); }
-		c=0;
-	}; 
 
-	
-
-        console.log(this.innerHTML);
-
-        /* if you know it's going to be numeric:
-        console.log(parseInt(this.innerHTML),10);
-        */
-    }
 }
 
 
