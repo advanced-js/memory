@@ -1,72 +1,48 @@
-$('td').click(function() {
-  var _this = this;
-  var tdId = $(_this).attr('class');
-  clicker(tdId);
-});
-
-function clicker(tdId) {
-  counter(1, tdId);
-}
-var count = 0;
-var tdIdarray = [];
-
-function counter(num, tdId) {
-  tdIdarray.push(tdId);
-  console.log(tdIdarray);
-  count = count + num;
-  console.log(count);
-  if ((count % 2) === 0) {
-    if (tdIdarray[tdIdarray.length - 1] === tdIdarray[tdIdarray.length - 2]) {
-      console.log("match");
-      $('.' + tdIdarray[tdIdarray.length - 1]).css('visibility', 'hidden');
-      $('.' + tdIdarray[tdIdarray.length - 2]).css('visibility', 'hidden');
-      $('.status').empty();
-      $('.status').append('<p>You got a match!</p>');
-    } else {
-      console.log("no match");
-      $('.status').empty();
-      $('.status').append('<p>Sorry no match</p>');
-    }
-
-  }
-}
-
-
 var Click = (function() {
   this.numClicks = 0;
+  this.arr = [];
 });
 
 var clickTd = new Click();
 
-var ClickArr = (function() {
-  this.arr = [];
-  console.log("This is the og arr: " + this.arr);
-});
-
-var clickToArr = new ClickArr();
-
 $("td").click(function(e) {
-  clickTd.incrementClicks();
   var _this = this;
-  var tdId = $(_this).attr('class');
-  clickToArr.pushArr(tdId);
-  // pieces.addToArr();
+  var tdClass = $(_this).children().attr('class');
+  var child = $(_this).children();
+  $(child).show();
+  setTimeout(function(){
+  clickTd.incrementClicks();
+  clickTd.addToArr(tdClass);
+}, 500);
 });
-
 
 Click.prototype.incrementClicks = function() {
   this.numClicks++;
-  console.log("There have been: " + this.numClicks + " clicks");
+};
+
+Click.prototype.addToArr = function(tdClass) {
+  this.arr.push(tdClass);
   if ((this.numClicks % 2) === 0) {
-    //check.checkCurrent();
-    console.log("EVEN NUM");
+    clickTd.checkGame();
   }
 };
 
-ClickArr.prototype.pushArr = function(tdId) {
-  this.arr.push(tdId);
-  console.log("This is the elements name: " + tdId);
-  console.log("This is the array: " + this.arr);
-  console.log("This is the arr length: " + this.arr.length);
-  console.log("This is the last element: " + this.arr[this.arr.length - 1]);
-};
+Click.prototype.checkGame = function() {
+  if (this.arr[this.arr.length - 1] === this.arr[this.arr.length - 2]) {
+    clickTd.removePiece();
+  } else {
+    clickTd.resetPiece();
+    $('.' + this.arr[this.arr.length - 1]).hide();
+    $('.' + this.arr[this.arr.length - 2]).hide();
+  }
+}
+Click.prototype.resetPiece = function() {
+  $('.status').empty();
+  $('.status').append('<p>Sorry Wrong</p>');
+}
+Click.prototype.removePiece = function() {
+  $('.status').empty();
+  $('.status').append('<p>You got a match!</p>');
+  $('.' + this.arr[this.arr.length - 1]).parent().css('visibility', 'hidden');
+  $('.' + this.arr[this.arr.length - 2]).parent().css('visibility', 'hidden');
+}
