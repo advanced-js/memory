@@ -7,14 +7,14 @@ table {
 }
 
 td {
-  width: 150px;
-  height: 206px;
+  width: 75px;
+  height: 103px;
   background: url('card.jpg');
   background-size: cover;
 }
 div {
-  width: 150px;
-  height: 206px;
+  width: 75px;
+  height: 103px;
   display: none;
 }
 .info {

@@ -25,31 +25,38 @@ Click.prototype.checkGame = function() {
   } else {
     clickTd.resetPiece();
   }
-}
+};
 Click.prototype.resetPiece = function() {
   $('.status').empty();
   // $('.status').append('<p>Sorry Wrong</p>');
   $('.' + this.arr[this.arr.length - 1]).hide();
   $('.' + this.arr[this.arr.length - 2]).hide();
-}
+};
 Click.prototype.removePiece = function() {
   $('.status').empty();
   // $('.status').append('<p>You got a match!</p>');
   $('.' + this.arr[this.arr.length - 1]).parent().css('visibility', 'hidden');
   $('.' + this.arr[this.arr.length - 2]).parent().css('visibility', 'hidden');
-}
+};
 
 
 
 //array play
 var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow"];
 
-var num = 4;
+
+$(".btn").click(function(){
+  var num;
+  num = $("input").val();
+  checkNumber(num);
+});
+function checkNumber(num){
 if (num % 2 === 0) {
-  pickColors(num, colorArr)
+  pickColors(num, colorArr);
 } else {
   var addOne = num + 1;
   pickColors(addOne, colorArr);
+}
 }
 
 function pickColors(num, array) {
@@ -60,24 +67,24 @@ function pickColors(num, array) {
     pickedColors.push(array[i], array[i]);
   }
   console.log(pickedColors);
-  shuffleColors(pickedColors);
+  shuffleColors(num, pickedColors);
 }
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
  */
-function shuffleColors(array) {
+function shuffleColors(num, array) {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
     var temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
-  console.log(array);
-  buildBoard(array);
+  console.log(num, array);
+  buildBoard(num, array);
 }
 
-function buildBoard(shuffledColors) {
+function buildBoard(num, shuffledColors) {
   var board = "";
   var index = 0;
   for (var x = 0; x < num; x++) {
@@ -86,13 +93,13 @@ function buildBoard(shuffledColors) {
       board += '<td><div class="' + shuffledColors[index] + '" style="background-color: ' + shuffledColors[index] + '"></div></td>';
       index++;
     }
-    board += "</tr>"
+    board += "</tr>";
     console.log(board);
   }
   $("table").append(board);
 }
 //Start With click
-$("td").click(function(e) {
+$('body').on('click', 'td',(function(e) {
   var _this = this;
   var tdClass = $(_this).children().attr('class');
   var child = $(_this).children();
@@ -101,4 +108,4 @@ $("td").click(function(e) {
     clickTd.incrementClicks();
     clickTd.addToArr(tdClass);
   }, 500);
-});
+}));
