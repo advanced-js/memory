@@ -1,0 +1,23 @@
+body {
+  margin: auto;
+}
+
+table {
+  margin: auto;
+}
+
+td {
+  width: 150px;
+  height: 206px;
+  background: url('card.jpg');
+  background-size: cover;
+}
+div {
+  width: 150px;
+  height: 206px;
+  display: none;
+}
+.info {
+display: inline-block;
+height: 100px;
+}
