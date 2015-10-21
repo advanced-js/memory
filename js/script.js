@@ -9,7 +9,7 @@ var clickTd = new Click();
 Click.prototype.incrementClicks = function() {
   this.numClicks++;
   $('.clickCount').empty();
-  $('.clickCount').append("Clicks: "+this.numClicks);
+  $('.clickCount').append("Clicks: " + this.numClicks);
 };
 
 Click.prototype.addToArr = function(tdClass) {
@@ -41,22 +41,23 @@ Click.prototype.removePiece = function() {
 
 
 
-//array play
+//This still needs to be put in objects
 var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow"];
 
 
-$(".btn").click(function(){
+$(".btn").click(function() {
   var num;
   num = $("input").val();
   checkNumber(num);
 });
-function checkNumber(num){
-if (num % 2 === 0) {
-  pickColors(num, colorArr);
-} else {
-  var addOne = num + 1;
-  pickColors(addOne, colorArr);
-}
+
+function checkNumber(num) {
+  if (num % 2 === 0) {
+    pickColors(num, colorArr);
+  } else {
+    var addOne = num + 1;
+    pickColors(addOne, colorArr);
+  }
 }
 
 function pickColors(num, array) {
@@ -99,7 +100,7 @@ function buildBoard(num, shuffledColors) {
   $("table").append(board);
 }
 //Start With click
-$('body').on('click', 'td',(function(e) {
+$('body').on('click', 'td', (function(e) {
   var _this = this;
   var tdClass = $(_this).children().attr('class');
   var child = $(_this).children();
