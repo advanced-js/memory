@@ -30,9 +30,7 @@ function tryAgain(){
 	var card1 = document.getElementById(card_ids[0]);
 	var card2 = document.getElementById(card_ids[1]);
 	card1.style.background = 'url(cards/cardback.png) no-repeat';
-	card1.innerHTML = "";
 	card2.style.background = 'url(cards/cardback.png) no-repeat';
-	card2.innerHTML = "";
 	values = [];
 	card_ids = [];
 }
@@ -43,12 +41,12 @@ function playGame(card,val){
 		card.style.background = 'url(cards/'+ val +'.png) no-repeat';
 
 		if(values.length === 0){
-			values.push(val);
 			card_ids.push(card.id);
+			values.push(val);
 
 		} else if(values.length == 1){
-			values.push(val);
 			card_ids.push(card.id);
+			values.push(val);
 
 			if(values[0] == values[1]){
 				cardsFlipped += 2;
