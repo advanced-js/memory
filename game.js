@@ -48,7 +48,9 @@ function populateAndBindLi() {
 		var i = parseInt($(this).attr('id'));
 		$(this).addClass('selected');
 		$(this).addClass('animate');
-		setTimeout(function(){$('.animate').removeClass('animate')},200);
+		setTimeout(function(){
+			$('.animate').removeClass('animate');
+		},200);
 		if ($('.selected').length === 1) {
 			matchIt = arr[i];
 		}
