@@ -4,7 +4,7 @@ body {
 }
 
 table { 
-    margin: auto;
+    margin: 0 auto 30px;
     background-color: black;
     color: white;
     font-size: 30px;
@@ -16,7 +16,7 @@ td {
 
 span {
     display: block; 
-    padding: 20px;
+    padding: 30px;
     opacity: 0;
     cursor: pointer;
 }
@@ -34,4 +34,17 @@ span.colorMatched.disabled {
 
 span.visible { 
     opacity: 1; 
+}
+
+.message { 
+    visibility: hidden;
+}
+
+.message.show { 
+    visibility: visible;
+}
+
+a.reset { 
+    color: #333; 
+    text-decoration: underline;
 }

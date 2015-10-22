@@ -1,19 +1,17 @@
 var revealed = null;
 
+// functions
+
 function clicked() { 
     if(!$(this).hasClass('visible') && !$(this).hasClass('disabled')) { 
         // only fire if what we clicked on is not already visible or disabled!
         $(this).addClass('visible'); 
 
         if (revealed == null) {
-            console.log('first click'); 
-
             // first click
             revealed = this.innerHTML; 
 
         } else {
-            console.log('second click'); 
-
             // second click
             var thisValue = this.innerHTML; 
 
@@ -26,6 +24,11 @@ function clicked() {
                 // remove fancy yellow color
                     $('.colorMatched').addClass('disabled'); 
                 }, 500); 
+
+                // is the game over? 
+                if($('.colorMatched').length == $('td').length) { 
+                    $('#Message').addClass('show'); 
+                }
             } 
 
             setTimeout(function() { 
@@ -37,6 +40,15 @@ function clicked() {
     }
 }; 
 
+
+function reset() { 
+    $('span').removeClass('visible').removeClass('colorMatched').removeClass('disabled'); 
+    $('#Message').removeClass('show'); 
+}; 
+
+// event listeners
+
 $('span').on('click', clicked); 
 
-// array of numbers
+$('#Reset').on('click', reset); 
+
