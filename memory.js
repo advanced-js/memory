@@ -35,7 +35,7 @@ function tryAgain(){
 	card2.innerHTML = "";
 	values = [];
 	card_ids = [];
-};
+}
 
 
 function playGame(card,val){
