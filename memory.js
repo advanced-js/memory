@@ -5,7 +5,9 @@ var cardsFlipped = 0;
 
 //Fisher Yates Shuffle Modern Algorithm
 Array.prototype.cardShuffle = function() {
-	var i = this.length, j, temp;
+	var i = this.length;
+	var j;
+	var temp;
 	while (--i > 0) {
 		j = Math.floor(Math.random()*(i+1));
 		temp = this[j];
