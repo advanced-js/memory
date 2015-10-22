@@ -2,28 +2,28 @@ $.fn.activate = function(){
     this.addClass("activated");
     this.text(this.val());
     return this;
-}
+};
 
 $.fn.deactivate = function(){
     this.removeClass("activated");
     this.text("");
     return this;
-}
+};
 
 $.fn.match = function(){
     this.addClass("matched");
     return this;
-}
+};
 
 $.fn.freeze = function(){
     this.addClass("frozen");
     return this;
-}
+};
 
 $.fn.unfreeze = function(){
     this.removeClass("frozen");
     return this;
-}
+};
 
 function endRound(){
     // set timeout so user has time to see result
@@ -51,7 +51,7 @@ function testWin(){
 }
 
 function testForMatch(clicked_tile, active_tiles){
-    var matched_tile = undefined;
+    var matched_tile;
     for (var i=0; i<active_tiles.length; i++){
         var tile = active_tiles[i];
         if ($(tile).val() === $(clicked_tile).val()){
