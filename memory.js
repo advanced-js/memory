@@ -7,7 +7,7 @@ function clicked() {
         // only fire if what we clicked on is not already visible or disabled!
         $(this).addClass('visible'); 
 
-        if (revealed == null) {
+        if (revealed === null) {
             // first click
             revealed = this.innerHTML; 
 
@@ -38,13 +38,13 @@ function clicked() {
             }, 500); 
         }
     }
-}; 
+}
 
 
 function reset() { 
     $('span').removeClass('visible').removeClass('colorMatched').removeClass('disabled'); 
     $('#Message').removeClass('show'); 
-}; 
+}
 
 // event listeners
 
