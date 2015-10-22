@@ -1,31 +1,42 @@
 var revealed = null;
 
 function clicked() { 
-    $(this).addClass('visible'); 
+    if(!$(this).hasClass('visible') && !$(this).hasClass('disabled')) { 
+        // only fire if what we clicked on is not already visible or disabled!
+        $(this).addClass('visible'); 
 
-    if (revealed == null) {
-        // first click
-        revealed = this.innerHTML;  
+        if (revealed == null) {
+            console.log('first click'); 
 
-    } else {
-        // second click
-        var thisValue = this.innerHTML; 
+            // first click
+            revealed = this.innerHTML; 
 
-        if (thisValue == revealed) {
-            // change color to yellow and make unclickable
-            $('.visible').addClass('colorMatched'); 
+        } else {
+            console.log('second click'); 
 
-            // then start over
-            reveal = null; 
-            $('.visible').removeClass('visible'); 
+            // second click
+            var thisValue = this.innerHTML; 
 
-        } else { 
-            // start over
-            reveal = null; 
+            // if there's a match!
+            if (thisValue == revealed) {
+                // change color to yellow and make unclickable
+                $('.visible').addClass('colorMatched'); 
+
+                setTimeout(function() { 
+                // remove fancy yellow color
+                    $('.colorMatched').addClass('disabled'); 
+                }, 500); 
+            } 
+
+            setTimeout(function() { 
+                // after half a second, start over again!
+                revealed = null; 
+                $('.visible').removeClass('visible'); 
+            }, 500); 
         }
     }
-
-    console.log(this.innerHTML); 
 }; 
 
 $('span').on('click', clicked); 
+
+// array of numbers
