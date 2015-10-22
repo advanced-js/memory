@@ -26,8 +26,8 @@ button {
 div#gameboard {
   background: #222;
   border: #999 1px solid;
-  width: 565px;
-  height: 420px;
+  width: 552px;
+  height: 415px;
   padding: 24px;
   margin: 0px auto;
 }
@@ -36,12 +36,10 @@ div#gameboard {
 /*target all child divs*/
 div#gameboard > div{
   background: url(cards/cardback.png) no-repeat;
-  border: #000 1px solid;
   width: 72px;
   height: 96px;
   float: left;
   margin: 0 10px 10px 10px;
-  padding: 0px;
   font-size: 64px;
   cursor: pointer;
   text-align: center;
