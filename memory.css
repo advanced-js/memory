@@ -1,0 +1,44 @@
+ul {
+    display: inline-block;
+    list-style-type: none;
+}
+li {
+    width: 30px;
+    height: 30px;
+    text-indent: -1000em;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background: #165782;
+    background-image: -webkit-linear-gradient(top, #165782, #7ec9f7);
+    background-image: -moz-linear-gradient(top, #165782, #7ec9f7);
+    background-image: -ms-linear-gradient(top, #165782, #7ec9f7);
+    background-image: -o-linear-gradient(top, #165782, #7ec9f7);
+    background-image: linear-gradient(to bottom, #165782, #7ec9f7);
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+}
+li:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+.selected {
+    text-indent: 1em;
+	transition: width 0.1s linear;
+}
+.matched {
+    visibility: hidden;
+}
+.animate {
+	width:0px;
+}
