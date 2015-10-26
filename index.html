@@ -9,22 +9,10 @@
 	   padding: 5px;
 	}
 	</style>
+	<script src="jquery-2.1.4.min.js"></script>
   </head>
   <body>
-  <table id='tid'>
-  <tr>
-  	<td>x</td><td>a</td>
-  </tr>
-  <tr>
-  	<td>b</td><td>x</td>
-  </tr>
-  <tr>
-  	<td>y</td><td>b</td>
-  </tr>
-  <tr>
-  	<td>a</td><td>y</td>
-  </tr>
-  </table>
+  <div id="board"></div>
 
 <script>
 
@@ -34,10 +22,108 @@ var c = 0;
 var firstval;
 
 
-var table = document.getElementById('tid');
-var cells = table.getElementsByTagName('td');
+var Board = function (rows, cols) {
+
+	if ((rows*cols)%2 > 0) { alert('Not an even number'); }
+
+	$('#board').append('<table id=tid></table>');
+	
+	var rowString = "";
+	// CREATES BOARD OF ROWS x COLS
+	for (var i=0; i<rows; i++) {
+		rowString="<tr>";
+		for (var j=0; j<cols; j++) {
+			rowString+="<td>"+ j +"</td>";
+		}
+		rowString+="</tr>";
+		$('#board').children().append(rowString);
+	}
+}
+
+Board.prototype.setBoard = function() {
+
+	var table = document.getElementById('tid');
+	var cells = table.getElementsByTagName('td');
+	var values = new Array();
+
+
+	// SET VALUES
+	for (var i=0; i < cells.length; i++) {
+		var k=i;
+		// SINCE WE NEED PAIRS, WE ONLY CREATE RANDOM VALUES FOR THE FIRST HALF OF THE LOOP
+		if (i >= cells.length/2) { 
+			k = i - cells.length/2; 
+			cells[i].innerHTML = values[k];
+		}
+		else {
+			var rando = Math.floor(Math.random()*100);
+			while (values.indexOf(rando) > -1) {
+				rando = Math.floor(Math.random()*100);
+			}
+			values[i] = rando;
+			cells[i].innerHTML = values[i];
+		}
+	}
+
+	for (var i=0; i < cells.length; i++) {
+		//alert(cells.length);
+		cells[i].onclick = function() {
+	    	if (this.style.color === 'red' || this.style.color === 'green') { return; }
+
+	    	// SET THE FONT COLOR FROM WHITE TO RED ONCLICK
+			this.style.color = 'red';
+			// IF C == 0 THEN IT'S FIRST CARD FLIP
+			if (c==0) {
+				firstval = this.innerHTML;
+				c++;
+			}
+			// IF C == 1 THEN IT'S SECOND CARD FLIP
+			else { 
+				// MATCH IF GLOBAL VAR firstval == THIS FLIP
+				if (firstval == this.innerHTML) { 
+					alert('MATCH');
+					// LOOP THROUGH ALL CELLS TO SET MATCHED CARDS TO GREEN
+					for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
+						var cell = document.getElementById('tid').getElementsByTagName('td')[j];
+						if (cell.innerHTML == firstval) { 
+							cell.style.color = 'green';
+						} 
+					}
+				}
+				else { 
+					// IF NOT A MATCH SET COLORS BACK TO WHITE
+					alert('NO MATCH'); 
+					this.style.color = 'white';
+					// LOOP THROUGH ALL CELLS AND SET FIRSTVAL BACK TO WHITE
+					for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
+						var cell = document.getElementById('tid').getElementsByTagName('td')[j];
+						if (cell.innerHTML == firstval) { 
+							cell.style.color = 'white';
+						} 
+					}
+					
+				}
+				// ON SECOND FLIP ALWAYS SET C TO ZERO TO RESET
+				c=0;
+			}; 
+		    console.log(this.innerHTML);
+		}
+	}
+}
+
+var board = new Board(5, 4);
+board.setBoard();
+
+/*
+SuperHero.prototype.useSuperPower = function() {
+  console.log(this.superName + " uses super power " + this.superPower);
+  return this.superName + " uses super power " + this.superPower;
+};
+*/
+
 
 // LOOP THROUGH ALL TABLE CELLS TO CREATE ONCLICK FUNCTION
+/*
 for (var i=0,len=cells.length; i<len; i++) {
     cells[i].onclick = function() {
     	if (this.style.color === 'red' || this.style.color === 'green') { return; }
@@ -83,7 +169,7 @@ for (var i=0,len=cells.length; i<len; i++) {
 	}
 
 }
-
+*/
 
 
     </script>
