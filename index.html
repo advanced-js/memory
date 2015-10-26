@@ -40,6 +40,8 @@ var cells = table.getElementsByTagName('td');
 // LOOP THROUGH ALL TABLE CELLS TO CREATE ONCLICK FUNCTION
 for (var i=0,len=cells.length; i<len; i++) {
     cells[i].onclick = function() {
+    	if (this.style.color === 'red' || this.style.color === 'green') { return; }
+
     	// SET THE FONT COLOR FROM WHITE TO RED ONCLICK
 		this.style.color = 'red';
 		// IF C == 0 THEN IT'S FIRST CARD FLIP
