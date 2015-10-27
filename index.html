@@ -33,7 +33,7 @@ var Board = function (rows, cols) {
 	for (var i=0; i<rows; i++) {
 		rowString="<tr>";
 		for (var j=0; j<cols; j++) {
-			rowString+="<td>"+ j +"</td>";
+			rowString+="<td>.</td>";
 		}
 		rowString+="</tr>";
 		$('#board').children().append(rowString);
@@ -45,28 +45,37 @@ Board.prototype.setBoard = function() {
 	var table = document.getElementById('tid');
 	var cells = table.getElementsByTagName('td');
 	var values = new Array();
+	var pairValues = new Array();
 
 
 	// SET VALUES
 	for (var i=0; i < cells.length; i++) {
-		var k=i;
 		// SINCE WE NEED PAIRS, WE ONLY CREATE RANDOM VALUES FOR THE FIRST HALF OF THE LOOP
+		// TO FILL THE SECOND HALF OF THE BOARD WE CHOOSE A RANDOM INDEX FROM THE FIRST HALF
+		// AND ADD IT TO THE SECOND
 		if (i >= cells.length/2) { 
 			k = i - cells.length/2; 
-			cells[i].innerHTML = values[k];
+			do {
+				indexRand = Math.floor(Math.random() * cells.length/2);
+				//alert("i is " + i + " indexRand is " + indexRand + " pairval is " + values[indexRand] + " k is " + k + " indexOf " + values[indexRand] + " is " + pairValues.indexOf(values[indexRand]));
+			} while (pairValues.indexOf(values[indexRand]) > -1 && k < cells.length/2)
+			pairValues[k] = values[indexRand];
+			cells[i].innerHTML = values[indexRand];
 		}
+		// FILLING FIRST HALF OF BOARD
 		else {
-			var rando = Math.floor(Math.random()*100);
-			while (values.indexOf(rando) > -1) {
-				rando = Math.floor(Math.random()*100);
-			}
+			do {
+				var rando = Math.floor(Math.random()*100);
+			} while (values.indexOf(rando) > -1)
 			values[i] = rando;
+			//alert("i is " + i);
 			cells[i].innerHTML = values[i];
 		}
 	}
 
+
+	// CREATE ONCLICK EVENTS FOR THE BOARD
 	for (var i=0; i < cells.length; i++) {
-		//alert(cells.length);
 		cells[i].onclick = function() {
 	    	if (this.style.color === 'red' || this.style.color === 'green') { return; }
 
@@ -113,64 +122,6 @@ Board.prototype.setBoard = function() {
 
 var board = new Board(5, 4);
 board.setBoard();
-
-/*
-SuperHero.prototype.useSuperPower = function() {
-  console.log(this.superName + " uses super power " + this.superPower);
-  return this.superName + " uses super power " + this.superPower;
-};
-*/
-
-
-// LOOP THROUGH ALL TABLE CELLS TO CREATE ONCLICK FUNCTION
-/*
-for (var i=0,len=cells.length; i<len; i++) {
-    cells[i].onclick = function() {
-    	if (this.style.color === 'red' || this.style.color === 'green') { return; }
-
-    	// SET THE FONT COLOR FROM WHITE TO RED ONCLICK
-		this.style.color = 'red';
-		// IF C == 0 THEN IT'S FIRST CARD FLIP
-		if (c==0) {
-			firstval = this.innerHTML;
-			c++;
-		}
-		// IF C == 1 THEN IT'S SECOND CARD FLIP
-		else { 
-			// MATCH IF GLOBAL VAR firstval == THIS FLIP
-			if (firstval == this.innerHTML) { 
-				alert('MATCH');
-				// LOOP THROUGH ALL CELLS TO SET MATCHED CARDS TO GREEN
-				for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
-					var cell = document.getElementById('tid').getElementsByTagName('td')[j];
-					if (cell.innerHTML == firstval) { 
-						cell.style.color = 'green';
-					} 
-				}
-			}
-			else { 
-				// IF NOT A MATCH SET COLORS BACK TO WHITE
-				alert('NO MATCH'); 
-				this.style.color = 'white';
-				// LOOP THROUGH ALL CELLS AND SET FIRSTVAL BACK TO WHITE
-				for (var j=0; j < document.getElementById('tid').getElementsByTagName('td').length; j++) { 
-					var cell = document.getElementById('tid').getElementsByTagName('td')[j];
-					if (cell.innerHTML == firstval) { 
-						cell.style.color = 'white';
-					} 
-				}
-				
-			}
-			// ON SECOND FLIP ALWAYS SET C TO ZERO TO RESET
-			c=0;
-		}; 
-	    console.log(this.innerHTML);
-
-	}
-
-}
-*/
-
 
     </script>
 
