@@ -1,31 +1,66 @@
-var revealed = null;
+// var revealed = null;
+
+// function clicked() { 
+//     $(this).addClass('visible'); 
+
+//     if (revealed == null) {
+//         // first click
+//         revealed = this.innerHTML;  
+
+//     } else {
+//         // second click
+//         var thisValue = this.innerHTML; 
+
+//         if (thisValue == revealed) {
+//             // change color to yellow and make unclickable
+//             $('.visible').addClass('colorMatched'); 
+
+//             // then start over
+//             reveal = null; 
+//             $('.visible').removeClass('visible'); 
+
+//         } else { 
+//             // start over
+//             reveal = null; 
+//        }
+//    }
+
+//     console.log(this.innerHTML); 
+// }; 
+
+// $('span').on('click', clicked);  
+
+var firstClick = null;
 
 function clicked() { 
     $(this).addClass('visible'); 
 
-    if (revealed == null) {
+    if (firstClick == null) {
         // first click
-        revealed = this.innerHTML;  
+        firstClick = this.innerHTML;
+            $(this).addClass('firstClick'); 
 
     } else {
         // second click
-        var thisValue = this.innerHTML; 
+        var secondClick = this.innerHTML; 
+            $(this).addClass('secondClick'); 
 
-        if (thisValue == revealed) {
-            // change color to yellow and make unclickable
-            $('.visible').addClass('colorMatched'); 
+        if (firstClick == secondClick) {
+            
+            $('.firstClick, .secondClick').addClass('colorMatched');
 
-            // then start over
-            reveal = null; 
-            $('.visible').removeClass('visible'); 
+        } else {
+            //third click
+                var thirdClick = this.innerHTML;
 
-        } else { 
-            // start over
-            reveal = null; 
-       }
-   }
+                $(this).addClass('thirdClick'); 
 
-    console.log(this.innerHTML); 
-}; 
+                if (firstClick == thirdClick) {
 
-$('span').on('click', clicked);  
+                $('.firstClick, .thirdClick').addClass('colorMatched');
+
+                }
+            }
+        }
+    };
+$('span').on('click', clicked);

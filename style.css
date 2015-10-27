@@ -1,15 +1,21 @@
 body { 
+
     
 }
 
 table { 
     background-color: black;
+    height: 400px;
+    width:400px;
     color: white;
-    font-size: 20px;
+    font-family: arial;
+	font-weight: bold;
+    font-size: 150px;
 }
 
-td { padding:10px;
-    border: 2px solid gray;
+td { text-align: center;
+	padding:10px;
+    border: 1px solid white;
 
 }
 
@@ -20,9 +26,9 @@ span {
 
 span.colorMatched { 
     opacity: 1; 
-    background-color: yellow; 
+    color: red; 
 }
 
 span.visible { 
     opacity: 1; 
-} 
+}
