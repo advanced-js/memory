@@ -36,6 +36,7 @@
 //MEMORY V2
 
 var firstClick = null;
+var secondClick = null;
 
 function clicked() {
 
@@ -53,7 +54,7 @@ function clicked() {
 
      // second click
 
-     var secondClick = this.innerHTML;
+    secondClick = this.innerHTML;
 
      $(this).addClass('secondClick');
 
@@ -65,9 +66,9 @@ function clicked() {
 
 } else {
 
-    var timeoutID = setTimeout(function(){$('td').addClass('frozen')},2000);
+    var timeoutID = setTimeout(function(){$('td').addClass('frozen');},2000);
 
-    var altTimeoutID = setTimeout(function(){$('#buttonDiv').show()},1000);
+    var altTimeoutID = setTimeout(function(){$('#buttonDiv').show();},1000);
 
 }
 
@@ -80,6 +81,7 @@ function reset() {
     $('#buttonDiv').hide();
 
     firstClick = null;
+    secondClick = null;
 
 }
 
