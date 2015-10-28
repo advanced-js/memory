@@ -85,4 +85,4 @@ function reset() {
 
 $('span').on('click', clicked);
 
-//Thanks to pair partner Maryanne for idea of reset button
+//Thanks to pair partner Marianne for reset button idea
