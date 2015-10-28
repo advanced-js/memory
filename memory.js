@@ -1,3 +1,5 @@
+//THIS IS OUR ORIGINAL IN-CLASS PAIR EFFORT
+
 // var revealed = null;
 
 // function clicked() { 
@@ -30,37 +32,57 @@
 
 // $('span').on('click', clicked);  
 
+//My completed version of in-class assignment:
+//MEMORY V2
+
 var firstClick = null;
 
-function clicked() { 
-    $(this).addClass('visible'); 
+function clicked() {
 
-    if (firstClick == null) {
-        // first click
-        firstClick = this.innerHTML;
-            $(this).addClass('firstClick'); 
+    $(this).addClass('visible');
 
-    } else {
-        // second click
-        var secondClick = this.innerHTML; 
-            $(this).addClass('secondClick'); 
+    if (firstClick === null) {
 
-        if (firstClick == secondClick) {
-            
-            $('.firstClick, .secondClick').addClass('colorMatched');
+    // first click
 
-        } else {
-            //third click
-                var thirdClick = this.innerHTML;
+         firstClick = this.innerHTML;
 
-                $(this).addClass('thirdClick'); 
+         $(this).addClass('firstClick');
 
-                if (firstClick == thirdClick) {
+     } else {
 
-                $('.firstClick, .thirdClick').addClass('colorMatched');
+     // second click
 
-                }
-            }
-        }
-    };
+     var secondClick = this.innerHTML;
+
+     $(this).addClass('secondClick');
+
+ }
+
+ if (firstClick === secondClick) {
+
+    $('.firstClick, .secondClick').addClass('colorMatched');
+
+} else {
+
+    var timeoutID = setTimeout(function(){$('td').addClass('frozen')},2000);
+
+    var altTimeoutID = setTimeout(function(){$('#buttonDiv').show()},1000);
+
+}
+
+}
+
+function reset() {
+
+    $('*').removeClass();
+
+    $('#buttonDiv').hide();
+
+    firstClick = null;
+
+}
+
 $('span').on('click', clicked);
+
+//Thanks to pair partner Maryanne for idea of reset button

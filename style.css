@@ -1,8 +1,3 @@
-body { 
-
-    
-}
-
 table { 
     background-color: black;
     height: 400px;
@@ -11,12 +6,12 @@ table {
     font-family: arial;
 	font-weight: bold;
     font-size: 150px;
+    display: block;
 }
 
 td { text-align: center;
 	padding:10px;
     border: 1px solid white;
-
 }
 
 span {
@@ -24,11 +19,35 @@ span {
     cursor: pointer;
 }
 
-span.colorMatched { 
+.colorMatched { 
     opacity: 1; 
     color: red; 
 }
 
-span.visible { 
+.visible { 
     opacity: 1; 
+}
+
+.frozen {
+  pointer-events: none;
+}
+
+#buttonDiv {
+    width: 400px;
+    height: 200px;
+    text-align: center;
+    padding-top: 10px;
+    display: none;
+}
+
+button {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px; 
+    font-family: arial;
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    color: white;
+    background-color: red;
 }
