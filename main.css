@@ -2,7 +2,13 @@ body {
 	width: 900px;
 	margin: 0 auto;
 	height: 600px;
+	font-family: 'Amatic SC', cursive;
 }
+/* font */
+.resetGame {
+	font-family: 'Exo', sans-serif;
+}
+
 ul{
 	width: 700px;
 	float: left;
