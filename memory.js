@@ -170,7 +170,6 @@ Tile.prototype = {
     // if matched - out of the game ; if frozen - can't click for now
     return this.matched || this.frozen;
   }
-
 };
 
 $(function() {
