@@ -195,8 +195,8 @@ Tile.prototype = {
   }
 };
 
-$(function() {
-    var tiles = [
+function setUpBoard(){
+  var tiles = [
       new Tile("tile1", "A"),
       new Tile("tile2", "B"),
       new Tile("tile3", "B"),
@@ -217,9 +217,13 @@ $(function() {
       new Tile("tile15", "H"),
       new Tile("tile16", "H")
     ];
-    var theBoard = new Board("board", tiles, 4, 4);
-    theBoard.draw();
-    var theGame = new Game(theBoard);
+  var theBoard = new Board("board", tiles, 4, 4);
+  theBoard.draw();
+  return theBoard;
+}
+
+$(function() {
+    var theGame = new Game(setUpBoard());
     $('.win-status').hide();
     $('.tile').click( 
       function(){
