@@ -109,6 +109,8 @@ var Memory = {
         var shuffledNumbers = Memory.shuffleArray(numArray); 
 
         Memory.fillGame(shuffledNumbers); 
+
+        Memory.addEventListeners(); 
     }
 };
 
