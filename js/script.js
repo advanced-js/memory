@@ -5,6 +5,17 @@ var Click = (function() {
 
 var clickTd = new Click();
 
+//Start With click
+$('body').on('click', 'td', (function(e) {
+  var _this = this;
+  var tdClass = $(_this).children().attr('class');
+  var child = $(_this).children();
+  $(child).show();
+  setTimeout(function() {
+    clickTd.incrementClicks();
+    clickTd.addToArr(tdClass);
+  }, 500);
+}));
 
 Click.prototype.incrementClicks = function() {
   this.numClicks++;
@@ -41,51 +52,54 @@ Click.prototype.removePiece = function() {
 
 
 
-//This still needs to be put in objects
-var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow"];
-
-
+//Building board
+var BuildGame = function(num) {
+  this.num = num;
+  this.checkEvenBoard(num);
+};
+//Start build board process
 $(".btn").click(function() {
   var num;
   num = $("input").val();
-  checkNumber(num);
+  var newBoard = new BuildGame(num);
 });
-
-function checkNumber(num) {
-  if (num % 2 === 0) {
-    pickColors(num, colorArr);
+BuildGame.prototype.checkEvenBoard = function(num) {
+  if (this.num % 2 === 0) {
+    this.pickArrayColors(num);
   } else {
-    var addOne = num + 1;
-    pickColors(addOne, colorArr);
+    this.num++;
+    console.log("the name changed to " + this.num);
+    this.pickArrayColors(num);
   }
-}
+};
 
-function pickColors(num, array) {
-  var size = num * num / 2;
-  console.log(size);
-  pickedColors = [];
+BuildGame.prototype.pickArrayColors = function(num) {
+  var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow"];
+  console.log("Im in the color function " + this.num);
+  var size = (this.num * this.num) / 2;
+  console.log("this is the size " + size);
+  var pickedColors = [];
   for (var i = 0; i < size; i++) {
-    pickedColors.push(array[i], array[i]);
+    pickedColors.push(colorArr[i], colorArr[i]);
   }
-  console.log(pickedColors);
-  shuffleColors(num, pickedColors);
-}
+  this.shuffleColors(num, pickedColors);
+};
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
  */
-function shuffleColors(num, array) {
+BuildGame.prototype.shuffleColors = function(num, array) {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
+    //swap I and J
     var temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
-  console.log(num, array);
-  buildBoard(num, array);
-}
+  this.buildBoard(num, array);
+};
 
-function buildBoard(num, shuffledColors) {
+BuildGame.prototype.buildBoard = function(num, shuffledColors) {
   var board = "";
   var index = 0;
   for (var x = 0; x < num; x++) {
@@ -98,15 +112,4 @@ function buildBoard(num, shuffledColors) {
     console.log(board);
   }
   $("table").append(board);
-}
-//Start With click
-$('body').on('click', 'td', (function(e) {
-  var _this = this;
-  var tdClass = $(_this).children().attr('class');
-  var child = $(_this).children();
-  $(child).show();
-  setTimeout(function() {
-    clickTd.incrementClicks();
-    clickTd.addToArr(tdClass);
-  }, 500);
-}));
+};
