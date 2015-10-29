@@ -1,6 +1,6 @@
 var Game = function(board){
   this.board = board;
-}
+};
 
 Game.prototype = {
   // tests all activated tile(s) if it matches with the clicked tile
@@ -86,14 +86,14 @@ Game.prototype = {
     }
   }
 
-}
+};
 
 var Board = function(tiles, num_rows, num_columns){
   this.tiles = tiles;
   this.size = tiles.length;
   this.num_rows = num_rows;
   this.num_columns = num_columns;
-}
+};
 
 Board.prototype = {
   
@@ -116,7 +116,7 @@ Board.prototype = {
   getTile: function(tile_id){
     return this.tiles.find( function(tile){ return tile.id == tile_id; }); 
   }
-}
+};
 
 var Tile = function(id, value){
   this.id = id; 
@@ -124,7 +124,7 @@ var Tile = function(id, value){
   this.activated = false;
   this.matched = false;
   this.frozen = false;
-}
+};
 
 Tile.prototype = {
   value_matches: function(other_tile){
@@ -157,15 +157,21 @@ Tile.prototype = {
     $("#"+this.id).css("visibility", "hidden");
   },
   updateDomObj: function(){
-    this.activated ? this.activateDomObj() : this.deactivateDomObj();
-    this.matched ? this.hideDomObj() : false;
+    if (this.activated){
+      this.activateDomObj();
+    }else{
+      this.deactivateDomObj();
+    }
+    if (this.matched){
+      this.hideDomObj();
+    }
   },
   shouldIgnoreClicks: function(){
     // if matched - out of the game ; if frozen - can't click for now
     return this.matched || this.frozen;
   }
 
-}
+};
 
 $(function() {
     var tiles = [
