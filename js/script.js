@@ -65,24 +65,21 @@ $(".btn").click(function() {
 });
 BuildGame.prototype.checkEvenBoard = function(num) {
   if (this.num % 2 === 0) {
-    this.pickArrayColors(num);
+    this.pickArrayColors(this.num);
   } else {
     this.num++;
-    console.log("the name changed to " + this.num);
-    this.pickArrayColors(num);
+    this.pickArrayColors(this.num);
   }
 };
 
 BuildGame.prototype.pickArrayColors = function(num) {
-  var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow"];
-  console.log("Im in the color function " + this.num);
+  var colorArr = ["blue", "red", "green", "pink", "black", "orange", "purple", "gray", "white", "turquoise", "Chartreuse", "LightSkyBlue", "PeachPuff", "yellow", "lightGreen", "hotPink", "indigo", "navy"];
   var size = (this.num * this.num) / 2;
-  console.log("this is the size " + size);
   var pickedColors = [];
   for (var i = 0; i < size; i++) {
     pickedColors.push(colorArr[i], colorArr[i]);
   }
-  this.shuffleColors(num, pickedColors);
+  this.shuffleColors(this.num, pickedColors);
 };
 /**
  * Randomize array element order in-place.
@@ -96,7 +93,7 @@ BuildGame.prototype.shuffleColors = function(num, array) {
     array[i] = array[j];
     array[j] = temp;
   }
-  this.buildBoard(num, array);
+  this.buildBoard(this.num, array);
 };
 
 BuildGame.prototype.buildBoard = function(num, shuffledColors) {
@@ -109,7 +106,6 @@ BuildGame.prototype.buildBoard = function(num, shuffledColors) {
       index++;
     }
     board += "</tr>";
-    console.log(board);
   }
   $("table").append(board);
 };
