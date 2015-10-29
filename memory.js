@@ -10,6 +10,7 @@ $(function() {
 			console.log("match!");
 			$(lastClicked).css("visibility","hidden");
 			$(this).css("visibility", "hidden");
+			lastClicked = undefined;
 
 		} else {
 			// second click - no match
@@ -17,5 +18,7 @@ $(function() {
 			lastClicked = undefined;
 		}
 	});
+
+
 });
 
