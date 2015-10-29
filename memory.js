@@ -1,101 +1,188 @@
-$.fn.activate = function(){
-    this.addClass("activated");
-    this.text(this.val());
-    return this;
-};
-
-$.fn.deactivate = function(){
-    this.removeClass("activated");
-    this.text("");
-    return this;
-};
-
-$.fn.match = function(){
-    this.addClass("matched");
-    return this;
-};
-
-$.fn.freeze = function(){
-    this.addClass("frozen");
-    return this;
-};
-
-$.fn.unfreeze = function(){
-    this.removeClass("frozen");
-    return this;
-};
-
-function endRound(){
-    // set timeout so user has time to see result
-    setTimeout(function(){
-        $('.matched').css("visibility", "hidden");
-        $('.activated').deactivate();
-        $('.tile').unfreeze();
-        testWin();
-    }, 500);
+var Game = function(board){
+  this.board = board;
 }
 
-function testWin(){
-    var tiles = $('.tile');
-    var any_not_matched = false;
-    for (var i=0; i<tiles.length; i++){
-        var tile = tiles[i];
-        if (!$(tile).hasClass("matched")){
-            any_not_matched = true;
-            break;
-        }
-    }
-    if (!any_not_matched){
-        $(".win-status").show();
-    }
-}
-
-function testForMatch(clicked_tile, active_tiles){
+Game.prototype = {
+  // tests all activated tile(s) if it matches with the clicked tile
+  findAnyMatch: function(clicked_tile){
     var matched_tile;
-    for (var i=0; i<active_tiles.length; i++){
-        var tile = active_tiles[i];
-        if ($(tile).val() === $(clicked_tile).val()){
+    this.board.allActivatedTiles().forEach(
+        function(tile){
+          if (tile.id !== clicked_tile.id && tile.value_matches(clicked_tile)){
             matched_tile = tile;
+          }
         }
-    }
-    if (matched_tile !== undefined){
-        console.log("match!");
-        $(matched_tile).match();
-        $(clicked_tile).match();
-    }else{
-        console.log("no match!");
-    }
-}
+    );
+    return matched_tile;
+  },
 
-function tileOnClick(){
-    if ($(this).hasClass("matched") || $(this).hasClass("frozen")){
-        // out of the game - ignore
+  findAndRecordAnyMatch: function(clicked_tile){
+     var matched_tile = this.findAnyMatch(clicked_tile);
+     if (matched_tile !== undefined){
+      console.log("match!");
+      matched_tile.recordMatch();
+      clicked_tile.recordMatch();
+    }else{
+      console.log("no match!");
+    }
+  },
+
+  isSecondTurn: function(){
+    return this.board.allActivatedTiles().length > 1;
+  },
+
+  // start the turn when a tile is clicked
+  startTurn: function(clicked_tile){
+    if (clicked_tile.shouldIgnoreClicks()){
         return;
     }
-    var endThisRound = false;
     // freeze to prevent click actions from happening
-    $('.tile').freeze();
-    if ($(this).hasClass("activated")){
-        // second click - can't match with itself
-        endThisRound = true;
-    }else{
-        var active_tiles = $('.activated');
-        $(this).activate();
-        if (active_tiles.length !== 0) {		
-            // second click - may be a match
-            testForMatch(this, active_tiles);
-            endThisRound = true;
-        }
+    this.board.allTiles().forEach( function(tile){ tile.freeze();} );
+    clicked_tile.activate();
+    clicked_tile.updateDomObj();
+    if (this.isSecondTurn()) {
+      this.findAndRecordAnyMatch(clicked_tile);
     }
-    if (endThisRound){
-        endRound();
+    this.endTurn();
+  },
+  
+  endTurn: function(){
+   if (this.isSecondTurn()){
+      this.endRound();
     }else{
-        $('.tile').unfreeze();
+      // unfreeze and update at the end of the turn
+      this.board.allTiles().forEach(
+          function(tile){ 
+            tile.updateDomObj();
+            tile.unfreeze();
+          }
+      );
     }
+  },
+
+  // at the end of a round, deactivate + unfreeze tiles
+  // also test for a win
+  endRound: function(){
+    theGame = this;
+    // set timeout so user has time to see result
+    setTimeout(function(){
+        theGame.board.allTiles().forEach(
+          function(tile){
+            tile.deactivate();
+            tile.updateDomObj();
+            tile.unfreeze();
+          }
+        );
+        theGame.testWin();
+    }, 500);
+  },
+
+  // test for the win case, where all tiles have been matched
+  // show win status if it's a win, otherwise do nothing
+  testWin: function(){
+    var matched_tiles = this.board.allMatchedTiles();
+    if (matched_tiles.length === this.board.size){
+      $(".win-status").show();
+    }
+  }
+
+}
+
+var Board = function(tiles, num_rows, num_columns){
+  this.tiles = tiles;
+  this.size = tiles.length;
+  this.num_rows = num_rows;
+  this.num_columns = num_columns;
+}
+
+Board.prototype = {
+  
+  // returns a list of all Tiles that have matched with another
+  allMatchedTiles: function(){
+    return this.tiles.filter( function(tile){ return tile.matched; });
+  },
+
+  // returns a list of all Tiles that are activated
+  allActivatedTiles: function() {
+    return this.tiles.filter( function(tile){ return tile.activated; });
+  },
+
+  // returns all tiles
+  allTiles: function() {
+    return this.tiles;
+  },
+
+  // get the tile with this id
+  getTile: function(tile_id){
+    return this.tiles.find( function(tile){ return tile.id == tile_id; }); 
+  }
+}
+
+var Tile = function(id, value){
+  this.id = id; 
+  this.value = value;
+  this.activated = false;
+  this.matched = false;
+  this.frozen = false;
+}
+
+Tile.prototype = {
+  value_matches: function(other_tile){
+    return this.value === other_tile.value;
+  },
+  activate: function(){
+    this.activated = true;
+  },
+  deactivate: function(){
+    this.activated = false;
+  },
+  recordMatch: function(){
+    this.matched = true;
+  },
+  freeze: function() {
+    this.frozen = true;
+  },
+  unfreeze: function(){
+    this.frozen = false;
+  },
+  activateDomObj: function(){
+    $("#"+this.id).text(this.value);
+    return true;
+  },
+  deactivateDomObj: function(){
+    $("#"+this.id).text("");
+    return true;
+  },
+  hideDomObj: function(){
+    $("#"+this.id).css("visibility", "hidden");
+  },
+  updateDomObj: function(){
+    this.activated ? this.activateDomObj() : this.deactivateDomObj();
+    this.matched ? this.hideDomObj() : false;
+  },
+  shouldIgnoreClicks: function(){
+    // if matched - out of the game ; if frozen - can't click for now
+    return this.matched || this.frozen;
+  }
+
 }
 
 $(function() {
+    var tiles = [
+      new Tile("tile1", "A"),
+      new Tile("tile2", "B"),
+      new Tile("tile3", "A"),
+      new Tile("tile4", "B")
+    ];
+    var theBoard = new Board(tiles);
+    var theGame = new Game(theBoard);
     $('.win-status').hide();
-    $('.tile').click(tileOnClick);
+    $('.tile').click( 
+      function(){
+        var tile_id = $(this).attr("id");
+        var clicked_tile = theGame.board.getTile(tile_id);
+        theGame.startTurn(clicked_tile);
+      }
+    );
 });
 
