@@ -88,7 +88,8 @@ Game.prototype = {
 
 };
 
-var Board = function(tiles, num_rows, num_columns){
+var Board = function(id, tiles, num_rows, num_columns){
+  this.id = id;
   this.tiles = tiles;
   this.size = tiles.length;
   this.num_rows = num_rows;
@@ -115,6 +116,28 @@ Board.prototype = {
   // get the tile with this id
   getTile: function(tile_id){
     return this.tiles.find( function(tile){ return tile.id == tile_id; }); 
+  },
+
+  // draws the board as a table
+  draw: function(){
+    var table = $("<table>");
+    var tiles_added = 0;
+    for (var r=0; r<this.num_rows; r++){
+      if (tiles_added >= this.size){
+        break;
+      }
+      var row = $("<tr>");
+      for (var c=0; c<this.num_columns; c++){
+        if (tiles_added >= this.size){
+          break;
+        }
+        var tile = this.tiles[tiles_added];
+        row.append("<td><button id='"+tile.id+"' class='tile'/></td>");
+        tiles_added++;
+      }
+      table.append(row);
+    }
+    $("#"+this.id).append(table);
   }
 };
 
@@ -176,10 +199,26 @@ $(function() {
     var tiles = [
       new Tile("tile1", "A"),
       new Tile("tile2", "B"),
-      new Tile("tile3", "A"),
-      new Tile("tile4", "B")
+      new Tile("tile3", "B"),
+      new Tile("tile4", "C"),
+
+      new Tile("tile5", "C"),
+      new Tile("tile6", "E"),
+      new Tile("tile7", "E"),
+      new Tile("tile8", "G"),
+
+      new Tile("tile9", "F"),
+      new Tile("tile10", "G"),
+      new Tile("tile11", "F"),
+      new Tile("tile12", "A"),
+
+      new Tile("tile13", "D"),
+      new Tile("tile14", "D"),
+      new Tile("tile15", "H"),
+      new Tile("tile16", "H")
     ];
-    var theBoard = new Board(tiles);
+    var theBoard = new Board("board", tiles, 4, 4);
+    theBoard.draw();
     var theGame = new Game(theBoard);
     $('.win-status').hide();
     $('.tile').click( 
