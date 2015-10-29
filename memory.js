@@ -98,7 +98,7 @@ var Memory = {
     reset: function() { 
         $('#Message').removeClass('show'); 
         $('#MemoryGame tbody').html(''); 
-        
+
         var numArray = []; 
 
         for(var i = 1; i <= 18; i++) { 
@@ -110,6 +110,6 @@ var Memory = {
 
         Memory.fillGame(shuffledNumbers); 
     }
-}
+};
 
 Memory.init(); 
