@@ -28,8 +28,14 @@ Board.prototype = {
     return this.tiles.find( function(tile){ return tile.id == tile_id; }); 
   },
 
+  // clears the board - removes table
+  clear: function(){
+    $("#"+this.id).html("");    
+  },
+
   // draws the board as a table
   draw: function(){
+    this.clear();
     var table = $("<table>");
     var tiles_added = 0;
     for (var r=0; r<this.num_rows; r++){

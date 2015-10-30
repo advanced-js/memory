@@ -30,22 +30,43 @@ function shuffleTiles(tiles){
     } 
 }
 
-function setUpBoard(){
-  var tiles = orderedTiles(100);
+function setUpBoard(size, num_columns, num_rows){
+  if (size <= 0 || num_columns*num_rows != size){
+    console.log(size + ", " + num_columns + ", " + num_rows + " are invalid parameters");
+    return;  
+  }
+  var tiles = orderedTiles(size);
   shuffleTiles(tiles);
-  var theBoard = new Board("board", tiles, 10, 10);
+  var theBoard = new Board("board", tiles, num_rows, num_columns);
   theBoard.draw();
   return theBoard;
 }
 
+function convertToInt(str){
+    var new_int = parseInt(str);
+    if (isNaN(new_int)){
+        console.log("err: " + str + " is not a number");
+        return 0;
+    }
+    return new_int;
+}
+
 $(function() {
-    var theGame = new Game(setUpBoard());
+    var theGame;
     $('.win-status').hide();
-    $('.tile').click( 
+    $('#generate-board-btn').click(
       function(){
-        var clicked_tile = theGame.board.getTile(this.id);
-        theGame.startTurn(clicked_tile);
-      }
+        var size = convertToInt($('#board-size').val());
+        var num_columns = convertToInt($('#board-num-cols').val());
+        var num_rows = convertToInt($('#board-num-rows').val());  
+        theGame = new Game(setUpBoard(size, num_columns, num_rows));
+        $('.tile').click( 
+          function(){
+            var clicked_tile = theGame.board.getTile(this.id);
+            theGame.startTurn(clicked_tile);
+          }
+        );
+      }  
     );
 });
 
