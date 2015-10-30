@@ -1,26 +1,39 @@
-function setUpBoard(){
-  var tiles = [
-      new Tile("tile1", "A"),
-      new Tile("tile2", "B"),
-      new Tile("tile3", "B"),
-      new Tile("tile4", "C"),
-
-      new Tile("tile5", "C"),
-      new Tile("tile6", "E"),
-      new Tile("tile7", "E"),
-      new Tile("tile8", "G"),
-
-      new Tile("tile9", "F"),
-      new Tile("tile10", "G"),
-      new Tile("tile11", "F"),
-      new Tile("tile12", "A"),
-
-      new Tile("tile13", "D"),
-      new Tile("tile14", "D"),
-      new Tile("tile15", "H"),
-      new Tile("tile16", "H")
+function orderedTiles(size){
+    var letters = [ 
+        "A", "B", "C", "D", "E", "F", "G",
+        "H", "I", "J", "K", "L", "M", "N",
+        "O", "P", "Q", "R", "S", "T", "U",
+        "V", "W", "X", "Y", "Z"
     ];
-  var theBoard = new Board("board", tiles, 4, 4);
+    var tiles = [];
+    var next_tile_id = 1;
+    var num_distinct_tiles = Math.floor(size/2);
+    for (var i=0; i<num_distinct_tiles; i++){
+        // cycle through the letters
+        var letter_ind = i % letters.length;
+        var letter = letters[letter_ind];
+        // append twice so we know there are 2 to match
+        tiles.push(new Tile("tile"+next_tile_id, letter));
+        next_tile_id++;
+        tiles.push(new Tile("tile"+next_tile_id, letter));
+        next_tile_id++;
+    }
+    return tiles;
+}
+
+function shuffleTiles(tiles){
+    for (var i=0; i<tiles.length; i++){
+        var swap_ind = Math.floor(Math.random()*tiles.length);
+        var old_tile = tiles[swap_ind];
+        tiles[swap_ind] = tiles[i];
+        tiles[i] = old_tile;
+    } 
+}
+
+function setUpBoard(){
+  var tiles = orderedTiles(100);
+  shuffleTiles(tiles);
+  var theBoard = new Board("board", tiles, 10, 10);
   theBoard.draw();
   return theBoard;
 }
