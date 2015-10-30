@@ -227,8 +227,7 @@ $(function() {
     $('.win-status').hide();
     $('.tile').click( 
       function(){
-        var tile_id = $(this).attr("id");
-        var clicked_tile = theGame.board.getTile(tile_id);
+        var clicked_tile = theGame.board.getTile(this.id);
         theGame.startTurn(clicked_tile);
       }
     );
