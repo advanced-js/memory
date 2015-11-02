@@ -1,0 +1,50 @@
+body { 
+    font-family: 'helvetica', arial, sans-serif;
+    text-align: center;
+}
+
+table { 
+    margin: 0 auto 30px;
+    background-color: black;
+    color: white;
+    font-size: 30px;
+}
+
+td { 
+    border: 2px solid gray;
+}
+
+span {
+    display: block; 
+    padding: 30px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+span.colorMatched { 
+    opacity: 1; 
+    background-color: yellow; 
+    color: gray;
+}
+
+span.colorMatched.disabled { 
+    background-color: gray; 
+    cursor: default;
+}
+
+span.visible { 
+    opacity: 1; 
+}
+
+.message { 
+    visibility: hidden;
+}
+
+.message.show { 
+    visibility: visible;
+}
+
+a.reset { 
+    color: #333; 
+    text-decoration: underline;
+}
