@@ -2,7 +2,50 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="memoryOO.js"></script>
+    <style>
+      .container {
+        width: 5rem;
+        margin: 0 auto;
+      }
+
+     td {
+        width: 2rem;
+        height: 2rem;
+        text-align: center;
+        border: 1px solid;
+      }
+
+      td.is-removed {
+        visibility: hidden;
+      }
+
+      button {
+        margin-bottom: 1rem;
+      }
+    </style>
   </head>
+
   <body>
+
+  <section class="container">
+  	<table class="board">
+      <tr>
+        <td>A</td>
+        <td>A</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>B</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>C</td>
+      </tr>
+      <button>Reset</button>
+    </table>
+  </section>
+
   </body>
 </html>
