@@ -1,0 +1,75 @@
+body {
+	width: 900px;
+	margin: 0 auto;
+	height: 600px;
+	font-family: 'Amatic SC', cursive;
+}
+/* font */
+.resetGame {
+	font-family: 'Exo', sans-serif;
+}
+
+ul{
+	width: 700px;
+	float: left;
+	left: 0;
+	top: 0;
+}
+li {
+	width: 165;
+	height:128px;
+	padding: 5px;
+	margin: 5px;
+	float: left;
+	list-style: none;
+	border: 1px dashed rgb(255,140,0);
+}
+
+img {
+	border: 0;
+}
+
+.v2_center, .v2_canter2 {
+	margin: 0 auto;
+}
+
+a img.hid0, a img.hid1, a img.hid2,a img.hid3 {
+	visibility:hidden;
+	top: 126px;
+    position: absolute;
+    margin: 0 auto;
+}
+a img.hid4, a img.hid5, a img.hid6, a img.hid7 {
+	visibility:hidden;
+	top: 274px;
+    position: absolute;
+    margin: 0 auto;
+}
+
+a img.hid8, a img.hid9, a img.hid10, a img.hid11 {
+	visibility:hidden;
+	top: 422px;
+    position: absolute;
+    margin: 0 auto;
+}
+
+a img.hid12, a img.hid13, a img.hid14, a img.hid15 {
+	visibility:hidden;
+	top: 570px;
+	position: absolute;
+    margin: 0 auto;
+}
+
+a:hover img.hid0, a:hover img.hid1, a:hover img.hid2, a:hover img.hid3, a:hover img.hid4, a:hover img.hid5, a:hover img.hid6, a:hover img.hid7, a:hover img.hid8, a:hover img.hid9, a:hover img.hid10, a:hover img.hid11, a:hover img.hid12, a:hover img.hid13,
+a:hover img.hid14, a:hover img.hid15 {
+	visibility:visible;
+	
+}
+
+#newNode {
+	width: 650px;
+}
+
+a.found {
+	opacity: 0;
+}
