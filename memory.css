@@ -1,0 +1,48 @@
+
+*{
+  font-family: 'Indie Flower', cursive;
+}
+
+body {
+  background: #cccfff;
+}
+
+h1 {
+  text-align: center;
+
+  font-size: 70px;
+  margin: 20px 0 10px 0;
+  line-height: 80%;
+}
+
+button {
+  font-size: 24px;
+  border: 3px dotted black;
+  margin-top: 30px;
+  background: #fff;
+
+}
+
+div#gameboard {
+  background: #222;
+  border: #999 1px solid;
+  width: 552px;
+  height: 415px;
+  padding: 24px;
+  margin: 0px auto;
+}
+
+
+/*target all child divs*/
+div#gameboard > div{
+  background: url(cards/cardback.png) no-repeat;
+  width: 72px;
+  height: 96px;
+  float: left;
+  margin: 0 10px 10px 10px;
+  font-size: 64px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 150%; 
+
+}
