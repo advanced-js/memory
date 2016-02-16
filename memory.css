@@ -1,3 +1,10 @@
+h1 {
+	color: #000066;
+}
+p {
+	color: #0000CC;
+	font-size: 20px;
+}
 .tile {
 	height: 100px;
 	width: 100px;
@@ -7,12 +14,12 @@
 .tile div {
 	font-size: 40px;
 	text-align: center;
-	color: #F5680A;
+	color: #FFFFFF;
+	opacity: 0;
 }
-/*.show {
-	color: #FFFFFF;
-}*/
-.gone {
-	background-color: #FFFFFF;
-	color: #FFFFFF;
+button {
+	margin: 20px;
+	padding: 10px;
+	color: #000066;
+	font-size: 20px;
 }

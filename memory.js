@@ -4,6 +4,7 @@ $(document).ready(function() {
 		this.height = height;
 		this.width = width;
 		this.takenValues = "#";
+		this.values = null;
 		this.clicked1 = null;
 		this.clicked2 = null;
 		this.remainingMatches = height*width/2;
@@ -24,25 +25,23 @@ $(document).ready(function() {
 	    return value;
 	};
 
-	// Game.prototype.genValues = function() {
-	// 	var values = [];
-	// 	for (var i = 0; i < this.height; i++) {
-	// 		values[i] = [];
-	// 		for (var j = 0; j < this.width; j++) {
-	// 			values[i][j] = this.genValue();
-	// 		};
-	// 	}
-	// 	return values;
-	// };
+	Game.prototype.genValues = function() {
+		var values = [];
+		for (var i = 0; i < this.height; i++) {
+			values[i] = [];
+			for (var j = 0; j < this.width; j++) {
+				values[i][j] = this.genValue();
+			};
+		}
+		return values;
+	};
 
 	Game.prototype.genHtml = function() {
-//		var values = this.genValues();
 		var board = "<table>";
 		for (var i = 0; i < this.height; i++) {
 			board += "<tr>";
 			for (var j = 0; j < this.width; j++) {
-//				board += "<td class=\"tile\"><div class=\"show\">" + values[i][j] + "</div></td>";
-				board += "<td class=\"tile\"><div>" + this.genValue() + "</div></td>";
+				board += "<td class=\"tile\"><div>" + this.values[i][j] + "</div></td>";
 			}
 			board += "</tr>";
 		}
@@ -51,8 +50,15 @@ $(document).ready(function() {
 	};
 
 	Game.prototype.initBoard = function() {
+		this.values = this.genValues()
 		$('#board').append(this.genHtml());
 	};
+
+	Game.prototype.checkWinner = function() {
+		if ( this.remainingMatches === 0 ) {
+			$("#msg").append("<p>***WINNER***</p>")
+		}
+	}
 
 	var Tile = function($td) {
 		this.$td = $td;
@@ -62,6 +68,7 @@ $(document).ready(function() {
 
 	Tile.prototype.matches = function(tile) {
 		var match = false;
+		// Need to distinguish clicking on same tile somehow
 		if ( this.value === tile.value ) {
 			match = true;
 		}
@@ -69,22 +76,18 @@ $(document).ready(function() {
 	};
 
 	Tile.prototype.showTile = function() {
-		this.$div.css('color','#FFFFFF');
+		this.$div.css('opacity','1');
 	};
 
 	Tile.prototype.hideTile = function() {
-		this.$div.css('color','#F5680A');
+		this.$div.animate({opacity: 0},750);
 	};
 
 	Tile.prototype.removeTile = function() {
-		this.$td.fadeOut(1000);
+		this.$td.fadeOut(750);
 	};
 
-	// Code only works for boards with an even number of tiles
-	var game = new Game(4,4);
-	game.initBoard();
-
-	$('.tile').click(function() {
+	var action = function() {
 		if ( game.clicked1 === null ) {
 			game.clicked1 = new Tile($(this));
 			game.clicked1.showTile();
@@ -95,18 +98,28 @@ $(document).ready(function() {
 				game.remainingMatches--;
 				game.clicked1.removeTile();
 				game.clicked2.removeTile();
+				game.checkWinner();
 			} else {
 				game.clicked1.hideTile();
 				game.clicked2.hideTile();
 			}
 			game.clicked1 = null;
 			game.clicked2 = null;
-			game.checkIfWon();
 		}
+	};
+
+	// Code only works for boards with an even number of tiles
+	var game = new Game(4,4);
+	game.initBoard();
+	$('.tile').click(action);
+	$('button').click(function() {
+		$('#msg').empty();
+		$('#board').empty();
+		$('#board').append(game.genHtml());
+		game.clicked1 = null;
+		game.clicked2 = null;
+		game.remainingMatches = game.height*game.width/2;
+		$('.tile').click(action);
 	});
 
 });
-
-
-
-
