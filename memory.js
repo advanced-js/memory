@@ -12,9 +12,10 @@ $(document).ready(function() {
 
 	Game.prototype.genValue = function() {
 		var found = false;
+		var value = -1;
 		var maxValue = this.height*this.width/2;
 		while ( !found ) {
-			var value = Math.floor(Math.random()*maxValue);
+			value = Math.floor(Math.random()*maxValue);
 			var index = this.takenValues.indexOf("#" + value + "#");
 			var lastIndex = this.takenValues.lastIndexOf("#" + value + "#");
 			if ( index === -1 || index === lastIndex ) {
@@ -31,7 +32,7 @@ $(document).ready(function() {
 			values[i] = [];
 			for (var j = 0; j < this.width; j++) {
 				values[i][j] = this.genValue();
-			};
+			}
 		}
 		return values;
 	};
@@ -50,15 +51,15 @@ $(document).ready(function() {
 	};
 
 	Game.prototype.initBoard = function() {
-		this.values = this.genValues()
+		this.values = this.genValues();
 		$('#board').append(this.genHtml());
 	};
 
 	Game.prototype.checkWinner = function() {
 		if ( this.remainingMatches === 0 ) {
-			$("#msg").append("<p>***WINNER***</p>")
+			$("#msg").append("<p>***WINNER***</p>");
 		}
-	}
+	};
 
 	var Tile = function($td) {
 		this.$td = $td;
