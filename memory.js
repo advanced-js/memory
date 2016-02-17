@@ -19,7 +19,7 @@ $(document).ready(function() {
 			taken = false;
 		} 
 		return taken;
-	}
+	};
 
 	Game.prototype.genValue = function() {
 		var found = false;
@@ -98,12 +98,12 @@ $(document).ready(function() {
 	Game.prototype.setClicked1 = function($tile) {
 		game.clicked1 = new Tile($tile);
 		game.clicked1.showTile();
-	}
+	};
 
 	Game.prototype.setClicked2 = function($tile) {
 		game.clicked2 = new Tile($tile);
 		game.clicked2.showTile();
-	}
+	};
 
 	var action = function() {
 		var $tile = $(this);
