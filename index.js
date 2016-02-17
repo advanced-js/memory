@@ -1,7 +1,5 @@
 (function() {
 
-	//helper functions. dont want to use jquery
-
 	function hasClass(el, className) {
 	  if (el.classList)
 	    return el.classList.contains(className)
@@ -25,77 +23,56 @@
 	}
 
 	//board class
-	var Board = function(x,y) {
-		var self = this;
-
+	var Board = function(x,y, drawingBoard) {
 		if (x <= 0) {
 			throw new Error('Rows must be greater than 0');
 		}
 		if (y <= 0) {
 			throw new Error('Columsn must be greater than 0');
 		}
-
+		if (x*y % 2 !== 0) {
+			throw new Error('You really should have an even number of pieces, or you will never win');	
+		}
 		if (x*y > 26) {
 			throw new Error('Currently you can not go higher than alphabet letters. 26 Boxes is Max');	
-		}
+		}		
+
+		var self = this;
+		this.drawingBoard = drawingBoard;
+
+		
 		this.x = x;
 		this.y = y;
 
 
 		this.activeItems = [];
-		this.activeElements = [];
-		this.allowClick = true;
 
 		//create pieces
-		this.items = this.randomizeBoardPieces(x,y);		
+		this.items = this.randomizeBoardPieces(x,y);
 
-		this.draw();
+		//seaprate out display
+		drawingBoard.draw(this); 
 	
 	};
 
-	Board.prototype.draw = function() {
-		var self = this;
-		document.write('<div class="row">');
-		this.items.forEach(function(item, index) {
-				document.write('<div data-id="' + index + '" class="node"><span>' + self.items[index] + '</span></div>');				
-				if ((index+1) % self.y === 0) {
-					document.write('</div>'); //close row
-					document.write('<div class="row">');
-				}
-		});
 
-		document.write('</div>');
- 
-		var memoryNodes = document.getElementsByClassName('node');
-		for (var m = 0; m < memoryNodes.length; m++) {
-			memoryNodes[m].addEventListener('click', function() {
-				var id = Number.parseInt(this.getAttribute('data-id'));
-				if (self.allowClick && self.activeItems.indexOf(id) === -1) {
-					addClass(this, 'active');
-					self.selectNode(id, this);
-				}
-				
-			});
-		}		
-	};
-
-	Board.prototype.selectNode = function(index, elem) {		
+	Board.prototype.selectNode = function(index) {		
 		this.activeItems.push(index);
-		this.activeElements.push(elem);
 		this.compare();
 	};
 
 	Board.prototype.compare = function() {		
-		var items = this.items, activeItems = this.activeItems, activeElements = this.activeElements;
+		var items = this.items, activeItems = this.activeItems;
 		if (activeItems.length === 2 && items[activeItems[0]] === items[activeItems[1]]) {
-			this.reset(false);
-			activeElements.forEach(function(elem) {
-					addClass(elem, 'flash');
-			});						
-		} else if (activeItems.length == 2) {
-			
+			this.matchSuccess();
+		} else if (activeItems.length == 2) {			
 			this.reset(true);
 		}
+	}
+
+	Board.prototype.matchSuccess = function() {
+		this.drawingBoard.matchSuccess();
+		this.reset(false);					
 	}
 
 	Board.prototype.randomizeBoardPieces = function(x,y) {
@@ -123,13 +100,22 @@
 	Board.prototype.reset = function(removeActiveElements) {
 		var self = this;
 		self.activeItems = [];
+		self.drawingBoard.reset(removeActiveElements);
+	};
 
+		var HTMLBoard = function(boardId) {
+		this.id = boardId;
+		this.allowClick = true;
+		this.activeElements = [];
+		};
+
+		HTMLBoard.prototype.reset = function(removeActiveElements) {
+		var self = this;
 		if (removeActiveElements) {
 				self.allowClick = false;
-
 				self.activeElements.forEach(function(elem) {
+
 					addClass(elem, 'shake');
-					console.log('in shake');
 				});
 
 				setTimeout(function() {
@@ -142,9 +128,104 @@
 				}, 500);
 		} else {
 			self.activeElements = [];			
-		}		
-	};
+		}
+		};
 
-	var x = new Board(4,4);
+		HTMLBoard.prototype.draw = function(board) {
+		var self = this;
+		var html = '';
+		html += '<div class="row">';
+		board.items.forEach(function(item, index) {
+				html += '<div data-id="' + index + '" class="node"><span>' + board.items[index] + '</span></div>';
+				if ((index+1) % board.y === 0) {
+					html += '</div>';//close row
+					html += '<div class="row">';
+				}
+		});
+
+		html += '</div>';
+			document.getElementById(self.id).innerHTML = html;
+
+		var memoryNodes = document.getElementsByClassName('node');
+		for (var m = 0; m < memoryNodes.length; m++) {
+			memoryNodes[m].addEventListener('click', function() {
+				var id = Number.parseInt(this.getAttribute('data-id'));
+				if (self.allowClick && board.activeItems.indexOf(id) === -1) {
+					addClass(this, 'active');
+					self.activeElements.push(this);
+					board.selectNode(id);					
+				}				
+			});
+		}
+		};
+
+		HTMLBoard.prototype.matchSuccess = function() {
+		this.activeElements.forEach(function(elem) {
+				addClass(elem, 'flash');
+		});		
+		}
+
+		var CanvasBoard = function(boardId) {
+		this.id = boardId;
+		this.allowClick = true;
+		this.activeElements = [];
+		}
+
+		CanvasBoard.prototype.reset = function(removeActiveElements) {
+		var self = this;
+		if (removeActiveElements) {
+				self.allowClick = false;
+				setTimeout(function() {
+					self.activeElements.forEach(function(elem) {
+						//reset active leemnts here
+					});		
+					self.activeElements = [];	
+					self.allowClick = true;
+				}, 500);			
+		} else {
+			self.activeElements = [];			
+		}
+		};
+
+		CanvasBoard.prototype.draw = function(board) {
+		var self = this;
+		var context = document.getElementById('canvasBoard').getContext("2d");
+
+		var x =50, y=50, width= 50, height= 50;
+
+		board.items.forEach(function(item, index) {
+				context.rect(x,y,width,height);
+				context.stroke();
+				//set click listeiner here
+				x+= 60;
+				if ((index+1) % board.y === 0) {
+					x =50;
+					y+= 60;
+				}
+		});
+
+		};
+
+		CanvasBoard.prototype.matchSuccess = function() {
+		this.activeElements.forEach(function(elem) {
+				//addClass(elem, 'flash');
+				//set active style here
+		});		
+		}
+
+
+	document.getElementById('generate').addEventListener('click', function() {
+		var drawingBoard = new HTMLBoard('board');
+		//var canvasBoard = new CanvasBoard('canvasBoard'); ability to swap diff displays for any memory grid
+
+		var rows = document.getElementById('rows').value;
+		var columns = document.getElementById('columns').value;
+		try {	
+			var board = new Board(rows,columns, drawingBoard); 
+		} catch(err) {
+			alert(err);	
+		}
+		
+	});
 
 })();
