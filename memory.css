@@ -16,6 +16,7 @@ p {
 	text-align: center;
 	color: #FFFFFF;
 	opacity: 0;
+	cursor: default;
 }
 button {
 	margin: 20px;

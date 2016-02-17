@@ -3,6 +3,7 @@ $(document).ready(function() {
 	var Game = function(height,width) {
 		this.height = height;
 		this.width = width;
+		this.maxValue = height*width/2;
 		this.takenValues = "#";
 		this.values = null;
 		this.clicked1 = null;
@@ -10,15 +11,22 @@ $(document).ready(function() {
 		this.remainingMatches = height*width/2;
 	};
 
+	Game.prototype.taken = function(value) {
+		var taken = true;
+		var index = this.takenValues.indexOf("#" + value + "#");
+		var lastIndex = this.takenValues.lastIndexOf("#" + value + "#");
+		if ( index === -1 || index === lastIndex ) {
+			taken = false;
+		} 
+		return taken;
+	}
+
 	Game.prototype.genValue = function() {
 		var found = false;
 		var value = -1;
-		var maxValue = this.height*this.width/2;
 		while ( !found ) {
-			value = Math.floor(Math.random()*maxValue);
-			var index = this.takenValues.indexOf("#" + value + "#");
-			var lastIndex = this.takenValues.lastIndexOf("#" + value + "#");
-			if ( index === -1 || index === lastIndex ) {
+			value = Math.floor(Math.random()*this.maxValue);
+			if ( !this.taken(value) ) {
 				found = true;
 				this.takenValues += value + "#";
 			}
@@ -69,7 +77,6 @@ $(document).ready(function() {
 
 	Tile.prototype.matches = function(tile) {
 		var match = false;
-		// Need to distinguish clicking on same tile somehow
 		if ( this.value === tile.value ) {
 			match = true;
 		}
@@ -88,13 +95,22 @@ $(document).ready(function() {
 		this.$td.fadeOut(750);
 	};
 
+	Game.prototype.setClicked1 = function($tile) {
+		game.clicked1 = new Tile($tile);
+		game.clicked1.showTile();
+	}
+
+	Game.prototype.setClicked2 = function($tile) {
+		game.clicked2 = new Tile($tile);
+		game.clicked2.showTile();
+	}
+
 	var action = function() {
+		var $tile = $(this);
 		if ( game.clicked1 === null ) {
-			game.clicked1 = new Tile($(this));
-			game.clicked1.showTile();
-		} else if ( game.clicked2 === null) {
-			game.clicked2 = new Tile($(this));
-			game.clicked2.showTile();
+			game.setClicked1($tile);
+		} else if ( !game.clicked1.$td.is($tile) ) {
+			game.setClicked2($tile);
 			if ( game.clicked2.matches(game.clicked1) ) {
 				game.remainingMatches--;
 				game.clicked1.removeTile();
@@ -110,7 +126,7 @@ $(document).ready(function() {
 	};
 
 	// Code only works for boards with an even number of tiles
-	var game = new Game(4,4);
+	var game = new Game(4,8);
 	game.initBoard();
 	$('.tile').click(action);
 	$('button').click(function() {
