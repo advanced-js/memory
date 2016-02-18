@@ -58,15 +58,33 @@ $(document).ready(function() {
 		return board;
 	};
 
-	Game.prototype.initBoard = function() {
-		this.values = this.genValues();
+	Game.prototype.initBoard = function(chgvalues) {
+		if ( chgvalues ) {
+			this.takenValues = "#";
+			this.values = this.genValues();
+	    }
+	    $('#board').empty();
 		$('#board').append(this.genHtml());
+		$('.tile').click(action);
 	};
 
 	Game.prototype.checkWinner = function() {
-		if ( this.remainingMatches === 0 ) {
-			$("#msg").append("<p>***WINNER***</p>");
+		this.clicked1.removeTile();
+		this.clicked1 = null;
+		this.clicked2.removeTile();
+		this.clicked2 = null;
+		if ( --this.remainingMatches === 0 ) {
+			setTimeout(function () {
+				$("#msg").append("<p>***WINNER***</p>");
+			},800);
 		}
+	};
+
+	Game.prototype.unsetClickedTiles = function() {
+		this.clicked1.hideTile();
+		this.clicked1 = null;
+		this.clicked2.hideTile();
+		this.clicked2 = null;
 	};
 
 	var Tile = function($td) {
@@ -95,48 +113,47 @@ $(document).ready(function() {
 		this.$td.fadeOut(750);
 	};
 
-	Game.prototype.setClicked1 = function($tile) {
-		game.clicked1 = new Tile($tile);
-		game.clicked1.showTile();
+	Tile.prototype.sameTileAs = function($tile) {
+		return this.$td.is($tile);
 	};
 
-	Game.prototype.setClicked2 = function($tile) {
-		game.clicked2 = new Tile($tile);
-		game.clicked2.showTile();
+	var setClicked = function($tile) {
+		var clicked = new Tile($tile);
+		clicked.showTile();
+		return clicked;
 	};
 
 	var action = function() {
 		var $tile = $(this);
 		if ( game.clicked1 === null ) {
-			game.setClicked1($tile);
-		} else if ( !game.clicked1.$td.is($tile) ) {
-			game.setClicked2($tile);
+			game.clicked1 = setClicked($tile);
+		} else if ( !game.clicked1.sameTileAs($tile) ) {
+			game.clicked2 = setClicked($tile);
 			if ( game.clicked2.matches(game.clicked1) ) {
-				game.remainingMatches--;
-				game.clicked1.removeTile();
-				game.clicked2.removeTile();
 				game.checkWinner();
 			} else {
-				game.clicked1.hideTile();
-				game.clicked2.hideTile();
+				game.unsetClickedTiles();
 			}
-			game.clicked1 = null;
-			game.clicked2 = null;
 		}
 	};
 
+	// -------------------------------------------------------
 	// Code only works for boards with an even number of tiles
 	var game = new Game(4,8);
-	game.initBoard();
-	$('.tile').click(action);
-	$('button').click(function() {
+	game.initBoard(true);
+	$('#new').click(function() {
 		$('#msg').empty();
-		$('#board').empty();
-		$('#board').append(game.genHtml());
+		game.initBoard(true);
 		game.clicked1 = null;
 		game.clicked2 = null;
 		game.remainingMatches = game.height*game.width/2;
-		$('.tile').click(action);
+	});
+	$('#reset').click(function() {
+		$('#msg').empty();
+		game.initBoard(false);
+		game.clicked1 = null;
+		game.clicked2 = null;
+		game.remainingMatches = game.height*game.width/2;
 	});
 
 });
