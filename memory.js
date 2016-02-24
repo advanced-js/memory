@@ -139,24 +139,9 @@ Game.prototype.initBoard = function(chgvalues) {
 	});
 };
 
-	// var action = function() {
-	// 	var $tile = $(this);
-	// 	if ( game.clicked1 === null ) {
-	// 		game.clicked1 = setClicked($tile);
-	// 	} else if ( !game.clicked1.sameTileAs($tile) ) {
-	// 		game.clicked2 = setClicked($tile);
-	// 		if ( game.clicked2.matches(game.clicked1) ) {
-	// 			game.removeClickedTiles();
-	// 			game.checkWinner();
-	// 		} else {
-	// 			game.unsetClickedTiles();
-	// 		}
-	// 	}
-	// };
-
 $(document).ready(function() {
 	// Code only works for boards with an even number of tiles
-	var game = new Game(2,2);
+	var game = new Game(4,8);
 	game.initBoard(true);
 	$('#new').click(function() {
 		$('#msg').empty();
