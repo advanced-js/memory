@@ -57,30 +57,6 @@ Game.prototype.genHtml = function() {
 	return board;
 };
 
-Game.prototype.initBoard = function(chgvalues) {
-	var self = this;
-	if ( chgvalues ) {
-		self.takenValues = "#";
-		self.values = this.genValues();
-	}
-	$('#board').empty();
-	$('#board').append(self.genHtml());
-	$('.tile').click(function() {
-		var $tile = $(this);
-		if ( self.clicked1 === null ) {
-			self.clicked1 = setClicked($tile);
-		} else if ( !self.clicked1.sameTileAs($tile) ) {
-			self.clicked2 = setClicked($tile);
-			if ( self.clicked2.matches(self.clicked1) ) {
-				self.removeClickedTiles();
-				self.checkWinner();
-			} else {
-				self.unsetClickedTiles();
-			}
-		}		
-	});
-};
-
 Game.prototype.unsetClickedTiles = function() {
 	this.clicked1.hideTile();
 	this.clicked1 = null;
@@ -139,9 +115,48 @@ var setClicked = function($tile) {
 	return clicked;
 };
 
+Game.prototype.initBoard = function(chgvalues) {
+	var self = this;
+	if ( chgvalues ) {
+		self.takenValues = "#";
+		self.values = this.genValues();
+	}
+	$('#board').empty();
+	$('#board').append(self.genHtml());
+	$('.tile').click(function() {
+		var $tile = $(this);
+		if ( self.clicked1 === null ) {
+			self.clicked1 = setClicked($tile);
+		} else if ( !self.clicked1.sameTileAs($tile) ) {
+			self.clicked2 = setClicked($tile);
+			if ( self.clicked2.matches(self.clicked1) ) {
+				self.removeClickedTiles();
+				self.checkWinner();
+			} else {
+				self.unsetClickedTiles();
+			}
+		}		
+	});
+};
+
+	// var action = function() {
+	// 	var $tile = $(this);
+	// 	if ( game.clicked1 === null ) {
+	// 		game.clicked1 = setClicked($tile);
+	// 	} else if ( !game.clicked1.sameTileAs($tile) ) {
+	// 		game.clicked2 = setClicked($tile);
+	// 		if ( game.clicked2.matches(game.clicked1) ) {
+	// 			game.removeClickedTiles();
+	// 			game.checkWinner();
+	// 		} else {
+	// 			game.unsetClickedTiles();
+	// 		}
+	// 	}
+	// };
+
 $(document).ready(function() {
 	// Code only works for boards with an even number of tiles
-	var game = new Game(4,8);
+	var game = new Game(2,2);
 	game.initBoard(true);
 	$('#new').click(function() {
 		$('#msg').empty();
