@@ -1,13 +1,16 @@
-var Game = function(height,width) {
+var Game = function(height,width,boardHtmlElementId,msgHtmlElementId,tileHtmlElementClass) {
 	this.height = height;
 	this.width = width;
+	this.boardHtmlElementId = boardHtmlElementId;
+	this.msgHtmlElementId = msgHtmlElementId;
+	this.tileHtmlElementClass = tileHtmlElementClass;
+	this.tileClass = tileHtmlElementClass.substr(1);
 	this.maxValue = height*width/2;
 	this.takenValues = "#";
 	this.values = null;
 	this.clicked1 = null;
 	this.clicked2 = null;
 	this.remainingMatches = height*width/2;
-	this.msgElementId = "#msg";
 };
 
 Game.prototype.taken = function(value) {
@@ -49,7 +52,7 @@ Game.prototype.genHtml = function() {
 	for (var i = 0; i < this.height; i++) {
 		board += "<tr>";
 		for (var j = 0; j < this.width; j++) {
-			board += "<td class=\"tile\"><div>" + this.values[i][j] + "</div></td>";
+			board += "<td class=\"" + this.tileClass + "\"><div>" + this.values[i][j] + "</div></td>";
 		}
 		board += "</tr>";
 	}
@@ -72,10 +75,11 @@ Game.prototype.removeClickedTiles = function() {
 };
 
 Game.prototype.checkWinner = function() {
-	if ( --this.remainingMatches === 0 ) {
+	var self = this;
+	if ( --self.remainingMatches === 0 ) {
 		setTimeout(function () {
-			$("#msg").append("<p>***WINNER***</p>");
-		},800);
+			$(self.msgHtmlElementId).append("<p>***WINNER***</p>");
+		},775);
 	}
 };
 
@@ -115,46 +119,69 @@ var setClicked = function($tile) {
 	return clicked;
 };
 
+var action = function(event) {
+	var $tile = $(this);
+	var game = event.data.game;
+	if ( game.clicked1 === null ) {
+		game.clicked1 = setClicked($tile);
+	} else if ( !game.clicked1.sameTileAs($tile) ) {
+		game.clicked2 = setClicked($tile);
+		if ( game.clicked2.matches(game.clicked1) ) {
+			game.removeClickedTiles();
+			game.checkWinner();
+		} else {
+			game.unsetClickedTiles();
+		}
+	}		
+};
+
 Game.prototype.initBoard = function(chgvalues) {
 	var self = this;
 	if ( chgvalues ) {
 		self.takenValues = "#";
-		self.values = this.genValues();
+		self.values = self.genValues();
 	}
-	$('#board').empty();
-	$('#board').append(self.genHtml());
-	$('.tile').click(function() {
-		var $tile = $(this);
-		if ( self.clicked1 === null ) {
-			self.clicked1 = setClicked($tile);
-		} else if ( !self.clicked1.sameTileAs($tile) ) {
-			self.clicked2 = setClicked($tile);
-			if ( self.clicked2.matches(self.clicked1) ) {
-				self.removeClickedTiles();
-				self.checkWinner();
-			} else {
-				self.unsetClickedTiles();
-			}
-		}		
+	$(self.boardHtmlElementId).empty();
+	$(self.boardHtmlElementId).append(self.genHtml());
+	$(self.tileHtmlElementClass).click({
+		game:self
+	},action);
+};
+
+var Button = function(type,htmlElementId) {
+	this.type = type;
+	this.htmlElementId = htmlElementId;
+};
+
+Button.prototype.initButton = function(game) {
+	var chgvalues = false;
+	if ( this.type === "New" ) {
+		chgvalues = true;
+	}
+	$(this.htmlElementId).click(function() {
+		$(game.msgHtmlElementId).empty();
+		game.initBoard(chgvalues);
+		game.clicked1 = null;
+		game.clicked2 = null;
+		game.remainingMatches = game.height*game.width/2;
 	});
 };
 
 $(document).ready(function() {
 	// Code only works for boards with an even number of tiles
-	var game = new Game(4,8);
+	// 1st board
+	var game = new Game(3,6,"#board","#msg",".tile");
 	game.initBoard(true);
-	$('#new').click(function() {
-		$('#msg').empty();
-		game.initBoard(true);
-		game.clicked1 = null;
-		game.clicked2 = null;
-		game.remainingMatches = game.height*game.width/2;
-	});
-	$('#reset').click(function() {
-		$('#msg').empty();
-		game.initBoard(false);
-		game.clicked1 = null;
-		game.clicked2 = null;
-		game.remainingMatches = game.height*game.width/2;
-	});
+	var newButton = new Button("New","#new");
+	newButton.initButton(game);
+	var resetButton = new Button("Reset","#reset");
+	resetButton.initButton(game);
+
+	// 2nd board
+	var game2 = new Game(4,4,"#board2","#msg2",".tile2");
+	game2.initBoard(true);
+	var newButton2 = new Button("New","#new2");
+	newButton2.initButton(game2);
+	var resetButton2 = new Button("Reset","#reset2");
+	resetButton2.initButton(game2);
 });
