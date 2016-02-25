@@ -1,16 +1,12 @@
-var Game = function(height,width,boardHtmlElementId,msgHtmlElementId,tileHtmlElementClass) {
-	this.height = height;
-	this.width = width;
-	this.boardHtmlElementId = boardHtmlElementId;
-	this.msgHtmlElementId = msgHtmlElementId;
-	this.tileHtmlElementClass = tileHtmlElementClass;
-	this.tileClass = tileHtmlElementClass.substr(1);
-	this.maxValue = height*width/2;
+var Game = function(boardElements) {
+	this.boardElements = boardElements;
+	this.tileClass = boardElements.tileHtmlElementClass.substr(1);
+	this.maxValue = boardElements.height*boardElements.width/2;
 	this.takenValues = "#";
 	this.values = null;
 	this.clicked1 = null;
 	this.clicked2 = null;
-	this.remainingMatches = height*width/2;
+	this.remainingMatches = boardElements.height*boardElements.width/2;
 };
 
 Game.prototype.taken = function(value) {
@@ -38,9 +34,9 @@ Game.prototype.genValue = function() {
 
 Game.prototype.genValues = function() {
 	var values = [];
-	for (var i = 0; i < this.height; i++) {
+	for (var i = 0; i < this.boardElements.height; i++) {
 		values[i] = [];
-		for (var j = 0; j < this.width; j++) {
+		for (var j = 0; j < this.boardElements.width; j++) {
 			values[i][j] = this.genValue();
 		}
 	}
@@ -49,9 +45,9 @@ Game.prototype.genValues = function() {
 
 Game.prototype.genHtml = function() {
 	var board = "<table>";
-	for (var i = 0; i < this.height; i++) {
+	for (var i = 0; i < this.boardElements.height; i++) {
 		board += "<tr>";
-		for (var j = 0; j < this.width; j++) {
+		for (var j = 0; j < this.boardElements.width; j++) {
 			board += "<td class=\"" + this.tileClass + "\"><div>" + this.values[i][j] + "</div></td>";
 		}
 		board += "</tr>";
@@ -78,7 +74,7 @@ Game.prototype.checkWinner = function() {
 	var self = this;
 	if ( --self.remainingMatches === 0 ) {
 		setTimeout(function () {
-			$(self.msgHtmlElementId).append("<p>***WINNER***</p>");
+			$(self.boardElements.msgHtmlElementId).append("<p>***WINNER***</p>");
 		},775);
 	}
 };
@@ -141,9 +137,9 @@ Game.prototype.initBoard = function(chgvalues) {
 		self.takenValues = "#";
 		self.values = self.genValues();
 	}
-	$(self.boardHtmlElementId).empty();
-	$(self.boardHtmlElementId).append(self.genHtml());
-	$(self.tileHtmlElementClass).click({
+	$(self.boardElements.boardHtmlElementId).empty();
+	$(self.boardElements.boardHtmlElementId).append(self.genHtml());
+	$(self.boardElements.tileHtmlElementClass).click({
 		game:self
 	},action);
 };
@@ -159,29 +155,47 @@ Button.prototype.initButton = function(game) {
 		chgvalues = true;
 	}
 	$(this.htmlElementId).click(function() {
-		$(game.msgHtmlElementId).empty();
+		$(game.boardElements.msgHtmlElementId).empty();
 		game.initBoard(chgvalues);
 		game.clicked1 = null;
 		game.clicked2 = null;
-		game.remainingMatches = game.height*game.width/2;
+		game.remainingMatches = game.boardElements.height*game.boardElements.width/2;
 	});
+};
+
+var gameSetup = function(gameElements) {
+	var game = new Game({
+		height: gameElements.height,
+		width: gameElements.width,
+		boardHtmlElementId: gameElements.boardHtmlElementId,
+		msgHtmlElementId: gameElements.msgHtmlElementId,
+		tileHtmlElementClass: gameElements.tileHtmlElementClass
+	});
+	game.initBoard(true);
+	var newButton = new Button("New",gameElements.newButtonHtmlElementId);
+	newButton.initButton(game);
+	var resetButton = new Button("Reset",gameElements.resetButtonHtmlElementId);
+	resetButton.initButton(game);
 };
 
 $(document).ready(function() {
 	// Code only works for boards with an even number of tiles
-	// 1st board
-	var game = new Game(3,6,"#board","#msg",".tile");
-	game.initBoard(true);
-	var newButton = new Button("New","#new");
-	newButton.initButton(game);
-	var resetButton = new Button("Reset","#reset");
-	resetButton.initButton(game);
-
-	// 2nd board
-	var game2 = new Game(4,4,"#board2","#msg2",".tile2");
-	game2.initBoard(true);
-	var newButton2 = new Button("New","#new2");
-	newButton2.initButton(game2);
-	var resetButton2 = new Button("Reset","#reset2");
-	resetButton2.initButton(game2);
+	gameSetup({
+		height: 3,
+		width: 6,
+		boardHtmlElementId: "#board",
+		msgHtmlElementId: "#msg",
+		tileHtmlElementClass: ".tile",
+		newButtonHtmlElementId: "#new" ,
+		resetButtonHtmlElementId: "#reset"
+	});
+	gameSetup({
+		height: 4,
+		width: 4,
+		boardHtmlElementId: "#board2",
+		msgHtmlElementId: "#msg2",
+		tileHtmlElementClass: ".tile2",
+		newButtonHtmlElementId: "#new2" ,
+		resetButtonHtmlElementId: "#reset2"
+	});
 });
