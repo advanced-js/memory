@@ -2,7 +2,153 @@
 <html>
   <head>
     <title>Memory exercise</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<style>
+		.memoryboard {
+			background-color: #CCC; 
+			
+		}
+
+		.memoryboard > div {
+			width: 71px; 
+			height: 71px; 
+		}
+
+		.flipped { 
+			background-color: white !important; 
+		}
+
+		.tile {
+			display: inline-block; 
+			background-color: black; 
+			margin: 10px; 
+		}
+	</style>
+
   </head>
   <body>
+	  <h1>memory</h1>
+	<div class = "memoryboard">
+	</div>
+  	<div class = "msg"> pick a card</div>
+  	
+  	<script>	
+  	var Tile = function(text) {
+		this.text = text 
+		this.div =  $("<div class=\"tile\"><span>" + this.text +"</span></div>");
+		console.log("text", this.text)
+		$(".memoryboard").append(this.div)
+		
+		var self = this 		
+		this.div.click(function(){
+			self.handleClick();
+		})
+	}
+
+	Tile.prototype.handleClick = function() {		
+		this.flip(); 
+		scoreBoard.push(this)				
+		console.log("scoreBoard:", scoreBoard)
+
+		if (scoreBoard.length < 2) {
+			console.log("waiting for other click")
+			return; 
+		}
+		
+		var tile1 = scoreBoard[0];
+		var tile2 = scoreBoard[1];
+
+		if (tile1.matches(tile2)) {
+			console.log("matches")
+			setTimeout(function() {
+				tile1.div.css("visibility", "hidden")
+				tile2.div.css("visibility", "hidden")
+			
+			}, 1000);
+			msg("matched") 
+		} else {
+			console.log("nah")
+			setTimeout(function() {
+				tile1.unflip() 
+				tile2.unflip()
+			}, 1000);
+			msg("try again")
+		} 
+		scoreBoard = []; 	
+	}
+
+	Tile.prototype.flip = function() {
+		console.log("flipped");
+		this.div.addClass("flipped");
+	}
+
+	Tile.prototype.unflip = function() {
+		this.div.removeClass("flipped");
+	}
+
+	Tile.prototype.matches = function(otherTile) {
+		console.log("this.text:" + this.text);
+		console.log("othertile:" + otherTile.text);
+		if (this.text == otherTile.text) {	
+			console.log("return true");		
+			return true;
+		} else {
+			console.log("return false");		
+			return false; 
+		}
+	}
+
+	function shuffle(array) {
+		    var counter = array.length;
+
+		    // While there are elements in the array
+		    while (counter > 0) {
+		        // Pick a random index
+		        var index = Math.floor(Math.random() * counter);
+
+		        // Decrease counter by 1
+		        counter--;
+
+		        // And swap the last element with it
+		        var temp = array[counter];
+		        array[counter] = array[index];
+		        array[index] = temp;
+		    }
+
+	    	return array;
+		}
+
+	function removeAndPrintElements(array) {
+		while (array.length > 0) {
+			var firstElem = array.splice(0, 1);
+			var tile = new Tile(firstElem[0]); 
+		}
+	}
+
+	var msg = function(msg) {
+		$(".msg").text(msg)
+	}
+	
+	//global variables
+	
+	scoreBoard = []
+
+  	$(document).ready(function(){
+	
+		var array = ["A","A","B","B","C","C"];
+		var arraylength = array.length
+		
+		var text = shuffle(array)
+
+		removeAndPrintElements(text)
+	});
+
+
+	// prevent it from clicking itself 
+	// take away global variables 
+	// shhoudl the code go into the "matches" method or the "handleClick" method?
+
+  	</script>
   </body>
 </html>
