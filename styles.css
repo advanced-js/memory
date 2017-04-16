@@ -1,0 +1,17 @@
+.container {
+	width: 480px;
+	height: 480px;
+	margin: 50px auto;
+}
+
+article {
+	height: 100px;
+	width: 100px;
+	background-color: #CCC;
+	display: inline-block;
+	margin: 10px;
+}
+h1,
+h2 {
+    text-align: center;
+}
