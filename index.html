@@ -1,8 +1,166 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Memory exercise</title>
+    <title>MEMORY</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore-1.7.0-min.js"></script>
+    <style>
+      body{
+        background: #aaa;
+        font-family: sans-serif;
+        color: #FFF;
+      }
+      h1{
+        font-size: 20px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+      }
+      h2{
+        font-size: 16px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      p{
+        text-align: center;
+      }
+      .box{
+        background: #FFF;
+      }
+      table{
+        margin: 0px auto;
+      }
+    </style>
   </head>
   <body>
+  <h1>50 Shades Of Gray</h1>
+  <h2>The Hardest Game Of Memory Like Ever</h2>
+  <p>Score: <span class="score">0</span></p>
+    <table width="400" height="400" cellspacing="20">
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+      <tr>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+        <td id="" class="box" data-color=""></td>
+      </tr>
+    </table>
+
+    <script src="js/memory.js"></script>
+
   </body>
 </html>
