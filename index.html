@@ -1,8 +1,264 @@
 <!DOCTYPE html>
+<style>
+table, td, tr {
+  border: 0px solid black;
+  border-collapse: collapse;
+}
+
+div[rel='show'] {
+  background-color:white;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+div[rel='cover'] {
+  background-color:red;
+  width: 40px;
+  height: 40px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script>
+  function MemoryGame()
+  {
+    var score = 0;
+    var row = 4;
+    var column = 4;
+    var TDcount = 0;
+    var TDArr = new Array();
+    var firstSquare = null;
+    var secondSquare = null;
+    var lock = 0;
+
+    function randomNumberGenerator(maxRange)
+    {
+      return Math.floor(Math.random() * maxRange);
+    }
+
+    function randomCharGenerator()
+    {
+      var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+      var rand = randomNumberGenerator(chars.length)
+      return chars[rand];
+    }
+
+    function createColumn()
+    {
+      var str = "";
+      var i = 0;
+      for(i = 0; i < column; i++)
+      {
+        TDcount++;
+        TDArr.push(TDcount);
+        str += "<td><div><div id='" + TDcount + "' rel='cover'></div>";
+        str += "<div id='s" + TDcount + "' style='display:none' rel='show'></div></div></td>";
+      }
+      return str;
+    }
+
+    function createRow()
+    {
+      var str = "<tr>";
+      str += createColumn();
+      str += "</tr>";
+
+      return str;
+    }
+
+    function createTable()
+    {
+      var str = "";
+      var i = 0;
+      for(i = 0; i < row; i++)
+      {
+        str += createRow();
+      }
+      return str;
+    }
+
+    function assignValueToSquare(value)
+    {
+      var index = randomNumberGenerator(TDArr.length);
+      $("#" + TDArr[index]).attr("value", value);
+      $("#s" + TDArr[index]).html(value);
+
+      TDArr.splice(index, 1);
+    }
+
+    function showHiddenValue(square)
+    {
+      var id = square.attr("id");
+      $("#" + id).slideUp({
+        complete:function()
+        {
+          $("#s" + id).show();
+          lock = 0;
+        }
+      });
+    }
+
+    function hideBothValue()
+    {
+      $("#s"+firstSquare.attr("id")).hide();
+      $("#s"+secondSquare.attr("id")).hide();
+
+      firstSquare.slideDown();
+      secondSquare.slideDown();
+
+      firstSquare = secondSquare = null;
+      lock = 0;
+    }
+
+    function setScore(s)
+    {
+      score = s;
+      $("#score").html(score);
+    }
+
+    this.setup = function setup()
+    {
+      $("#memoryTable").append(createTable());
+
+      $("div[rel='cover']").bind({
+        click: function() {
+          if(lock === 1)
+            return;
+
+          if($(this).attr("value") === undefined)
+            return;
+
+          if(firstSquare !== null && secondSquare !== null)
+            return;
+
+          if(firstSquare === null)
+          {
+            lock = 1;
+            firstSquare = $(this);
+            showHiddenValue(firstSquare);
+          }
+          else if(firstSquare !== null)
+          {
+            secondSquare = $(this);
+            showHiddenValue(secondSquare);
+
+            if(firstSquare.attr("value") == secondSquare.attr("value"))
+            {
+              setScore(++score);
+              lock = 1;
+              firstSquare.removeAttr("value");
+              secondSquare.removeAttr("value");
+              firstSquare = secondSquare = null;
+              lock = 0;
+            }
+            else
+            {
+              setScore(--score);
+              setTimeout(function(){
+                lock = 1;
+                hideBothValue();
+              }, 1000);
+            }
+          }
+        }
+      });
+
+      while(TDArr.length > 0)
+      {
+        var value = randomCharGenerator();
+        assignValueToSquare(value);
+        assignValueToSquare(value);
+      }
+    }
+
+    this.changeSize = function changeSize(r, c)
+    {
+      row = r;
+      column = c;
+      if((row * column) % 2 === 1)
+      {
+        alert((row * column) + " is not even! Row times column must be even");
+        return;
+      }
+      $("#memoryTable").empty();
+      this.setup();
+    }
+
+    this.reset = function reset()
+    {
+      setScore(0)
+      firstSquare = secondSquare = null;
+      $("div[rel='show']:visible").each(function(){
+        $(this).hide();
+        var value = $(this).html();
+        var id = $(this).attr("id").substring(1);
+        $("#"+id).attr("value", value);
+        $("#"+id).show();
+      });
+    }
+
+    this.getRow = function getRow()
+    {
+      return row;
+    }
+
+    this.getColumn = function getColumn()
+    {
+      return column;
+    }
+
+    this.getScore = function getScore()
+    {
+      return score;
+    }
+  }
+
+
+  $(document).ready(function() {
+    var game = new MemoryGame();
+    game.setup();
+    $("#row").val(game.getRow());
+    $("#column").val(game.getColumn());
+    $("#score").html(game.getScore());
+
+    $("#changeButton").click(function()
+    {
+      game.changeSize($("#row").val(), $("#column").val());
+    });
+
+    $("#reset").click(function()
+    {
+      game.reset();
+    });
+  });
+</script>
+
 <html>
   <head>
     <title>Memory exercise</title>
   </head>
   <body>
+    <table>
+    <tr>
+      <td>Rows:</td><td><input type="input" id="row" style="width:30px"></td>
+    </tr>
+    <tr>
+      <td>Height:</td><td><input type="input" id="column" style="width:30px"></td>
+    </tr>
+    <tr>
+      <td><input type="button" id="changeButton" value="Change"></td><td></td>
+    </tr>
+    </table>
+
+    <br>
+    <input type="button" id="reset" value="Reset">
+    <table id="memoryTable">
+    </table>
+    <br>
+    Score: <div id="score"></div>
   </body>
 </html>
