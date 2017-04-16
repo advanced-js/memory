@@ -2,7 +2,490 @@
 <html>
   <head>
     <title>Memory exercise</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Handlee);
+
+        * { margin: 0; padding: 0; }
+
+        body {
+            background-color: #333;
+            font-family: 'Handlee', arial;
+        }
+
+        .memory {
+            margin: 0 auto;
+            padding-bottom: 100px;
+            width: 1060px;
+        }
+
+        .game_name {
+            color: #fff;
+            font-size: 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .generate_game {
+            background-color: #777;
+            border-radius: 6px;
+            float: left;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .generate_game input {
+            background-color: #333;
+            border: none;
+            color: #e1e1e1;
+            font-size: 24px;
+            height: 45px;
+            text-align: center;
+            width: 100px;
+        }
+
+        .generate_game .generate_game_text {
+            color: #000;
+            display: inline;
+            font-size: 24px;
+        }
+
+        .generate_game .generate_game_button {
+            background-color: #333;
+            border-radius: 4px;
+            color: #e1e1e1;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 6px 10px 10px;
+            text-transform: uppercase;
+        }
+
+        .generate_game .generate_game_button:hover {
+            background-color: #ccc;
+            color: #000;
+        }
+
+        .game_admin_bar {
+            height: 50px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .game_admin_bar .total_moves {
+            color: #ccc;
+            float: left;
+            font-size: 16px;
+        }
+
+        .game_admin_bar .reset_button {
+            background-color: #999;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+            padding: 10px 6px 10px 6px;
+        }
+
+        .game_board {
+            float: left;
+        }
+
+        .game_board .memory_button {
+            background-color: #BBBDBF;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #999;
+            border-bottom: 1px solid #999;
+            border-left: 1px solid #ccc;
+            cursor: pointer;
+            float: left;
+            font-size: 30px;
+            height: 125px;
+            line-height: 125px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            position: relative;
+            text-align: center;
+            overflow-y: hidden;
+            vertical-align: middle;
+            width: 125px;
+        }
+
+        .game_board :not(.match).memory_button:hover {
+            border: 1px solid #000;
+        }
+
+        .pressed {
+            background-color: #fff!important;
+            border-top: 1px solid #666!important;
+            border-right: 1px solid #ccc!important;
+            border-bottom: 1px solid #ccc!important;
+            border-left: 1px solid #666!important;
+        }
+
+        .left_square {
+            clear: left;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .match {
+            opacity: 0.4;
+        }
+
+        .highlight {
+            background-color: #e1e1e1!important;
+            cursor: default;
+            opacity: 1!important;
+        }
+
+    </style>
+
   </head>
   <body>
+
+    <div class='memory'>
+        <div class='game_name'>Advanced JS - Memory Game</div>
+
+        <div class='game_admin_bar' style="display:none;">
+            <div class='total_moves'>Total Moves: <span>0</span></div>
+            <div class='reset_button'>RESET</div>
+        </div>
+
+        <div class='generate_game'>
+            <input type='text' value='10'>
+            <div class='generate_game_text'>Matches To Find</div>
+            <div class='clear'></div>
+            <div class='generate_game_button'>Generate Gameboard</div>
+        </div>
+
+        <div class='game_board'></div>
+        <div class='clear'></div>
+    </div>
+
+    <script>
+
+    function memory_game_class() {
+        this.cards = {
+            card_array : [],
+            match_sets : null,
+            total_cards : null,
+        };
+        this.game_board = {
+            row_size : null
+        };
+        this.game_play = {
+            click_state : false,
+            current_number : null,
+            current_location : null,
+            game_paused : false,
+        };
+        this.stats = {
+            total_moves : 0
+        };
+    }
+
+    memory_game_class.prototype.generate_game_board = function() {
+
+        var matches_to_find = $('.memory .generate_game input').val();
+
+        //CHECK IF INPUT BOX IS EMPTY
+        if ( $('.memory .generate_game input').length === 0 ) {
+            return;
+        }
+
+        //CHECK IF 0 WAS USED AS INPUT VALUE
+        if ( matches_to_find === 0 ) {
+            return;
+        }
+
+        //MAKE SURE AN INTEGER WAS ENTERED
+        var matches_to_find_number = Number(matches_to_find);
+
+        if ( Math.floor( matches_to_find_number ) === matches_to_find_number ) {
+
+            this.cards.match_sets = matches_to_find_number;
+
+            $('.generate_game').hide();
+
+            this.init_game_board().determine_row_size().shuffle_cards().layout_cards().add_listeners();
+
+            $('.game_admin_bar').show();
+        }
+        else {
+            alert('please enter a valid integer');
+        }
+
+    };
+
+
+    memory_game_class.prototype.init_game_board = function() {
+
+        //TOTAL NUMBER OF CARDS
+        this.cards.total_cards = this.cards.match_sets * 2;
+
+        //NUMBER OF CARDS IN A ROW
+        this.game_board.row_size = this.determine_row_size.call(this);
+
+        //PUSH 2 SETS OF NUMBERS INTO ARRAY FOR EACH MATCH_SET
+        for ( var i = 0; i < this.cards.match_sets; i++ ) {
+            this.cards.card_array.push(i);
+            this.cards.card_array.push(i);
+        }
+
+        return this;
+    }
+
+    memory_game_class.prototype.determine_row_size = function() {
+
+        //GET SQUARE ROOT OF TOTAL CARDS
+        var square_root = Math.sqrt( this.cards.total_cards );
+
+        //IF SQUARE ROOT IS 8 OR LESS AND AN INTEGER CREATE A SQUARE LAYOUT
+        if ( square_root <= 8 && square_root % 1 === 0 ) {
+            this.row_size = square_root;
+        }
+
+        //ELSE CREATE A RECTANGLE LAYOUT WITH A MAXIMUM OF 8 TILES TO A ROW
+        else {
+            for (var i=8; i>=2; i--) {
+                if ( this.cards.total_cards % i === 0) {
+                    this.row_size = i;
+                    break;
+                }
+            }
+        }
+
+        return this;
+    };
+
+    memory_game_class.prototype.shuffle_cards = function() {
+        //TOTAL NUMBERS LEFT IN ARRAY
+        var cards_left_to_shuffle = this.cards.card_array.length;
+
+        //LAST NUMBER IN ARRAY NOT YET SHUFFLED
+        var last_number_in_array;
+
+        //RANDOMLY SELECTED INDEX BASED ON CARDS LEFT TO SHUFFLE
+        var random_index;
+
+        // WHILE CARDS REMAINING TO SHUFFLE
+        while ( cards_left_to_shuffle > 0 ) {
+
+            //PICK A RANDOM INDEX BASED ON THE CARDS LEFT TO SHUFFLE
+            random_index = Math.floor(Math.random() * cards_left_to_shuffle);
+
+            //TOTAL NUMBERS IN ARRAY MINUS 1 TO MATCH 0 BASED INDEX
+            cards_left_to_shuffle -= 1;
+
+            //LAST NUMBER IN THE ARRAY TO SHUFFLE
+            last_number_in_array = this.cards.card_array[cards_left_to_shuffle];
+
+            // ==== SWAP THE CARDS ==== //
+            //LAST NUMBER IN ARRAY IS EQUAL TO RANDOM INDEX
+            this.cards.card_array[cards_left_to_shuffle] = this.cards.card_array[random_index];
+
+            //RANDOM INDEX IS EQUAL TO LAST NUMBER IN THE ARRAY
+            this.cards.card_array[random_index] = last_number_in_array;
+        }
+
+        return this;
+    };
+
+    memory_game_class.prototype.layout_cards = function() {
+
+        //WHICH COLUMN THE CARD IS PLACED
+        var j = 1;
+
+        var memory_button_html = '';
+
+        for ( var i = 0; i < this.cards.total_cards; i++ ) {
+
+            if ( j === 1 ) {
+                memory_button_html = '<div class="memory_button left_square" data-location="' + i + '" data-number="' + this.cards.card_array[i] + '"></div>';
+                j++;
+            }
+
+            else if ( j < this.game_board.row_size ) {
+                memory_button_html = '<div class="memory_button" data-location="' + i + '" data-number="' + this.cards.card_array[i] + '"></div>';
+                j++;
+            }
+
+            else {
+                memory_button_html = '<div class="memory_button" data-location="' + i + '" data-number="' + this.cards.card_array[i] + '"></div>';
+                j = 1;
+            }
+
+            //DEAL CARD TO THE GAME BOARD
+            $('.game_board').append(memory_button_html);
+        }
+
+        return this;
+
+        //memory.game_play.add_listeners();
+    };
+
+    memory_game_class.prototype.add_listeners = function() {
+
+        var that = this;
+
+        $('.memory_button').on('click', function() {
+
+            //CHECK IF THE BOARD IS CLICKABLE
+            if ( that.game_play.game_paused === true ) {
+                return;
+            }
+
+            //CHECK IF THE CARD HAS ALREADY BEEN MATCHED
+            if ( $(this).hasClass('match') ) {
+                return;
+            }
+
+            //SET THE CARD THAT WAS CLICKED TO ACTIVE
+            $(this).addClass('active');
+
+            var selected_number;
+
+            //Step 1. CHECK IF FIRST CLICK OR SECOND CLICK
+            if ( that.game_play.click_state === false ) {
+                //FIRST CLICK
+
+                //store the selected button number
+                selected_number = $(this).attr('data-number');
+
+                //set the current number
+                that.game_play.current_number = selected_number;
+
+                //set the current location
+                that.game_play.current_location = $(this).attr('data-location');
+
+                //show the button number
+                $(this).html(selected_number);
+
+                //set click state to true for second click
+                that.game_play.click_state = true;
+            }
+            else {
+                //SECOND CLICK
+
+                //selected data location
+                var selected_location = $(this).attr('data-location');
+
+                //IF THE USER CLICKED THE SAME TILE
+                if ( selected_location === that.game_play.current_location ) {
+                    return;
+                }
+
+                //reset the click state
+                that.game_play.click_state = false;
+
+                //store the selected number
+                selected_number = $(this).attr('data-number');
+
+                //show the number
+                $(this).html(selected_number);
+
+                if ( selected_number === that.game_play.current_number ) {
+                    //THERE IS A MATCH
+
+                    //reset the current number
+                    that.game_play.current_number = '';
+
+                    $('.active').addClass('match');
+                    $('.active').removeClass('active');
+
+                    that.cards.match_sets -= 1;
+                    //console.log('total sets to match: ', that.cards.match_sets);
+
+                    if ( that.cards.match_sets === 0 ) {
+                        //console.log('game won');
+                        that.game_won();
+                    }
+
+                }
+                else {
+                    //THER IS NOT A MATCH
+
+                    //PREVENT SELECTING A NEW TILE
+                    that.game_play.game_paused = true;
+
+                    setTimeout(function () {
+
+                        that.game_play.current_number = null;
+                        that.game_play.current_location = null;
+
+                        //HIDE THE NUMBERS THAT WERE NOT MATCHED
+                        $('.active').empty();
+
+                        //RESET ACTIVE TILES
+                        $('.active').removeClass('active');
+
+                        //USER CAN NOW SELECT A NEW TILE
+                        that.game_play.game_paused = false;
+
+                    }, 1000);
+                }
+
+                //INCREMENT SCORE
+                that.stats.total_moves += 1;
+
+                //SHOW THE SCORE IN THE DOM
+                $('.game_admin_bar .total_moves span').html( that.stats.total_moves );
+
+            }
+
+        });
+
+    };
+
+    memory_game_class.prototype.game_won = function() {
+
+        var highlight_timer = 100;
+
+        $('.game_board .memory_button').each(function(){
+
+            var that = $(this);
+
+            highlight_timer += 100;
+
+            setTimeout( function(){
+
+                that.addClass('highlight');
+
+            }, highlight_timer);
+
+        });
+    };
+
+    //INITIAL GAME SCREEN
+    $('.memory').on('click','.generate_game_button', function() {
+        memory_game.generate_game_board();
+    });
+
+    $('.memory').on('keypress', '.generate_game input', function(e) {
+        if (e.keyCode == 13) {
+            memory_game.generate_game_board();
+        }
+    });
+
+    //RESET THE GAME BOARD
+    $('.memory').on('click','.reset_button',function() {
+        $('.game_board').empty();
+        memory_game = new memory_game_class();
+        $('.generate_game').show();
+        $('.game_admin_bar').hide();
+        $('.game_admin_bar .total_moves span').html('0');
+    });
+
+    var memory_game = new memory_game_class();
+
+    //memory_game_01.init_game_board().determine_row_size().shuffle_cards().layout_cards().add_listeners();
+
+    </script>
+
   </body>
 </html>
