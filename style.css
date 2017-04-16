@@ -1,0 +1,48 @@
+body {
+	background-color: #FFF;
+}
+
+.cell {
+    border: 0px solid black;
+    text-align: center;
+    cursor: pointer;
+    height: 60px;
+    width: 100%;
+    background-color: #81BDFD;
+    color: #FFF;
+}
+
+.cell:hover {
+	background-color: #156AEB;
+}
+
+.match {
+    background-color: #3E1EED;
+}
+
+.clicked .icon {
+    visibility: visible;
+}
+
+.clicked{
+    background-color: #156AEB;
+}
+
+.match:hover {
+    background-color: #3E1EED;
+}
+
+.match .icon {
+    visibility: visible;
+}
+
+.icon {
+	visibility: hidden;
+    display: inline-block;
+    font-size: 32px;
+    padding-top: 12px;
+}
+
+.grid_1.sampleCell {
+	display: none;
+}
