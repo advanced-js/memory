@@ -1,8 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Memory exercise</title>
-  </head>
-  <body>
-  </body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="memory.css">
+        <script src="gameboard.js"></script>
+        <script src="piecesArray.js"></script>
+        <script src="clicks.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <title>Memory exercise</title>
+    </head>
+    <body>
+        <h3>How large do you want your board to be? (even numbers, please)</h3>
+        <input id="board-size" type="number" min="2" max="100" />
+        <button id="start">Let's play!</button>
+        <button id="reset">Reset Board</button>
+        <table>
+            <tbody class="gameboard">
+            </tbody>
+        </table>
+        <h3 id="message"></h3>
+    </body>
+    <script>
+        var self = this;
+        this.$("#reset").click(function() {
+            if (gameboard) { gameboard.reset(); }
+            if (clicks) { clicks.reset(); }
+            self.$("#message").html("");
+        });
+
+        this.$("#start").click(function() {
+            self.$("tbody.gameboard").html("");
+            self.$("#message").html("");
+
+            var boardSize = self.$("#board-size").val();
+            gameboard = new Gameboard(boardSize);
+            gameboard.buildBoard();
+
+            clicks = new Clicks();
+
+            self.$("td").click(function(e) {
+                clicks.incrementClicks();
+                gameboard.showPiece($(e.target).children(".piece"));
+                if (clicks.numberOfClicks === 2) {
+                    gameboard.checkMatch();
+                }
+            });
+        });
+    </script>
 </html>
