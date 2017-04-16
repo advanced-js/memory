@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="memoryV5.css">
+<script type="text/javascript"  src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript"  src="memoryV5.js"></script>
+<title>Memory Game</title>
+</head>
+
+
+<body>
+
+<div class='memory'>
+    <div id=top>
+         <div id=input>
+                <form id='form1'>
+                <legend>Enter Your Memory Board Size Below</legend>
+                <table>
+                <tr>
+                <td>Rows </td>
+                <td><input type=text id=row name=rows class=input></td>
+                <td id = rowe></td>
+                </tr>
+                <tr>
+                <td>Columns</td>
+                <td><input type=text id=col name=cols class=input></td>
+                <td id = cole></td>
+                </tr>
+                <tr>
+                <td> Total Memory Cards</td>
+                <td id=outputcalc> Press 'Go'</td>
+                <td id=outputcalce></td>
+                </tr>
+                <tr>
+                <td><input type=button id='go' value=' Go! '> </td>
+                <td><input type=button id='reset' value=' Start Over '> </td>
+                </tr>
+                </table>
+                </form>
+            </div>
+            
+             <div class='leaderboard'>
+                <table class='leadertable'>
+                    <tr>
+                    <td id=leaderlabel>Scores</td>
+                    </tr>
+                    <tr> <td class='space'> formatting  </td></tr>
+                    <tr>
+                    <td>Pairs Found</td>
+                    <td id='yourscore'> 0</td>
+                    </tr>
+                    <tr>
+                    <td>Number of Turns</td>
+                    <td id='yourturns'> 0 </td>
+                    </tr>
+                    <tr> <td class='space'> formatting   </td></tr>
+                    </table>
+            </div>
+     </div>
+     
+     <div class='board'>
+     </div>
+    
+    
+
+    
+    
+</div>
+
+</body>
+
+</body>
+</html>
+
