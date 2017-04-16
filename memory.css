@@ -1,0 +1,22 @@
+.cell {
+    border: 1px solid black;
+    text-align: center;
+    color: grey;
+    background-color: grey;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.match {
+    background-color: green;
+    color: white;
+}
+
+.clicked{
+    background-color: orange;
+    color: blue;
+}
+
+#board{
+    margin-top: 10px;
+}
