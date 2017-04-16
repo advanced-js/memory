@@ -1,0 +1,53 @@
+td {
+  border: 1px solid blue;
+  padding: 50px;
+  background-color: white;
+  color: white;
+  opacity: 1;
+  font-size: 50px;
+}
+
+.changeWhite {
+ -webkit-animation: changeColor 3500ms infinite;
+}
+
+.popUp {
+  -webkit-animation: popUp 4500ms 1;
+  border: none;
+}
+
+@-webkit-keyframes changeColor {
+  0%   { color: white; }
+  20%, 70% { color: red; }
+  100% { color: white; }
+}
+@-moz-keyframes changeColor {
+  0%   { color: white; }
+  20%, 70% { color: red; }
+  100% { color: white; }
+}
+@-o-keyframes changeColor {
+  0%   { color: white; }
+  20%, 70% { color: red; }
+  100% { color: white; }
+}
+@keyframes changeColor {
+  0%   { color: white; }
+  20%, 70% { color: red; }
+  100% { color: white; }
+}
+
+@-webkit-keyframes popUp {
+  0% { 
+    -webkit-transform: scale(1);
+    opacity: 1;
+  }
+  50$ {
+    -webkit-transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(0.02);
+    opacity: 0;
+  }
+}
